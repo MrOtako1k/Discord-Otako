@@ -5,7 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Link Discord Family Otako</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --warning-gradient: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: #e0e6ed;
+            --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
+            --shadow-dark: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,16 +30,16 @@
 
         body {
             font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
             background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            animation: gradientShift 20s ease infinite;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         @keyframes gradientShift {
@@ -32,8 +48,8 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* خلفية الجزيئات المتحركة */
-        .particles {
+        /* الخلفية التفاعلية الحديثة */
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
@@ -41,195 +57,179 @@
             height: 100%;
             pointer-events: none;
             z-index: 1;
+            overflow: hidden;
         }
 
-        .particle {
+        .floating-element {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            animation: float 15s ease-in-out infinite;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 1; }
-            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.5; }
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.8; }
+            25% { transform: translateY(-100px) rotate(90deg); opacity: 1; }
+            50% { transform: translateY(-200px) rotate(180deg); opacity: 0.6; }
+            75% { transform: translateY(-100px) rotate(270deg); opacity: 1; }
         }
 
-        /* النجوم المتلألئة */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s ease-in-out infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.5); }
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            padding: 50px;
+        /* الحاوية الرئيسية المحدثة */
+        .main-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            box-shadow: var(--shadow-light);
+            padding: 60px 40px;
             text-align: center;
-            max-width: 550px;
+            max-width: 600px;
             width: 100%;
             position: relative;
             overflow: hidden;
             z-index: 10;
             transform: translateY(0);
-            animation: containerFloat 6s ease-in-out infinite;
+            animation: containerFloat 8s ease-in-out infinite;
         }
 
         @keyframes containerFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-15px) scale(1.02); }
         }
 
-        .container::before {
-            content: '';
+        /* شريط علوي متحرك */
+        .top-accent {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, #5865f2, #7289da, #ff6b6b, #4ecdc4);
-            background-size: 300% 100%;
-            animation: gradientMove 3s ease infinite;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
+            background-size: 600% 100%;
+            animation: accentMove 4s ease infinite;
         }
 
-        @keyframes gradientMove {
+        @keyframes accentMove {
             0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            100% { background-position: 600% 50%; }
         }
 
-        h1 {
-            color: #ffffff;
-            margin-bottom: 35px;
-            font-size: 2.5em;
+        /* العنوان المحدث */
+        .title {
+            color: var(--text-primary);
+            margin-bottom: 40px;
+            font-size: 2.8em;
             font-weight: 900;
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            animation: titleGlow 4s ease-in-out infinite;
-            background: linear-gradient(45deg, #fff, #f0f0f0, #fff);
-            background-size: 200% 200%;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #fff, #e0e6ed, #fff, #f0f8ff);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: titleShine 5s ease-in-out infinite;
+            position: relative;
         }
 
-        @keyframes titleGlow {
-            0%, 100% { 
-                text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-                transform: scale(1);
-            }
-            50% { 
-                text-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
-                transform: scale(1.02);
-            }
+        @keyframes titleShine {
+            0%, 100% { background-position: 0% 50%; transform: scale(1); }
+            50% { background-position: 100% 50%; transform: scale(1.05); }
+        }
+
+        /* أيقونة Discord محدثة */
+        .discord-icon-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            position: relative;
         }
 
         .discord-icon {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 35px;
-            background: linear-gradient(135deg, #5865f2, #7289da);
+            width: 120px;
+            height: 120px;
+            background: var(--primary-gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 50px;
+            font-size: 60px;
             color: white;
-            box-shadow: 
-                0 15px 35px rgba(88, 101, 242, 0.4),
-                0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
             position: relative;
-            animation: iconPulse 3s ease-in-out infinite;
+            animation: iconPulse 4s ease-in-out infinite;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
         }
 
         @keyframes iconPulse {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.05) rotate(2deg); }
-            50% { transform: scale(1.1) rotate(0deg); }
-            75% { transform: scale(1.05) rotate(-2deg); }
+            0%, 100% { transform: scale(1) rotate(0deg); box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4); }
+            25% { transform: scale(1.1) rotate(5deg); box-shadow: 0 25px 50px rgba(118, 75, 162, 0.5); }
+            50% { transform: scale(1.2) rotate(0deg); box-shadow: 0 30px 60px rgba(240, 147, 251, 0.6); }
+            75% { transform: scale(1.1) rotate(-5deg); box-shadow: 0 25px 50px rgba(245, 87, 108, 0.5); }
         }
 
         .discord-icon:hover {
-            transform: scale(1.15) rotate(10deg);
-            box-shadow: 
-                0 20px 40px rgba(88, 101, 242, 0.6),
-                0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: scale(1.3) rotate(360deg);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.8);
         }
 
-        .discord-icon::before {
-            content: '';
+        /* حلقات دائرية حول الأيقونة */
+        .icon-ring {
             position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            border: 3px solid transparent;
             border-radius: 50%;
-            z-index: -1;
-            animation: iconBorder 4s linear infinite;
-            opacity: 0.7;
+            animation: ringRotate 8s linear infinite;
         }
 
-        @keyframes iconBorder {
+        .ring-1 {
+            width: 140px;
+            height: 140px;
+            border-top: 3px solid rgba(102, 126, 234, 0.6);
+            border-right: 3px solid rgba(118, 75, 162, 0.6);
+        }
+
+        .ring-2 {
+            width: 160px;
+            height: 160px;
+            border-bottom: 3px solid rgba(240, 147, 251, 0.6);
+            border-left: 3px solid rgba(245, 87, 108, 0.6);
+            animation-direction: reverse;
+            animation-duration: 12s;
+        }
+
+        @keyframes ringRotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
+        /* رابط Discord محدث */
         .discord-link {
             display: inline-block;
-            background: linear-gradient(135deg, #5865f2, #7289da, #ff6b6b);
+            background: var(--secondary-gradient);
             background-size: 200% 200%;
             color: white;
             text-decoration: none;
-            padding: 18px 40px;
-            border-radius: 50px;
-            font-size: 1.2em;
+            padding: 20px 50px;
+            border-radius: 60px;
+            font-size: 1.3em;
             font-weight: 700;
-            transition: all 0.4s ease;
-            box-shadow: 
-                0 8px 25px rgba(88, 101, 242, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            margin-bottom: 35px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px rgba(240, 147, 251, 0.4);
+            margin-bottom: 40px;
             position: relative;
             overflow: hidden;
-            animation: linkGlow 5s ease-in-out infinite;
+            animation: linkGlow 6s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         @keyframes linkGlow {
             0%, 100% { 
                 background-position: 0% 50%;
-                box-shadow: 0 8px 25px rgba(88, 101, 242, 0.4);
+                box-shadow: 0 15px 35px rgba(240, 147, 251, 0.4), 0 0 50px rgba(240, 147, 251, 0.2);
             }
             50% { 
                 background-position: 100% 50%;
-                box-shadow: 0 12px 35px rgba(255, 107, 107, 0.5);
+                box-shadow: 0 20px 45px rgba(245, 87, 108, 0.6), 0 0 70px rgba(245, 87, 108, 0.3);
             }
         }
 
@@ -240,8 +240,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.7s ease;
         }
 
         .discord-link:hover::before {
@@ -249,37 +249,78 @@
         }
 
         .discord-link:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 
-                0 15px 40px rgba(88, 101, 242, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 25px 50px rgba(240, 147, 251, 0.7), 0 0 80px rgba(240, 147, 251, 0.4);
         }
 
-        .discord-link:active {
-            transform: translateY(-1px) scale(1.02);
+        /* إحصائيات الموقع */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
         }
 
+        .stat-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: statFloat 6s ease-in-out infinite;
+        }
+
+        .stat-item:nth-child(2) { animation-delay: -2s; }
+        .stat-item:nth-child(3) { animation-delay: -4s; }
+
+        @keyframes statFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: 900;
+            color: var(--text-primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* قسم الإدارة المحدث */
         .admin-section {
-            margin-top: 45px;
-            padding-top: 35px;
+            margin-top: 50px;
+            padding-top: 40px;
             border-top: 2px solid rgba(255, 255, 255, 0.2);
             position: relative;
         }
 
         .admin-toggle {
-            background: linear-gradient(135deg, #34495e, #2c3e50);
+            background: var(--dark-gradient);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
+            padding: 15px 35px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.1em;
             font-weight: 600;
-            transition: all 0.3s ease;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(52, 73, 94, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(44, 62, 80, 0.3);
             position: relative;
             overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .admin-toggle::before {
@@ -289,45 +330,55 @@
             left: 50%;
             width: 0;
             height: 0;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            transition: width 0.3s ease, height 0.3s ease;
+            transition: width 0.5s ease, height 0.5s ease;
         }
 
         .admin-toggle:hover::before {
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
         }
 
         .admin-toggle:hover {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(52, 73, 94, 0.4);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(44, 62, 80, 0.5);
         }
 
+        /* لوحة الإدارة المحدثة */
         .admin-panel {
             display: none;
-            background: rgba(248, 249, 250, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 20px;
-            margin-top: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 
-                0 10px 30px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 25px;
+            margin-top: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-gradient);
         }
 
         .admin-panel.show {
             display: block;
-            animation: slideDown 0.5s ease;
+            animation: panelSlideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes slideDown {
+        @keyframes panelSlideIn {
             from {
                 opacity: 0;
-                transform: translateY(-20px) scale(0.95);
+                transform: translateY(-30px) scale(0.9);
             }
             to {
                 opacity: 1;
@@ -335,12 +386,56 @@
             }
         }
 
+        /* تبويبات الإدارة */
+        .admin-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 5px;
+            overflow: hidden;
+        }
+
+        .tab-button {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .tab-button.active {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: tabFadeIn 0.4s ease;
+        }
+
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* عناصر النموذج المحدثة */
         .form-group {
             margin-bottom: 25px;
             text-align: right;
         }
 
-        label {
+        .form-label {
             display: block;
             margin-bottom: 10px;
             color: #2c3e50;
@@ -348,44 +443,43 @@
             font-size: 1.1em;
         }
 
-        input[type="password"],
-        input[type="url"] {
+        .form-input {
             width: 100%;
             padding: 15px 20px;
             border: 2px solid rgba(221, 221, 221, 0.5);
             border-radius: 15px;
             font-size: 1em;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             direction: ltr;
             text-align: left;
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(5px);
         }
 
-        input[type="password"]:focus,
-        input[type="url"]:focus {
+        .form-input:focus {
             outline: none;
-            border-color: #5865f2;
-            box-shadow: 
-                0 0 0 4px rgba(88, 101, 242, 0.1),
-                0 5px 15px rgba(88, 101, 242, 0.2);
+            border-color: #4facfe;
+            box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.1), 0 10px 25px rgba(79, 172, 254, 0.2);
             transform: translateY(-2px);
+            background: white;
         }
 
+        /* أزرار محدثة */
         .btn {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            background: var(--success-gradient);
             color: white;
             border: none;
             padding: 15px 30px;
-            border-radius: 30px;
+            border-radius: 50px;
             cursor: pointer;
             font-size: 1em;
             font-weight: 700;
-            transition: all 0.3s ease;
-            margin: 8px;
-            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin: 10px 5px;
+            box-shadow: 0 8px 25px rgba(17, 153, 142, 0.3);
             position: relative;
             overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         .btn::before {
@@ -398,74 +492,93 @@
             background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            transition: width 0.4s ease, height 0.4s ease;
+            transition: width 0.5s ease, height 0.5s ease;
         }
 
         .btn:hover::before {
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
         }
 
         .btn:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.5);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(17, 153, 142, 0.5);
         }
 
         .btn-danger {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+            background: var(--warning-gradient);
+            box-shadow: 0 8px 25px rgba(252, 74, 26, 0.3);
         }
 
         .btn-danger:hover {
-            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.5);
+            box-shadow: 0 15px 35px rgba(252, 74, 26, 0.5);
         }
 
+        .btn-secondary {
+            background: var(--dark-gradient);
+            box-shadow: 0 8px 25px rgba(44, 62, 80, 0.3);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 15px 35px rgba(44, 62, 80, 0.5);
+        }
+
+        /* رسائل محدثة */
         .message {
-            padding: 15px 25px;
-            border-radius: 15px;
-            margin: 20px 0;
+            padding: 20px 30px;
+            border-radius: 20px;
+            margin: 25px 0;
             font-weight: 600;
             position: relative;
             overflow: hidden;
-            animation: messageSlide 0.5s ease;
+            animation: messageSlideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid;
         }
 
-        @keyframes messageSlide {
+        @keyframes messageSlideIn {
             from {
                 opacity: 0;
-                transform: translateX(20px);
+                transform: translateX(30px) scale(0.9);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateX(0) scale(1);
             }
         }
 
-        .success {
+        .message.success {
             background: linear-gradient(135deg, #d4edda, #c3e6cb);
             color: #155724;
-            border: 2px solid #c3e6cb;
-            box-shadow: 0 5px 15px rgba(21, 87, 36, 0.2);
+            border-color: #c3e6cb;
+            box-shadow: 0 10px 25px rgba(21, 87, 36, 0.2);
         }
 
-        .error {
+        .message.error {
             background: linear-gradient(135deg, #f8d7da, #f5c6cb);
             color: #721c24;
-            border: 2px solid #f5c6cb;
-            box-shadow: 0 5px 15px rgba(114, 28, 36, 0.2);
+            border-color: #f5c6cb;
+            box-shadow: 0 10px 25px rgba(114, 28, 36, 0.2);
         }
 
+        .message.info {
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+            color: #0c5460;
+            border-color: #bee5eb;
+            box-shadow: 0 10px 25px rgba(12, 84, 96, 0.2);
+        }
+
+        /* مربع الرابط الحالي */
         .current-link {
             background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
             word-break: break-all;
             direction: ltr;
             text-align: left;
             font-family: 'Courier New', monospace;
-            border-left: 5px solid #2196f3;
-            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
+            border-left: 6px solid #2196f3;
+            box-shadow: 0 10px 25px rgba(33, 150, 243, 0.2);
             position: relative;
             overflow: hidden;
         }
@@ -476,380 +589,391 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 2px;
+            height: 3px;
             background: linear-gradient(90deg, #2196f3, #21cbf3, #2196f3);
             background-size: 200% 100%;
-            animation: linkBorder 2s linear infinite;
+            animation: linkBorderMove 3s linear infinite;
         }
 
-        @keyframes linkBorder {
+        @keyframes linkBorderMove {
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
         }
 
-        /* إحصائيات الخادم */
-        .server-stats {
-            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(114, 137, 218, 0.1));
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin: 30px 0;
-            border: 1px solid rgba(88, 101, 242, 0.2);
-            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.1);
-        }
-
-        .stats-grid {
+        /* محدد الألوان المخصص */
+        .color-picker-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            margin-top: 20px;
+            margin: 20px 0;
         }
 
-        .stat-item {
-            text-align: center;
+        .color-option {
             padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(88, 101, 242, 0.3);
-        }
-
-        .stat-number {
-            font-size: 2em;
-            font-weight: 900;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            animation: countUp 2s ease-out;
-        }
-
-        .stat-label {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.9em;
-            font-weight: 600;
-            margin-top: 5px;
-        }
-
-        @keyframes countUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* قواعد الخادم */
-        .server-rules {
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 182, 193, 0.1));
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin: 30px 0;
-            border: 1px solid rgba(255, 107, 107, 0.2);
-            text-align: right;
-        }
-
-        .rules-title {
-            color: #fff;
-            font-size: 1.5em;
-            font-weight: 700;
-            margin-bottom: 20px;
+            background: white;
             text-align: center;
         }
 
-        .rule-item {
-            background: rgba(255, 255, 255, 0.1);
-            margin: 10px 0;
-            padding: 15px 20px;
-            border-radius: 15px;
-            border-right: 4px solid #ff6b6b;
-            color: rgba(255, 255, 255, 0.9);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+        .color-option:hover {
+            border-color: #4facfe;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.2);
         }
 
-        .rule-item:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateX(-5px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        .color-preview {
+            width: 100%;
+            height: 30px;
+            border-radius: 10px;
+            margin-bottom: 10px;
         }
 
-        .rule-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 3px;
-            height: 100%;
-            background: linear-gradient(180deg, #ff6b6b, #ff8e8e);
-            animation: ruleGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes ruleGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        /* أعضاء الفريق */
-        .team-section {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(129, 199, 132, 0.1));
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin: 30px 0;
-            border: 1px solid rgba(76, 175, 80, 0.2);
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .team-member {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .team-member:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(76, 175, 80, 0.3);
-        }
-
-        .member-avatar {
+        /* تبديل الثيم */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #4caf50, #81c784);
             border-radius: 50%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--glass-border);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin: 0 auto 15px;
-            position: relative;
-            animation: avatarFloat 4s ease-in-out infinite;
         }
 
-        @keyframes avatarFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-5px) rotate(5deg); }
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(180deg);
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        .member-name {
-            color: #fff;
-            font-weight: 700;
-            margin-bottom: 5px;
+        /* الثيم الداكن */
+        body.dark-theme {
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #e94560);
         }
 
-        .member-role {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9em;
+        .dark-theme .main-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
-        /* أنشطة الخادم */
-        .activities-section {
-            background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(186, 104, 200, 0.1));
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin: 30px 0;
-            border: 1px solid rgba(156, 39, 176, 0.2);
+        .dark-theme .admin-panel {
+            background: rgba(0, 0, 0, 0.8);
         }
 
-        .activity-item {
+        .dark-theme .form-input {
             background: rgba(255, 255, 255, 0.1);
-            margin: 15px 0;
-            padding: 20px;
-            border-radius: 15px;
-            border-left: 4px solid #9c27b0;
-            color: rgba(255, 255, 255, 0.9);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .activity-item:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateX(10px);
-            box-shadow: 0 10px 25px rgba(156, 39, 176, 0.3);
-        }
-
-        .activity-title {
-            font-weight: 700;
-            font-size: 1.1em;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .activity-desc {
-            font-size: 0.9em;
-            opacity: 0.9;
-        }
-
-        /* زر نسخ الرابط */
-        .copy-link-btn {
-            background: linear-gradient(135deg, #ff9800, #ffc107);
             color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            margin: 10px;
-            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
-            position: relative;
-            overflow: hidden;
         }
 
-        .copy-link-btn:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 152, 0, 0.5);
+        .dark-theme .form-label {
+            color: #e0e6ed;
         }
 
-        /* عداد الزوار */
-        .visitor-counter {
-            background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(100, 181, 246, 0.1));
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 15px 25px;
-            margin: 20px 0;
-            border: 1px solid rgba(33, 150, 243, 0.2);
-            text-align: center;
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .visitor-count {
-            font-size: 1.5em;
-            font-weight: 900;
-            color: #64b5f6;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        /* تأثيرات الموبايل */
-        @media (max-width: 600px) {
-            .container {
-                padding: 35px 25px;
+        /* الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 40px 25px;
                 margin: 15px;
-                border-radius: 20px;
+                border-radius: 25px;
             }
             
-            h1 {
-                font-size: 2em;
-                margin-bottom: 25px;
+            .title {
+                font-size: 2.2em;
+                margin-bottom: 30px;
             }
             
             .discord-icon {
-                width: 80px;
-                height: 80px;
-                font-size: 40px;
-                margin-bottom: 25px;
+                width: 100px;
+                height: 100px;
+                font-size: 50px;
+                margin-bottom: 30px;
             }
 
             .discord-link {
-                padding: 15px 30px;
-                font-size: 1.1em;
+                padding: 18px 40px;
+                font-size: 1.2em;
             }
 
             .admin-panel {
-                padding: 25px 20px;
+                padding: 30px 20px;
             }
 
-            .stats-grid {
+            .admin-tabs {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .stats-container {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
             }
 
-            .team-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .stat-number {
-                font-size: 1.5em;
+            .color-picker-group {
+                grid-template-columns: 1fr;
             }
         }
 
-        /* تأثيرات إضافية للتفاعل */
-        .ripple {
+        /* تأثيرات التحميل */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
             position: relative;
-            overflow: hidden;
         }
 
-        .ripple::after {
+        .loading::after {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 0;
-            height: 0;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #4facfe;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
+            animation: spin 1s linear infinite;
         }
 
-        .ripple:active::after {
-            width: 300px;
-            height: 300px;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- الجزيئات المتحركة -->
-    <div class="particles" id="particles"></div>
-    
-    <!-- النجوم المتلألئة -->
-    <div class="stars" id="stars"></div>
+    <!-- تبديل الثيم -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="تبديل الثيم">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
 
-    <div class="container">
-        <div class="discord-icon">💬</div>
-        <h1>🎮 Link Discord Family Otako 24/7 🎮</h1>
+    <!-- الخلفية المتحركة -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <div class="main-container">
+        <div class="top-accent"></div>
         
-        <a href="#" id="discordLink" class="discord-link ripple" target="_blank">
-            🚀 انضم الآن إلى Discord ✨
+        <div class="discord-icon-container">
+            <div class="icon-ring ring-1"></div>
+            <div class="icon-ring ring-2"></div>
+            <div class="discord-icon">
+                <i class="fab fa-discord"></i>
+            </div>
+        </div>
+        
+        <h1 class="title">🎮 Link Discord Family Otako 24/7 🎮</h1>
+        
+        <div class="stats-container">
+            <div class="stat-item">
+                <span class="stat-number" id="visitCount">0</span>
+                <div class="stat-label">زائر</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="clickCount">0</span>
+                <div class="stat-label">نقرة</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="onlineUsers">24</span>
+                <div class="stat-label">متصل</div>
+            </div>
+        </div>
+        
+        <a href="#" id="discordLink" class="discord-link" target="_blank" onclick="trackClick()">
+            <i class="fas fa-rocket"></i> انضم الآن إلى Discord <i class="fas fa-sparkles"></i>
         </a>
         
         <div class="admin-section">
-            <button class="admin-toggle ripple" onclick="toggleAdmin()">
-                🔧 لوحة الأدمن المتقدمة
+            <button class="admin-toggle" onclick="toggleAdmin()">
+                <i class="fas fa-cog"></i> لوحة الإدارة المتقدمة
             </button>
             
             <div class="admin-panel" id="adminPanel">
                 <div id="loginForm">
                     <div class="form-group">
-                        <label for="adminPassword">🔐 كلمة مرور الأدمن:</label>
-                        <input type="password" id="adminPassword" placeholder="ادخل كلمة المرور السرية">
+                        <label class="form-label" for="adminPassword">
+                            <i class="fas fa-lock"></i> كلمة مرور الأدمن:
+                        </label>
+                        <input type="password" id="adminPassword" class="form-input" placeholder="ادخل كلمة المرور السرية">
                     </div>
-                    <button class="btn ripple" onclick="login()">🔑 تسجيل الدخول</button>
+                    <button class="btn" onclick="login()">
+                        <i class="fas fa-key"></i> تسجيل الدخول
+                    </button>
                 </div>
                 
                 <div id="adminControls" style="display: none;">
-                    <div class="current-link">
-                        <strong>🔗 الرابط الحالي:</strong><br>
-                        <span id="currentLink"></span>
+                    <div class="admin-tabs">
+                        <button class="tab-button active" onclick="switchTab('general')">عام</button>
+                        <button class="tab-button" onclick="switchTab('design')">التصميم</button>
+                        <button class="tab-button" onclick="switchTab('stats')">إحصائيات</button>
+                        <button class="tab-button" onclick="switchTab('settings')">إعدادات</button>
+                    </div>
+
+                    <!-- تبويب عام -->
+                    <div id="generalTab" class="tab-content active">
+                        <div class="current-link">
+                            <strong><i class="fas fa-link"></i> الرابط الحالي:</strong><br>
+                            <span id="currentLink"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="newLink">
+                                <i class="fas fa-plus-circle"></i> رابط Discord الجديد:
+                            </label>
+                            <input type="url" id="newLink" class="form-input" placeholder="https://discord.gg/your-invite">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="pageTitle">
+                                <i class="fas fa-heading"></i> عنوان الصفحة:
+                            </label>
+                            <input type="text" id="pageTitle" class="form-input" placeholder="Link Discord Family Otako">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="linkText">
+                                <i class="fas fa-text-width"></i> نص الرابط:
+                            </label>
+                            <input type="text" id="linkText" class="form-input" placeholder="انضم الآن إلى Discord">
+                        </div>
+                        
+                        <button class="btn" onclick="updateLink()">
+                            <i class="fas fa-save"></i> حفظ التغييرات
+                        </button>
+                    </div>
+
+                    <!-- تبويب التصميم -->
+                    <div id="designTab" class="tab-content">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-palette"></i> اختر نظام الألوان:
+                            </label>
+                            <div class="color-picker-group">
+                                <div class="color-option" onclick="changeThemeColor('default')">
+                                    <div class="color-preview" style="background: linear-gradient(135deg, #667eea, #764ba2);"></div>
+                                    <div>الافتراضي</div>
+                                </div>
+                                <div class="color-option" onclick="changeThemeColor('sunset')">
+                                    <div class="color-preview" style="background: linear-gradient(135deg, #ff7e5f, #feb47b);"></div>
+                                    <div>غروب الشمس</div>
+                                </div>
+                                <div class="color-option" onclick="changeThemeColor('ocean')">
+                                    <div class="color-preview" style="background: linear-gradient(135deg, #36d1dc, #5b86e5);"></div>
+                                    <div>المحيط</div>
+                                </div>
+                                <div class="color-option" onclick="changeThemeColor('forest')">
+                                    <div class="color-preview" style="background: linear-gradient(135deg, #11998e, #38ef7d);"></div>
+                                    <div>الغابة</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="animationSpeed">
+                                <i class="fas fa-tachometer-alt"></i> سرعة الحركة:
+                            </label>
+                            <select id="animationSpeed" class="form-input">
+                                <option value="slow">بطيء</option>
+                                <option value="normal" selected>عادي</option>
+                                <option value="fast">سريع</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn" onclick="applyDesignChanges()">
+                            <i class="fas fa-paint-brush"></i> تطبيق التصميم
+                        </button>
+                    </div>
+
+                    <!-- تبويب الإحصائيات -->
+                    <div id="statsTab" class="tab-content">
+                        <div class="stats-container">
+                            <div class="stat-item">
+                                <span class="stat-number" id="totalVisits">0</span>
+                                <div class="stat-label">إجمالي الزيارات</div>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="todayVisits">0</span>
+                                <div class="stat-label">زيارات اليوم</div>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="totalClicks">0</span>
+                                <div class="stat-label">إجمالي النقرات</div>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="conversionRate">0%</span>
+                                <div class="stat-label">معدل التحويل</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-secondary" onclick="resetStats()">
+                            <i class="fas fa-redo"></i> إعادة تعيين الإحصائيات
+                        </button>
+                        <button class="btn" onclick="exportStats()">
+                            <i class="fas fa-download"></i> تصدير البيانات
+                        </button>
+                    </div>
+
+                    <!-- تبويب الإعدادات -->
+                    <div id="settingsTab" class="tab-content">
+                        <div class="form-group">
+                            <label class="form-label" for="newPassword">
+                                <i class="fas fa-key"></i> كلمة مرور جديدة:
+                            </label>
+                            <input type="password" id="newPassword" class="form-input" placeholder="كلمة المرور الجديدة">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="confirmPassword">
+                                <i class="fas fa-check-circle"></i> تأكيد كلمة المرور:
+                            </label>
+                            <input type="password" id="confirmPassword" class="form-input" placeholder="أعد إدخال كلمة المرور">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-cogs"></i> إعدادات متقدمة:
+                            </label>
+                            <div style="text-align: right; margin: 15px 0;">
+                                <label style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <input type="checkbox" id="autoRedirect" style="margin-left: 10px;">
+                                    إعادة توجيه تلقائية بعد 5 ثوانٍ
+                                </label>
+                                <label style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <input type="checkbox" id="showStats" style="margin-left: 10px;" checked>
+                                    عرض الإحصائيات للزوار
+                                </label>
+                                <label style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="enableSounds" style="margin-left: 10px;">
+                                    تفعيل الأصوات
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button class="btn" onclick="changePassword()">
+                            <i class="fas fa-lock"></i> تغيير كلمة المرور
+                        </button>
+                        <button class="btn btn-secondary" onclick="backupData()">
+                            <i class="fas fa-cloud-download-alt"></i> نسخ احتياطي
+                        </button>
+                        <button class="btn btn-danger" onclick="resetAll()">
+                            <i class="fas fa-exclamation-triangle"></i> إعادة تعيين شامل
+                        </button>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="newLink">🆕 رابط Discord الجديد:</label>
-                        <input type="url" id="newLink" placeholder="https://discord.gg/your-invite">
+                    <div style="margin-top: 30px; text-align: center;">
+                        <button class="btn btn-danger" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                        </button>
                     </div>
-                    
-                    <button class="btn ripple" onclick="updateLink()">✅ تحديث الرابط</button>
-                    <button class="btn btn-danger ripple" onclick="logout()">🚪 تسجيل الخروج</button>
                 </div>
                 
                 <div id="message"></div>
@@ -858,165 +982,174 @@
     </div>
 
     <script>
-        // إعدادات افتراضية
-        const DEFAULT_ADMIN_PASSWORD = '1683'; // يمكنك تغيير كلمة المرور هنا
-        const DEFAULT_DISCORD_LINK = 'https://discord.gg/example';
-        
-        // متغيرات عامة
-        let isLoggedIn = false;
-        let currentDiscordLink = localStorage.getItem('discordLink') || DEFAULT_DISCORD_LINK;
-        
-        // إحصائيات وهمية للعرض
-        let stats = {
-            members: 1250,
-            online: 342,
-            channels: 25,
-            boosts: 15
+        // إعدادات النظام
+        const CONFIG = {
+            DEFAULT_ADMIN_PASSWORD: '1683',
+            DEFAULT_DISCORD_LINK: 'https://discord.gg/example',
+            VERSION: '2.0.0'
         };
-        
-        // عداد الزوار
-        let visitorCount = localStorage.getItem('visitorCount') || 0;
-        
-        // إنشاء الجزيئات المتحركة
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-        
-        // إنشاء النجوم المتلألئة
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const starCount = 100;
-            
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                starsContainer.appendChild(star);
-            }
-        }
-        
-        // تحديث الإحصائيات
-        function updateStats() {
-            // محاكاة تحديث الإحصائيات
-            stats.online = Math.floor(Math.random() * 100) + 300;
-            stats.members += Math.floor(Math.random() * 5);
-            
-            document.getElementById('memberCount').textContent = stats.members.toLocaleString();
-            document.getElementById('onlineCount').textContent = stats.online.toLocaleString();
-            document.getElementById('channelCount').textContent = stats.channels;
-            document.getElementById('boostCount').textContent = stats.boosts;
-        }
-        
-        // تحديث عداد الزوار
-        function updateVisitorCount() {
-            visitorCount++;
-            localStorage.setItem('visitorCount', visitorCount);
-            document.getElementById('visitorCount').textContent = visitorCount.toLocaleString();
-        }
-        
-        // نسخ رابط Discord
-        function copyDiscordLink() {
-            navigator.clipboard.writeText(currentDiscordLink).then(function() {
-                showMessage('🎉 تم نسخ الرابط بنجاح! يمكنك مشاركته الآن', 'success');
-            }).catch(function() {
-                // للمتصفحات القديمة
-                const textArea = document.createElement('textarea');
-                textArea.value = currentDiscordLink;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                showMessage('📋 تم نسخ الرابط! الصق الرابط حيث تريد', 'success');
-            });
-        }
-        
-        // تحديث الرابط عند تحميل الصفحة
+
+        // متغيرات النظام
+        let isLoggedIn = false;
+        let currentDiscordLink = localStorage.getItem('discordLink') || CONFIG.DEFAULT_DISCORD_LINK;
+        let currentTab = 'general';
+        let visitCount = parseInt(localStorage.getItem('visitCount') || '0');
+        let clickCount = parseInt(localStorage.getItem('clickCount') || '0');
+        let isDarkTheme = localStorage.getItem('darkTheme') === 'true';
+
+        // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            createFloatingElements();
             updateDisplayedLink();
-            createParticles();
-            createStars();
             updateStats();
-            updateVisitorCount();
             
-            // تحديث الإحصائيات كل 30 ثانية
-            setInterval(updateStats, 30000);
+            // تطبيق الثيم المحفوظ
+            if (isDarkTheme) {
+                document.body.classList.add('dark-theme');
+                document.getElementById('themeIcon').className = 'fas fa-sun';
+            }
             
-            // تأثير تفاعلي مع حركة الماوس
-            document.addEventListener('mousemove', function(e) {
-                const particles = document.querySelectorAll('.particle');
-                const mouseX = e.clientX / window.innerWidth;
-                const mouseY = e.clientY / window.innerHeight;
-                
-                particles.forEach((particle, index) => {
-                    const speed = (index % 5 + 1) * 0.5;
-                    const x = (mouseX - 0.5) * speed;
-                    const y = (mouseY - 0.5) * speed;
-                    particle.style.transform = `translate(${x}px, ${y}px)`;
-                });
-            });
+            // تسجيل زيارة جديدة
+            visitCount++;
+            localStorage.setItem('visitCount', visitCount.toString());
+            updateStats();
         });
-        
+
+        // إنشاء العناصر المتحركة في الخلفية
+        function createFloatingElements() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const elementCount = 15;
+            
+            for (let i = 0; i < elementCount; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.style.left = Math.random() * 100 + '%';
+                element.style.top = Math.random() * 100 + '%';
+                element.style.width = (Math.random() * 100 + 50) + 'px';
+                element.style.height = element.style.width;
+                element.style.animationDelay = Math.random() * 15 + 's';
+                element.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                bgAnimation.appendChild(element);
+            }
+        }
+
+        // تبديل الثيم
+        function toggleTheme() {
+            isDarkTheme = !isDarkTheme;
+            document.body.classList.toggle('dark-theme', isDarkTheme);
+            localStorage.setItem('darkTheme', isDarkTheme.toString());
+            
+            const themeIcon = document.getElementById('themeIcon');
+            themeIcon.className = isDarkTheme ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // تهيئة الصفحة
+        function initializePage() {
+            const savedTitle = localStorage.getItem('pageTitle');
+            const savedLinkText = localStorage.getItem('linkText');
+            
+            if (savedTitle) {
+                document.querySelector('.title').innerHTML = savedTitle;
+            }
+            
+            if (savedLinkText) {
+                document.getElementById('discordLink').innerHTML = savedLinkText;
+            }
+        }
+
+        // تحديث العرض
         function updateDisplayedLink() {
             const linkElement = document.getElementById('discordLink');
             linkElement.href = currentDiscordLink;
             
-            // تحديث النص المعروض في لوحة الأدمن
             const currentLinkSpan = document.getElementById('currentLink');
             if (currentLinkSpan) {
                 currentLinkSpan.textContent = currentDiscordLink;
             }
         }
-        
+
+        // تحديث الإحصائيات
+        function updateStats() {
+            document.getElementById('visitCount').textContent = visitCount;
+            document.getElementById('clickCount').textContent = clickCount;
+            document.getElementById('totalVisits').textContent = visitCount;
+            document.getElementById('totalClicks').textContent = clickCount;
+            
+            const conversionRate = visitCount > 0 ? ((clickCount / visitCount) * 100).toFixed(1) : 0;
+            document.getElementById('conversionRate').textContent = conversionRate + '%';
+            
+            // محاكاة المستخدمين المتصلين
+            const onlineUsers = Math.floor(Math.random() * 50) + 20;
+            document.getElementById('onlineUsers').textContent = onlineUsers;
+        }
+
+        // تتبع النقرات
+        function trackClick() {
+            clickCount++;
+            localStorage.setItem('clickCount', clickCount.toString());
+            updateStats();
+        }
+
+        // تبديل لوحة الإدارة
         function toggleAdmin() {
             const panel = document.getElementById('adminPanel');
             panel.classList.toggle('show');
         }
-        
+
+        // تبديل التبويبات
+        function switchTab(tabName) {
+            // إخفاء جميع التبويبات
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // عرض التبويب المحدد
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+            currentTab = tabName;
+        }
+
+        // تسجيل الدخول
         function login() {
             const password = document.getElementById('adminPassword').value;
-            const messageDiv = document.getElementById('message');
+            const savedPassword = localStorage.getItem('adminPassword') || CONFIG.DEFAULT_ADMIN_PASSWORD;
             
-            if (password === DEFAULT_ADMIN_PASSWORD) {
+            if (password === savedPassword) {
                 isLoggedIn = true;
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('adminControls').style.display = 'block';
                 updateDisplayedLink();
-                showMessage('🎉 تم تسجيل الدخول بنجاح! مرحباً بك في لوحة التحكم', 'success');
+                loadAdminData();
+                showMessage('🎉 مرحباً بك في لوحة التحكم المتقدمة! تم تسجيل الدخول بنجاح', 'success');
                 document.getElementById('adminPassword').value = '';
             } else {
-                showMessage('❌ كلمة المرور غير صحيحة! حاول مرة أخرى', 'error');
-                
-                // تأثير اهتزاز للحقل
-                const passwordField = document.getElementById('adminPassword');
-                passwordField.style.animation = 'shake 0.5s ease-in-out';
-                setTimeout(() => {
-                    passwordField.style.animation = '';
-                }, 500);
+                showMessage('❌ كلمة المرور غير صحيحة! تأكد من إدخال كلمة المرور الصحيحة', 'error');
+                animateError(document.getElementById('adminPassword'));
             }
         }
-        
+
+        // تحميل بيانات الإدارة
+        function loadAdminData() {
+            document.getElementById('pageTitle').value = localStorage.getItem('pageTitle') || 'Link Discord Family Otako';
+            document.getElementById('linkText').value = localStorage.getItem('linkText') || 'انضم الآن إلى Discord';
+            document.getElementById('showStats').checked = localStorage.getItem('showStats') !== 'false';
+            document.getElementById('autoRedirect').checked = localStorage.getItem('autoRedirect') === 'true';
+            document.getElementById('enableSounds').checked = localStorage.getItem('enableSounds') === 'true';
+        }
+
+        // تسجيل الخروج
         function logout() {
             isLoggedIn = false;
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('adminControls').style.display = 'none';
             document.getElementById('newLink').value = '';
-            showMessage('👋 تم تسجيل الخروج بنجاح! شكراً لك', 'success');
+            showMessage('👋 تم تسجيل الخروج بنجاح! نراك قريباً', 'success');
         }
-        
+
+        // تحديث الرابط
         function updateLink() {
             if (!isLoggedIn) {
                 showMessage('🔒 يجب تسجيل الدخول أولاً!', 'error');
@@ -1024,109 +1157,249 @@
             }
             
             const newLink = document.getElementById('newLink').value.trim();
+            const pageTitle = document.getElementById('pageTitle').value.trim();
+            const linkText = document.getElementById('linkText').value.trim();
             
-            if (!newLink) {
-                showMessage('⚠️ يرجى إدخال رابط صحيح!', 'error');
+            if (newLink && !isValidUrl(newLink)) {
+                showMessage('🚫 الرابط غير صحيح! يرجى إدخال رابط صالح', 'error');
                 return;
             }
             
-            // التحقق من صحة الرابط
-            try {
-                new URL(newLink);
-            } catch (e) {
-                showMessage('🚫 الرابط غير صحيح! يرجى إدخال رابط صالح.', 'error');
-                return;
+            // حفظ التغييرات
+            if (newLink) {
+                currentDiscordLink = newLink;
+                localStorage.setItem('discordLink', newLink);
+                updateDisplayedLink();
             }
             
-            // حفظ الرابط الجديد
-            currentDiscordLink = newLink;
-            localStorage.setItem('discordLink', newLink);
-            updateDisplayedLink();
+            if (pageTitle) {
+                localStorage.setItem('pageTitle', pageTitle);
+                document.querySelector('.title').innerHTML = pageTitle;
+            }
             
-            showMessage('🎊 تم تحديث الرابط بنجاح! الرابط الجديد جاهز للاستخدام', 'success');
+            if (linkText) {
+                localStorage.setItem('linkText', linkText);
+                document.getElementById('discordLink').innerHTML = '<i class="fas fa-rocket"></i> ' + linkText + ' <i class="fas fa-sparkles"></i>';
+            }
+            
+            showMessage('✅ تم حفظ جميع التغييرات بنجاح!', 'success');
             document.getElementById('newLink').value = '';
         }
-        
+
+        // تغيير نظام الألوان
+        function changeThemeColor(theme) {
+            const root = document.documentElement;
+            
+            switch(theme) {
+                case 'sunset':
+                    root.style.setProperty('--primary-gradient', 'linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%)');
+                    root.style.setProperty('--secondary-gradient', 'linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%)');
+                    break;
+                case 'ocean':
+                    root.style.setProperty('--primary-gradient', 'linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%)');
+                    root.style.setProperty('--secondary-gradient', 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)');
+                    break;
+                case 'forest':
+                    root.style.setProperty('--primary-gradient', 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)');
+                    root.style.setProperty('--secondary-gradient', 'linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%)');
+                    break;
+                default:
+                    root.style.setProperty('--primary-gradient', 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)');
+                    root.style.setProperty('--secondary-gradient', 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)');
+            }
+            
+            localStorage.setItem('currentTheme', theme);
+            showMessage('🎨 تم تطبيق نظام الألوان الجديد!', 'success');
+        }
+
+        // تطبيق تغييرات التصميم
+        function applyDesignChanges() {
+            const animationSpeed = document.getElementById('animationSpeed').value;
+            const root = document.documentElement;
+            
+            switch(animationSpeed) {
+                case 'slow':
+                    root.style.setProperty('--animation-duration', '30s');
+                    break;
+                case 'fast':
+                    root.style.setProperty('--animation-duration', '10s');
+                    break;
+                default:
+                    root.style.setProperty('--animation-duration', '20s');
+            }
+            
+            showMessage('✨ تم تطبيق إعدادات التصميم!', 'success');
+        }
+
+        // تغيير كلمة المرور
+        function changePassword() {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!newPassword || !confirmPassword) {
+                showMessage('⚠️ يرجى ملء جميع الحقول', 'error');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                showMessage('❌ كلمات المرور غير متطابقة!', 'error');
+                return;
+            }
+            
+            if (newPassword.length < 4) {
+                showMessage('⚠️ كلمة المرور يجب أن تكون 4 أحرف على الأقل', 'error');
+                return;
+            }
+            
+            localStorage.setItem('adminPassword', newPassword);
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            showMessage('🔐 تم تغيير كلمة المرور بنجاح!', 'success');
+        }
+
+        // إعادة تعيين الإحصائيات
+        function resetStats() {
+            if (confirm('هل أنت متأكد من إعادة تعيين جميع الإحصائيات؟')) {
+                visitCount = 0;
+                clickCount = 0;
+                localStorage.setItem('visitCount', '0');
+                localStorage.setItem('clickCount', '0');
+                updateStats();
+                showMessage('🔄 تم إعادة تعيين الإحصائيات', 'info');
+            }
+        }
+
+        // تصدير البيانات
+        function exportStats() {
+            const data = {
+                visitCount: visitCount,
+                clickCount: clickCount,
+                conversionRate: visitCount > 0 ? ((clickCount / visitCount) * 100).toFixed(1) : 0,
+                currentLink: currentDiscordLink,
+                exportDate: new Date().toLocaleString('ar-SA')
+            };
+            
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = 'discord-stats-' + new Date().toISOString().split('T')[0] + '.json';
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showMessage('📊 تم تصدير البيانات بنجاح!', 'success');
+        }
+
+        // نسخ احتياطي
+        function backupData() {
+            const backupData = {
+                discordLink: currentDiscordLink,
+                pageTitle: localStorage.getItem('pageTitle'),
+                linkText: localStorage.getItem('linkText'),
+                visitCount: visitCount,
+                clickCount: clickCount,
+                adminPassword: localStorage.getItem('adminPassword'),
+                settings: {
+                    showStats: localStorage.getItem('showStats'),
+                    autoRedirect: localStorage.getItem('autoRedirect'),
+                    enableSounds: localStorage.getItem('enableSounds'),
+                    currentTheme: localStorage.getItem('currentTheme'),
+                    darkTheme: localStorage.getItem('darkTheme')
+                },
+                backupDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(backupData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', 'discord-backup-' + new Date().toISOString().split('T')[0] + '.json');
+            linkElement.click();
+            
+            showMessage('💾 تم إنشاء النسخة الاحتياطية!', 'success');
+        }
+
+        // إعادة تعيين شامل
+        function resetAll() {
+            if (confirm('⚠️ هذا سيحذف جميع البيانات والإعدادات! هل أنت متأكد؟')) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        // عرض الرسائل
         function showMessage(text, type) {
             const messageDiv = document.getElementById('message');
-            messageDiv.innerHTML = `<div class="message ${type}">${text}</div>`;
+            messageDiv.innerHTML = `<div class="message ${type}"><i class="fas fa-info-circle"></i> ${text}</div>`;
             
-            // إخفاء الرسالة بعد 4 ثوان
             setTimeout(() => {
                 messageDiv.innerHTML = '';
-            }, 4000);
+            }, 5000);
         }
-        
-        // إضافة تأثير اهتزاز للأخطاء
-        const shakeKeyframes = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-                20%, 40%, 60%, 80% { transform: translateX(5px); }
+
+        // تأثير الخطأ
+        function animateError(element) {
+            element.style.animation = 'shake 0.5s ease-in-out';
+            element.style.borderColor = '#e74c3c';
+            
+            setTimeout(() => {
+                element.style.animation = '';
+                element.style.borderColor = '';
+            }, 500);
+        }
+
+        // التحقق من صحة الرابط
+        function isValidUrl(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
             }
-        `;
-        
-        const styleSheet = document.createElement('style');
-        styleSheet.textContent = shakeKeyframes;
-        document.head.appendChild(styleSheet);
-        
-        // منع النقر بالزر الأيمن وبعض اختصارات لوحة المفاتيح (اختياري)
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-        
+        }
+
+        // منع بعض الاختصارات
+        document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', function(e) {
-            // منع F12, Ctrl+Shift+I, Ctrl+U
             if (e.key === 'F12' || 
                 (e.ctrlKey && e.shiftKey && e.key === 'I') || 
                 (e.ctrlKey && e.key === 'u')) {
                 e.preventDefault();
             }
         });
-        
-        // تأثير النقر للأزرار
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('ripple')) {
-                const ripple = e.target;
-                const rect = ripple.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                const rippleEffect = document.createElement('span');
-                rippleEffect.style.cssText = `
-                    position: absolute;
-                    border-radius: 50%;
-                    background: rgba(255, 255, 255, 0.6);
-                    transform: scale(0);
-                    animation: ripple-animation 0.6s linear;
-                    left: ${x}px;
-                    top: ${y}px;
-                    width: ${size}px;
-                    height: ${size}px;
-                `;
-                
-                ripple.appendChild(rippleEffect);
-                
-                setTimeout(() => {
-                    rippleEffect.remove();
-                }, 600);
-            }
+
+        // تأثيرات إضافية
+        document.addEventListener('mousemove', function(e) {
+            const elements = document.querySelectorAll('.floating-element');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            elements.forEach((element, index) => {
+                const speed = (index % 3 + 1) * 0.3;
+                const x = (mouseX - 0.5) * speed * 20;
+                const y = (mouseY - 0.5) * speed * 20;
+                element.style.transform = `translate(${x}px, ${y}px)`;
+            });
         });
-        
-        // إضافة تأثير الموجة
-        const rippleAnimation = `
-            @keyframes ripple-animation {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
+
+        // إضافة تأثيرات الاهتزاز
+        const shakeKeyframes = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+                20%, 40%, 60%, 80% { transform: translateX(10px); }
             }
         `;
         
-        const rippleStyleSheet = document.createElement('style');
-        rippleStyleSheet.textContent = rippleAnimation;
-        document.head.appendChild(rippleStyleSheet);
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = shakeKeyframes;
+        document.head.appendChild(styleSheet);
+
+        // تحديث الإحصائيات دورياً
+        setInterval(updateStats, 30000); // كل 30 ثانية
     </script>
 </body>
 </html>
