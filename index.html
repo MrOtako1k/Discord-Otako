@@ -1,108 +1,123 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Family Otako | Discord</title>
+<title>Family Otako | Gaming Community</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 <style>
 :root{
-  --neon:#00fff7;
-  --pink:#ff2fdc;
-  --bg:#0b0f1a;
-  --card:#11162a;
+  --main:#00ffd5;
+  --discord:#5865F2;
+  --youtube:#ff0033;
+  --bg:#050812;
+  --card:#0b1022;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
-  font-family:'Tajawal',sans-serif;
+  font-family:'Cairo',sans-serif;
   min-height:100vh;
   background:
-    radial-gradient(circle at top,#1b1f3b,#070a14 70%);
+    radial-gradient(circle at top,#0e1433,#050812 70%);
   color:#fff;
   display:flex;
   justify-content:center;
   align-items:center;
   padding:20px;
+  overflow:hidden;
+}
+
+/* background particles */
+.bg span{
+  position:absolute;
+  width:4px;
+  height:4px;
+  background:var(--main);
+  opacity:.3;
+  animation:move 10s linear infinite;
+}
+@keyframes move{
+  from{transform:translateY(100vh)}
+  to{transform:translateY(-10vh)}
 }
 
 .card{
   width:100%;
-  max-width:420px;
-  background:linear-gradient(180deg,#0f1430,#090c1d);
-  border-radius:25px;
+  max-width:430px;
+  background:linear-gradient(180deg,#0b1022,#070b18);
+  border-radius:28px;
   padding:35px 25px;
+  text-align:center;
   position:relative;
-  box-shadow:
-    0 0 40px rgba(0,255,247,.15),
-    inset 0 0 30px rgba(255,255,255,.03);
-  overflow:hidden;
+  box-shadow:0 0 60px rgba(0,255,213,.15);
+  z-index:2;
 }
 
+/* neon border */
 .card::before{
   content:"";
   position:absolute;
   inset:-2px;
-  border-radius:25px;
-  background:linear-gradient(120deg,var(--neon),var(--pink),var(--neon));
+  border-radius:28px;
+  background:linear-gradient(120deg,var(--main),#00aaff,var(--main));
   filter:blur(18px);
   opacity:.35;
   z-index:-1;
 }
 
 .logo{
-  width:90px;
-  height:90px;
+  width:95px;
+  height:95px;
   margin:0 auto 15px;
   border-radius:50%;
-  background:linear-gradient(135deg,#5865F2,#00fff7);
+  background:linear-gradient(135deg,var(--discord),var(--main));
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:45px;
-  box-shadow:0 0 25px rgba(88,101,242,.6);
+  font-size:48px;
+  box-shadow:0 0 30px rgba(88,101,242,.6);
 }
 
 h1{
-  text-align:center;
-  font-size:1.9em;
+  font-size:2em;
   font-weight:900;
-  margin-bottom:5px;
 }
 
-.subtitle{
-  text-align:center;
-  opacity:.8;
-  margin-bottom:25px;
+.tag{
+  margin-top:4px;
+  opacity:.75;
+  font-size:.9em;
 }
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-bottom:25px;
+  gap:12px;
+  margin:25px 0;
 }
 
 .stat{
-  background:rgba(255,255,255,.04);
-  border-radius:15px;
-  padding:12px 8px;
-  text-align:center;
+  background:rgba(255,255,255,.05);
+  border-radius:16px;
+  padding:12px 6px;
 }
 
 .stat span{
   display:block;
-  font-size:1.4em;
+  font-size:1.5em;
   font-weight:900;
-  color:var(--neon);
+  color:var(--main);
 }
 
-.stat small{opacity:.7;font-size:.75em}
+.stat small{
+  font-size:.75em;
+  opacity:.7;
+}
 
 .buttons{
   display:flex;
@@ -112,51 +127,48 @@ h1{
 
 .btn{
   padding:15px;
-  border-radius:40px;
+  border-radius:45px;
   font-size:1.05em;
   font-weight:700;
   border:none;
   cursor:pointer;
-  color:#000;
-  background:var(--neon);
   transition:.3s;
 }
 
 .btn.discord{
-  background:linear-gradient(135deg,#5865F2,#7b86ff);
+  background:var(--discord);
   color:#fff;
 }
 
 .btn.youtube{
-  background:linear-gradient(135deg,#ff0033,#ff6a6a);
+  background:var(--youtube);
   color:#fff;
 }
 
-.btn.outline{
+.btn.alt{
   background:transparent;
-  color:var(--neon);
-  border:2px solid var(--neon);
+  color:var(--main);
+  border:2px solid var(--main);
 }
 
 .btn:hover{
-  transform:translateY(-3px) scale(1.03);
-  box-shadow:0 0 25px rgba(0,255,247,.5);
+  transform:translateY(-3px) scale(1.04);
+  box-shadow:0 0 25px rgba(0,255,213,.6);
 }
 
 .footer{
-  margin-top:25px;
-  text-align:center;
-  font-size:.8em;
-  opacity:.6;
+  margin-top:22px;
+  font-size:.75em;
+  opacity:.55;
 }
 
+/* toast */
 #toast{
   position:fixed;
   bottom:25px;
   left:50%;
   transform:translateX(-50%);
   background:#000;
-  color:#fff;
   padding:12px 22px;
   border-radius:30px;
   opacity:0;
@@ -165,85 +177,79 @@ h1{
 }
 
 @media(max-width:480px){
-  h1{font-size:1.6em}
+  h1{font-size:1.7em}
 }
 </style>
 </head>
 
 <body>
 
+<div class="bg">
+  <span style="left:10%;animation-duration:12s"></span>
+  <span style="left:30%;animation-duration:9s"></span>
+  <span style="left:50%;animation-duration:11s"></span>
+  <span style="left:70%;animation-duration:8s"></span>
+  <span style="left:90%;animation-duration:13s"></span>
+</div>
+
 <div class="card">
-  <div class="logo">
-    <i class="fab fa-discord"></i>
-  </div>
+  <div class="logo"><i class="fab fa-discord"></i></div>
 
   <h1>Family Otako</h1>
-  <div class="subtitle">Discord • Gaming • Anime</div>
+  <div class="tag">Gaming • SA-MP • Discord</div>
 
   <div class="stats">
-    <div class="stat">
-      <span id="visits">0</span>
-      <small>زياراتك</small>
-    </div>
-    <div class="stat">
-      <span id="clicks">0</span>
-      <small>نقرات</small>
-    </div>
-    <div class="stat">
-      <span id="members">—</span>
-      <small>أعضاء</small>
-    </div>
+    <div class="stat"><span id="v">0</span><small>زياراتك</small></div>
+    <div class="stat"><span id="c">0</span><small>نقرات</small></div>
+    <div class="stat"><span id="m">—</span><small>أعضاء</small></div>
   </div>
 
   <div class="buttons">
-    <a class="btn discord" target="_blank" rel="noopener"
-       href="https://discord.gg/zgc6Vj24"
-       onclick="clicksCount();toast('🚀 فتح Discord')">
+    <a class="btn discord" href="https://discord.gg/zgc6Vj24" target="_blank"
+       onclick="clicks();toast('🚀 فتح Discord')">
        انضم إلى Discord
     </a>
 
-    <a class="btn youtube" target="_blank" rel="noopener"
-       href="https://youtube.com/@mrotako-1k"
-       onclick="clicksCount();toast('▶️ فتح YouTube')">
+    <a class="btn youtube" href="https://youtube.com/@mrotako-1k" target="_blank"
+       onclick="clicks();toast('▶️ فتح YouTube')">
        قناة YouTube
     </a>
 
-    <button class="btn outline" onclick="copyLink()">📋 نسخ رابط Discord</button>
-    <button class="btn outline" onclick="share()">🔗 مشاركة الموقع</button>
+    <button class="btn alt" onclick="copy()">📋 نسخ رابط Discord</button>
+    <button class="btn alt" onclick="share()">🔗 مشاركة الموقع</button>
   </div>
 
   <div class="footer">© Family Otako</div>
 </div>
 
-<div id="toast">تم</div>
+<div id="toast"></div>
 
 <script>
-let visits=+localStorage.getItem("v")||0;
-let clicks=+localStorage.getItem("c")||0;
+let v=+localStorage.getItem("v")||0;
+let c=+localStorage.getItem("c")||0;
 
 function update(){
-  document.getElementById("visits").textContent=visits;
-  document.getElementById("clicks").textContent=clicks;
+  v++;
+  localStorage.setItem("v",v);
+  document.getElementById("v").textContent=v;
+  document.getElementById("c").textContent=c;
 }
-
-visits++;
-localStorage.setItem("v",visits);
 update();
 
-function clicksCount(){
-  clicks++;
-  localStorage.setItem("c",clicks);
-  update();
+function clicks(){
+  c++;
+  localStorage.setItem("c",c);
+  document.getElementById("c").textContent=c;
 }
 
 function toast(t){
-  const el=document.getElementById("toast");
-  el.textContent=t;
-  el.style.opacity=1;
-  setTimeout(()=>el.style.opacity=0,2200);
+  const e=document.getElementById("toast");
+  e.textContent=t;
+  e.style.opacity=1;
+  setTimeout(()=>e.style.opacity=0,2200);
 }
 
-function copyLink(){
+function copy(){
   navigator.clipboard.writeText("https://discord.gg/zgc6Vj24");
   toast("✅ تم نسخ الرابط");
 }
@@ -261,13 +267,11 @@ function share(){
   }
 }
 
-// Discord members (real)
+// Discord members
 fetch("https://discord.com/api/v9/invites/zgc6Vj24?with_counts=true")
 .then(r=>r.json())
-.then(d=>{
-  document.getElementById("members").textContent=d.approximate_member_count;
-})
-.catch(()=>document.getElementById("members").textContent="—");
+.then(d=>document.getElementById("m").textContent=d.approximate_member_count)
+.catch(()=>document.getElementById("m").textContent="—");
 </script>
 
 </body>
