@@ -4,268 +4,270 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Family Otako | Discord & YouTube</title>
+<title>Family Otako | Discord</title>
 
-<!-- SEO -->
-<meta name="description" content="Family Otako - انضم إلى سيرفر ديسكورد وتابعنا على يوتيوب، مجتمع أنمي وقيمنق عربي.">
-<meta name="keywords" content="Discord, Otako, Anime, Gaming, YouTube">
-<meta name="author" content="MrOtako1k">
-
-<!-- Fonts & Icons -->
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-font-family:'Cairo',sans-serif;
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(-45deg,#667eea,#764ba2,#ff7e5f,#4facfe);
-background-size:400% 400%;
-animation:bg 15s ease infinite;
-color:#fff;
-overflow-x:hidden
-}
-@keyframes bg{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
+:root{
+  --neon:#00fff7;
+  --pink:#ff2fdc;
+  --bg:#0b0f1a;
+  --card:#11162a;
 }
 
-.main{
-background:rgba(255,255,255,0.12);
-backdrop-filter:blur(20px);
-border-radius:30px;
-padding:50px 35px;
-max-width:600px;
-width:100%;
-text-align:center;
-box-shadow:0 20px 50px rgba(0,0,0,0.3);
-position:relative
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Tajawal',sans-serif;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top,#1b1f3b,#070a14 70%);
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.card{
+  width:100%;
+  max-width:420px;
+  background:linear-gradient(180deg,#0f1430,#090c1d);
+  border-radius:25px;
+  padding:35px 25px;
+  position:relative;
+  box-shadow:
+    0 0 40px rgba(0,255,247,.15),
+    inset 0 0 30px rgba(255,255,255,.03);
+  overflow:hidden;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:25px;
+  background:linear-gradient(120deg,var(--neon),var(--pink),var(--neon));
+  filter:blur(18px);
+  opacity:.35;
+  z-index:-1;
+}
+
+.logo{
+  width:90px;
+  height:90px;
+  margin:0 auto 15px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#5865F2,#00fff7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:45px;
+  box-shadow:0 0 25px rgba(88,101,242,.6);
 }
 
 h1{
-font-size:2.5em;
-font-weight:900;
-margin-bottom:25px;
-background:linear-gradient(90deg,#fff,#ddd,#fff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent
+  text-align:center;
+  font-size:1.9em;
+  font-weight:900;
+  margin-bottom:5px;
 }
 
-.icons{
-display:flex;
-justify-content:center;
-gap:30px;
-margin-bottom:30px
+.subtitle{
+  text-align:center;
+  opacity:.8;
+  margin-bottom:25px;
 }
-.icon{
-width:90px;
-height:90px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:45px;
-cursor:pointer;
-transition:.4s
-}
-.discord{background:#5865F2}
-.youtube{background:#FF0000}
-.icon:hover{transform:scale(1.2) rotate(360deg)}
 
 .stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-margin-bottom:30px
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:25px;
 }
+
 .stat{
-background:rgba(255,255,255,0.15);
-padding:15px;
-border-radius:20px
+  background:rgba(255,255,255,.04);
+  border-radius:15px;
+  padding:12px 8px;
+  text-align:center;
 }
+
 .stat span{
-font-size:1.6em;
-font-weight:900;
-display:block
+  display:block;
+  font-size:1.4em;
+  font-weight:900;
+  color:var(--neon);
 }
 
-.links{
-display:flex;
-flex-direction:column;
-gap:15px
+.stat small{opacity:.7;font-size:.75em}
+
+.buttons{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
 }
+
 .btn{
-padding:16px;
-border-radius:40px;
-font-size:1.1em;
-font-weight:700;
-border:none;
-cursor:pointer;
-color:#fff;
-transition:.3s;
-text-decoration:none
-}
-.btn:hover{transform:scale(1.05)}
-.btn-discord{background:#5865F2}
-.btn-youtube{background:#FF0000}
-
-.theme-toggle{
-position:fixed;
-top:20px;
-right:20px;
-width:55px;
-height:55px;
-border-radius:50%;
-border:none;
-background:rgba(255,255,255,0.2);
-color:#fff;
-font-size:22px;
-cursor:pointer
+  padding:15px;
+  border-radius:40px;
+  font-size:1.05em;
+  font-weight:700;
+  border:none;
+  cursor:pointer;
+  color:#000;
+  background:var(--neon);
+  transition:.3s;
 }
 
-body.dark{
-background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364)
+.btn.discord{
+  background:linear-gradient(135deg,#5865F2,#7b86ff);
+  color:#fff;
+}
+
+.btn.youtube{
+  background:linear-gradient(135deg,#ff0033,#ff6a6a);
+  color:#fff;
+}
+
+.btn.outline{
+  background:transparent;
+  color:var(--neon);
+  border:2px solid var(--neon);
+}
+
+.btn:hover{
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 0 25px rgba(0,255,247,.5);
+}
+
+.footer{
+  margin-top:25px;
+  text-align:center;
+  font-size:.8em;
+  opacity:.6;
 }
 
 #toast{
-position:fixed;
-bottom:30px;
-left:50%;
-transform:translateX(-50%);
-background:rgba(0,0,0,0.75);
-padding:14px 25px;
-border-radius:30px;
-opacity:0;
-transition:.4s;
-z-index:9999
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#000;
+  color:#fff;
+  padding:12px 22px;
+  border-radius:30px;
+  opacity:0;
+  transition:.4s;
+  z-index:999;
 }
 
-@media(max-width:600px){
-h1{font-size:2em}
-.stats{grid-template-columns:repeat(2,1fr)}
-}
-
-@media (prefers-reduced-motion: reduce){
-*{animation:none!important;transition:none!important}
+@media(max-width:480px){
+  h1{font-size:1.6em}
 }
 </style>
 </head>
 
 <body>
 
-<button class="theme-toggle" onclick="toggleTheme()">
-<i id="themeIcon" class="fas fa-moon"></i>
-</button>
+<div class="card">
+  <div class="logo">
+    <i class="fab fa-discord"></i>
+  </div>
 
-<div class="main">
-<div class="icons">
-<div class="icon discord"><i class="fab fa-discord"></i></div>
-<div class="icon youtube"><i class="fab fa-youtube"></i></div>
-</div>
+  <h1>Family Otako</h1>
+  <div class="subtitle">Discord • Gaming • Anime</div>
 
-<h1>🎮 Family Otako 🎮</h1>
+  <div class="stats">
+    <div class="stat">
+      <span id="visits">0</span>
+      <small>زياراتك</small>
+    </div>
+    <div class="stat">
+      <span id="clicks">0</span>
+      <small>نقرات</small>
+    </div>
+    <div class="stat">
+      <span id="members">—</span>
+      <small>أعضاء</small>
+    </div>
+  </div>
 
-<div class="stats">
-<div class="stat"><span id="visits">0</span>زياراتك</div>
-<div class="stat"><span id="clicks">0</span>نقرات</div>
-<div class="stat"><span id="online">32</span>متصل</div>
-</div>
+  <div class="buttons">
+    <a class="btn discord" target="_blank" rel="noopener"
+       href="https://discord.gg/zgc6Vj24"
+       onclick="clicksCount();toast('🚀 فتح Discord')">
+       انضم إلى Discord
+    </a>
 
-<div class="links">
-<a class="btn btn-discord" target="_blank" rel="noopener"
-onclick="track(); sound(); toast('🚀 فتح Discord')"
-href="https://discord.gg/zgc6Vj24">
-انضم إلى Discord
-</a>
+    <a class="btn youtube" target="_blank" rel="noopener"
+       href="https://youtube.com/@mrotako-1k"
+       onclick="clicksCount();toast('▶️ فتح YouTube')">
+       قناة YouTube
+    </a>
 
-<a class="btn btn-youtube" target="_blank" rel="noopener"
-onclick="track(); sound(); toast('▶️ فتح YouTube')"
-href="https://youtube.com/@mrotako-1k">
-تابعنا على YouTube
-</a>
+    <button class="btn outline" onclick="copyLink()">📋 نسخ رابط Discord</button>
+    <button class="btn outline" onclick="share()">🔗 مشاركة الموقع</button>
+  </div>
 
-<button class="btn btn-discord" onclick="copyDiscord()">📋 نسخ رابط Discord</button>
-<button class="btn btn-youtube" onclick="shareSite()">🔗 مشاركة الموقع</button>
-</div>
+  <div class="footer">© Family Otako</div>
 </div>
 
 <div id="toast">تم</div>
 
-<audio id="clickSound">
-<source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3">
-</audio>
-
 <script>
-let visits=+localStorage.getItem('visits')||0;
-let clicks=+localStorage.getItem('clicks')||0;
-let dark=localStorage.getItem('dark')==='1';
-
-const v=document.getElementById('visits');
-const c=document.getElementById('clicks');
-const o=document.getElementById('online');
+let visits=+localStorage.getItem("v")||0;
+let clicks=+localStorage.getItem("c")||0;
 
 function update(){
-v.textContent=visits;
-c.textContent=clicks;
-o.textContent=Math.floor(Math.random()*40)+20;
+  document.getElementById("visits").textContent=visits;
+  document.getElementById("clicks").textContent=clicks;
 }
 
-document.addEventListener('DOMContentLoaded',()=>{
 visits++;
-localStorage.setItem('visits',visits);
-if(dark){
-document.body.classList.add('dark');
-themeIcon.className='fas fa-sun';
-}
+localStorage.setItem("v",visits);
 update();
-});
 
-function track(){
-clicks++;
-localStorage.setItem('clicks',clicks);
-update();
-}
-
-function toggleTheme(){
-dark=!dark;
-document.body.classList.toggle('dark',dark);
-localStorage.setItem('dark',dark?'1':'0');
-themeIcon.className=dark?'fas fa-sun':'fas fa-moon';
+function clicksCount(){
+  clicks++;
+  localStorage.setItem("c",clicks);
+  update();
 }
 
 function toast(t){
-const el=document.getElementById('toast');
-el.textContent=t;
-el.style.opacity=1;
-setTimeout(()=>el.style.opacity=0,2500);
+  const el=document.getElementById("toast");
+  el.textContent=t;
+  el.style.opacity=1;
+  setTimeout(()=>el.style.opacity=0,2200);
 }
 
-function copyDiscord(){
-navigator.clipboard.writeText("https://discord.gg/zgc6Vj24");
-toast("✅ تم نسخ الرابط");
+function copyLink(){
+  navigator.clipboard.writeText("https://discord.gg/zgc6Vj24");
+  toast("✅ تم نسخ الرابط");
 }
 
-function shareSite(){
-if(navigator.share){
-navigator.share({
-title:'Family Otako',
-text:'انضم إلى Family Otako 🔥',
-url:location.href
-});
-}else{
-navigator.clipboard.writeText(location.href);
-toast("📋 تم نسخ رابط الموقع");
-}
+function share(){
+  if(navigator.share){
+    navigator.share({
+      title:"Family Otako",
+      text:"انضم إلى Family Otako 🔥",
+      url:location.href
+    });
+  }else{
+    navigator.clipboard.writeText(location.href);
+    toast("📋 تم نسخ رابط الموقع");
+  }
 }
 
-function sound(){
-document.getElementById('clickSound').play();
-}
+// Discord members (real)
+fetch("https://discord.com/api/v9/invites/zgc6Vj24?with_counts=true")
+.then(r=>r.json())
+.then(d=>{
+  document.getElementById("members").textContent=d.approximate_member_count;
+})
+.catch(()=>document.getElementById("members").textContent="—");
 </script>
 
 </body>
