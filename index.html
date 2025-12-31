@@ -1,573 +1,272 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link Discord Family Otako</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
-            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            --warning-gradient: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
-            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --text-primary: #ffffff;
-            --text-secondary: #e0e6ed;
-            --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
-            --shadow-dark: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Otako | Discord & YouTube</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!-- SEO -->
+<meta name="description" content="Family Otako - انضم إلى سيرفر ديسكورد وتابعنا على يوتيوب، مجتمع أنمي وقيمنق عربي.">
+<meta name="keywords" content="Discord, Otako, Anime, Gaming, YouTube">
+<meta name="author" content="MrOtako1k">
 
-        body {
-            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(-45deg, #667eea, #764ba2, #ff7e5f, #feb47b, #4facfe, #00f2fe);
-            background-size: 400% 400%;
-            animation: gradientShift 20s ease infinite;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:'Cairo',sans-serif;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(-45deg,#667eea,#764ba2,#ff7e5f,#4facfe);
+background-size:400% 400%;
+animation:bg 15s ease infinite;
+color:#fff;
+overflow-x:hidden
+}
+@keyframes bg{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
 
-        /* الخلفية التفاعلية الحديثة */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
+.main{
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(20px);
+border-radius:30px;
+padding:50px 35px;
+max-width:600px;
+width:100%;
+text-align:center;
+box-shadow:0 20px 50px rgba(0,0,0,0.3);
+position:relative
+}
 
-        .floating-element {
-            position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-            animation: float 15s ease-in-out infinite;
-        }
+h1{
+font-size:2.5em;
+font-weight:900;
+margin-bottom:25px;
+background:linear-gradient(90deg,#fff,#ddd,#fff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent
+}
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.8; }
-            25% { transform: translateY(-100px) rotate(90deg); opacity: 1; }
-            50% { transform: translateY(-200px) rotate(180deg); opacity: 0.6; }
-            75% { transform: translateY(-100px) rotate(270deg); opacity: 1; }
-        }
+.icons{
+display:flex;
+justify-content:center;
+gap:30px;
+margin-bottom:30px
+}
+.icon{
+width:90px;
+height:90px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:45px;
+cursor:pointer;
+transition:.4s
+}
+.discord{background:#5865F2}
+.youtube{background:#FF0000}
+.icon:hover{transform:scale(1.2) rotate(360deg)}
 
-        /* الحاوية الرئيسية المحدثة */
-        .main-container {
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            box-shadow: var(--shadow-light);
-            padding: 60px 40px;
-            text-align: center;
-            max-width: 600px;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            z-index: 10;
-            transform: translateY(0);
-            animation: containerFloat 8s ease-in-out infinite;
-        }
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-bottom:30px
+}
+.stat{
+background:rgba(255,255,255,0.15);
+padding:15px;
+border-radius:20px
+}
+.stat span{
+font-size:1.6em;
+font-weight:900;
+display:block
+}
 
-        @keyframes containerFloat {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-15px) scale(1.02); }
-        }
+.links{
+display:flex;
+flex-direction:column;
+gap:15px
+}
+.btn{
+padding:16px;
+border-radius:40px;
+font-size:1.1em;
+font-weight:700;
+border:none;
+cursor:pointer;
+color:#fff;
+transition:.3s;
+text-decoration:none
+}
+.btn:hover{transform:scale(1.05)}
+.btn-discord{background:#5865F2}
+.btn-youtube{background:#FF0000}
 
-        /* شريط علوي متحرك */
-        .top-accent {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #ff7e5f, #feb47b, #4facfe, #00f2fe);
-            background-size: 600% 100%;
-            animation: accentMove 4s ease infinite;
-        }
+.theme-toggle{
+position:fixed;
+top:20px;
+right:20px;
+width:55px;
+height:55px;
+border-radius:50%;
+border:none;
+background:rgba(255,255,255,0.2);
+color:#fff;
+font-size:22px;
+cursor:pointer
+}
 
-        @keyframes accentMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 600% 50%; }
-        }
+body.dark{
+background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364)
+}
 
-        /* العنوان المحدث */
-        .title {
-            color: var(--text-primary);
-            margin-bottom: 40px;
-            font-size: 2.8em;
-            font-weight: 900;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(45deg, #fff, #e0e6ed, #fff, #f0f8ff);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: titleShine 5s ease-in-out infinite;
-            position: relative;
-        }
+#toast{
+position:fixed;
+bottom:30px;
+left:50%;
+transform:translateX(-50%);
+background:rgba(0,0,0,0.75);
+padding:14px 25px;
+border-radius:30px;
+opacity:0;
+transition:.4s;
+z-index:9999
+}
 
-        @keyframes titleShine {
-            0%, 100% { background-position: 0% 50%; transform: scale(1); }
-            50% { background-position: 100% 50%; transform: scale(1.05); }
-        }
+@media(max-width:600px){
+h1{font-size:2em}
+.stats{grid-template-columns:repeat(2,1fr)}
+}
 
-        /* أيقونة Discord محدثة */
-        .icon-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .social-icon {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            color: white;
-            position: relative;
-            animation: iconPulse 4s ease-in-out infinite;
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 2;
-        }
-
-        .discord-icon {
-            background: var(--primary-gradient);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
-        }
-
-        .youtube-icon {
-            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
-            box-shadow: 0 20px 40px rgba(255, 68, 68, 0.4);
-        }
-
-        @keyframes iconPulse {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.05) rotate(2deg); }
-            50% { transform: scale(1.1) rotate(0deg); }
-            75% { transform: scale(1.05) rotate(-2deg); }
-        }
-
-        .social-icon:hover {
-            transform: scale(1.2) rotate(360deg);
-        }
-
-        .discord-icon:hover {
-            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.8);
-        }
-
-        .youtube-icon:hover {
-            box-shadow: 0 25px 50px rgba(255, 68, 68, 0.8);
-        }
-
-        /* حلقات دائرية حول الأيقونة */
-        .icon-ring {
-            position: absolute;
-            border: 3px solid transparent;
-            border-radius: 50%;
-            animation: ringRotate 8s linear infinite;
-        }
-
-        .ring-1 {
-            width: 140px;
-            height: 140px;
-            border-top: 3px solid rgba(102, 126, 234, 0.6);
-            border-right: 3px solid rgba(118, 75, 162, 0.6);
-        }
-
-        .ring-2 {
-            width: 160px;
-            height: 160px;
-            border-bottom: 3px solid rgba(255, 126, 95, 0.6);
-            border-left: 3px solid rgba(254, 180, 123, 0.6);
-            animation-direction: reverse;
-            animation-duration: 12s;
-        }
-
-        @keyframes ringRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* روابط محدثة */
-        .link-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .social-link {
-            display: inline-block;
-            color: white;
-            text-decoration: none;
-            padding: 18px 40px;
-            border-radius: 60px;
-            font-size: 1.2em;
-            font-weight: 700;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            animation: linkGlow 6s ease-in-out infinite;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .discord-link {
-            background: var(--secondary-gradient);
-            background-size: 200% 200%;
-            box-shadow: 0 15px 35px rgba(255, 126, 95, 0.4);
-        }
-
-        .youtube-link {
-            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
-            background-size: 200% 200%;
-            box-shadow: 0 15px 35px rgba(255, 68, 68, 0.4);
-        }
-
-        @keyframes linkGlow {
-            0%, 100% { 
-                background-position: 0% 50%;
-            }
-            50% { 
-                background-position: 100% 50%;
-            }
-        }
-
-        .social-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.7s ease;
-        }
-
-        .social-link:hover::before {
-            left: 100%;
-        }
-
-        .social-link:hover {
-            transform: translateY(-5px) scale(1.05);
-        }
-
-        .discord-link:hover {
-            box-shadow: 0 25px 50px rgba(255, 126, 95, 0.7), 0 0 80px rgba(255, 126, 95, 0.4);
-        }
-
-        .youtube-link:hover {
-            box-shadow: 0 25px 50px rgba(255, 68, 68, 0.7), 0 0 80px rgba(255, 68, 68, 0.4);
-        }
-
-        /* إحصائيات الموقع */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .stat-item {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 20px 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-            animation: statFloat 6s ease-in-out infinite;
-        }
-
-        .stat-item:nth-child(2) { animation-delay: -2s; }
-        .stat-item:nth-child(3) { animation-delay: -4s; }
-
-        @keyframes statFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px) scale(1.05);
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .stat-number {
-            font-size: 1.8em;
-            font-weight: 900;
-            color: var(--text-primary);
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 0.9em;
-            color: var(--text-secondary);
-            margin-top: 5px;
-        }
-
-        /* تبديل الثيم */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--glass-border);
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 1000;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1) rotate(180deg);
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* الثيم الداكن */
-        body.dark-theme {
-            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #e94560);
-        }
-
-        .dark-theme .main-container {
-            background: rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* الشاشات الصغيرة */
-        @media (max-width: 768px) {
-            .main-container {
-                padding: 40px 25px;
-                margin: 15px;
-                border-radius: 25px;
-            }
-            
-            .title {
-                font-size: 2.2em;
-                margin-bottom: 30px;
-            }
-            
-            .icon-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
-            }
-
-            .social-icon {
-                width: 80px;
-                height: 80px;
-                font-size: 40px;
-            }
-
-            .social-link {
-                padding: 15px 30px;
-                font-size: 1.1em;
-            }
-
-            .stats-container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-        }
-
-        /* تأثيرات التحميل */
-        .loading {
-            opacity: 0.6;
-            pointer-events: none;
-            position: relative;
-        }
-
-        .loading::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            margin: -10px 0 0 -10px;
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #4facfe;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+@media (prefers-reduced-motion: reduce){
+*{animation:none!important;transition:none!important}
+}
+</style>
 </head>
+
 <body>
-    <!-- تبديل الثيم -->
-    <button class="theme-toggle" onclick="toggleTheme()" title="تبديل الثيم">
-        <i class="fas fa-moon" id="themeIcon"></i>
-    </button>
 
-    <!-- الخلفية المتحركة -->
-    <div class="bg-animation" id="bgAnimation"></div>
+<button class="theme-toggle" onclick="toggleTheme()">
+<i id="themeIcon" class="fas fa-moon"></i>
+</button>
 
-    <div class="main-container">
-        <div class="top-accent"></div>
-        
-        <div class="icon-container">
-            <div class="icon-ring ring-1"></div>
-            <div class="icon-ring ring-2"></div>
-            <div class="social-icon discord-icon">
-                <i class="fab fa-discord"></i>
-            </div>
-            <div class="social-icon youtube-icon">
-                <i class="fab fa-youtube"></i>
-            </div>
-        </div>
-        
-        <h1 class="title">🎮 Family Otako - Discord & YouTube 🎮</h1>
-        
-        <div class="stats-container">
-            <div class="stat-item">
-                <span class="stat-number" id="visitCount">0</span>
-                <div class="stat-label">زائر</div>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number" id="clickCount">0</span>
-                <div class="stat-label">نقرة</div>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number" id="onlineUsers">24</span>
-                <div class="stat-label">متصل</div>
-            </div>
-        </div>
-        
-        <div class="link-container">
-            <a href="https://discord.gg/zgc6Vj24" class="social-link discord-link" target="_blank" onclick="trackClick()">
-                <i class="fas fa-rocket"></i> انضم الآن إلى Discord <i class="fas fa-sparkles"></i>
-            </a>
-            
-            <a href="https://youtube.com/@mrotako-1k?si=_5vRNVSfOD3SGgLl" class="social-link youtube-link" target="_blank" onclick="trackClick()">
-                <i class="fas fa-play"></i> تابعنا على YouTube <i class="fas fa-heart"></i>
-            </a>
-        </div>
-    </div>
+<div class="main">
+<div class="icons">
+<div class="icon discord"><i class="fab fa-discord"></i></div>
+<div class="icon youtube"><i class="fab fa-youtube"></i></div>
+</div>
 
-    <script>
-        // متغيرات النظام
-        let visitCount = parseInt(localStorage.getItem('visitCount') || '0');
-        let clickCount = parseInt(localStorage.getItem('clickCount') || '0');
-        let isDarkTheme = localStorage.getItem('darkTheme') === 'true';
+<h1>🎮 Family Otako 🎮</h1>
 
-        // تهيئة الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            createFloatingElements();
-            updateStats();
-            
-            // تطبيق الثيم المحفوظ
-            if (isDarkTheme) {
-                document.body.classList.add('dark-theme');
-                document.getElementById('themeIcon').className = 'fas fa-sun';
-            }
-            
-            // تسجيل زيارة جديدة
-            visitCount++;
-            localStorage.setItem('visitCount', visitCount.toString());
-            updateStats();
-        });
+<div class="stats">
+<div class="stat"><span id="visits">0</span>زياراتك</div>
+<div class="stat"><span id="clicks">0</span>نقرات</div>
+<div class="stat"><span id="online">32</span>متصل</div>
+</div>
 
-        // إنشاء العناصر المتحركة في الخلفية
-        function createFloatingElements() {
-            const bgAnimation = document.getElementById('bgAnimation');
-            const elementCount = 15;
-            
-            for (let i = 0; i < elementCount; i++) {
-                const element = document.createElement('div');
-                element.className = 'floating-element';
-                element.style.left = Math.random() * 100 + '%';
-                element.style.top = Math.random() * 100 + '%';
-                element.style.width = (Math.random() * 100 + 50) + 'px';
-                element.style.height = element.style.width;
-                element.style.animationDelay = Math.random() * 15 + 's';
-                element.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                bgAnimation.appendChild(element);
-            }
-        }
+<div class="links">
+<a class="btn btn-discord" target="_blank" rel="noopener"
+onclick="track(); sound(); toast('🚀 فتح Discord')"
+href="https://discord.gg/zgc6Vj24">
+انضم إلى Discord
+</a>
 
-        // تبديل الثيم
-        function toggleTheme() {
-            isDarkTheme = !isDarkTheme;
-            document.body.classList.toggle('dark-theme', isDarkTheme);
-            localStorage.setItem('darkTheme', isDarkTheme.toString());
-            
-            const themeIcon = document.getElementById('themeIcon');
-            themeIcon.className = isDarkTheme ? 'fas fa-sun' : 'fas fa-moon';
-        }
+<a class="btn btn-youtube" target="_blank" rel="noopener"
+onclick="track(); sound(); toast('▶️ فتح YouTube')"
+href="https://youtube.com/@mrotako-1k">
+تابعنا على YouTube
+</a>
 
-        // تحديث الإحصائيات
-        function updateStats() {
-            document.getElementById('visitCount').textContent = visitCount;
-            document.getElementById('clickCount').textContent = clickCount;
-            
-            // محاكاة المستخدمين المتصلين
-            const onlineUsers = Math.floor(Math.random() * 50) + 20;
-            document.getElementById('onlineUsers').textContent = onlineUsers;
-        }
+<button class="btn btn-discord" onclick="copyDiscord()">📋 نسخ رابط Discord</button>
+<button class="btn btn-youtube" onclick="shareSite()">🔗 مشاركة الموقع</button>
+</div>
+</div>
 
-        // تتبع النقرات
-        function trackClick() {
-            clickCount++;
-            localStorage.setItem('clickCount', clickCount.toString());
-            updateStats();
-        }
+<div id="toast">تم</div>
 
-        // تأثيرات إضافية
-        document.addEventListener('mousemove', function(e) {
-            const elements = document.querySelectorAll('.floating-element');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            elements.forEach((element, index) => {
-                const speed = (index % 3 + 1) * 0.3;
-                const x = (mouseX - 0.5) * speed * 20;
-                const y = (mouseY - 0.5) * speed * 20;
-                element.style.transform = `translate(${x}px, ${y}px)`;
-            });
-        });
+<audio id="clickSound">
+<source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3">
+</audio>
 
-        // تحديث الإحصائيات دورياً
-        setInterval(updateStats, 30000); // كل 30 ثانية
-    </script>
+<script>
+let visits=+localStorage.getItem('visits')||0;
+let clicks=+localStorage.getItem('clicks')||0;
+let dark=localStorage.getItem('dark')==='1';
+
+const v=document.getElementById('visits');
+const c=document.getElementById('clicks');
+const o=document.getElementById('online');
+
+function update(){
+v.textContent=visits;
+c.textContent=clicks;
+o.textContent=Math.floor(Math.random()*40)+20;
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+visits++;
+localStorage.setItem('visits',visits);
+if(dark){
+document.body.classList.add('dark');
+themeIcon.className='fas fa-sun';
+}
+update();
+});
+
+function track(){
+clicks++;
+localStorage.setItem('clicks',clicks);
+update();
+}
+
+function toggleTheme(){
+dark=!dark;
+document.body.classList.toggle('dark',dark);
+localStorage.setItem('dark',dark?'1':'0');
+themeIcon.className=dark?'fas fa-sun':'fas fa-moon';
+}
+
+function toast(t){
+const el=document.getElementById('toast');
+el.textContent=t;
+el.style.opacity=1;
+setTimeout(()=>el.style.opacity=0,2500);
+}
+
+function copyDiscord(){
+navigator.clipboard.writeText("https://discord.gg/zgc6Vj24");
+toast("✅ تم نسخ الرابط");
+}
+
+function shareSite(){
+if(navigator.share){
+navigator.share({
+title:'Family Otako',
+text:'انضم إلى Family Otako 🔥',
+url:location.href
+});
+}else{
+navigator.clipboard.writeText(location.href);
+toast("📋 تم نسخ رابط الموقع");
+}
+}
+
+function sound(){
+document.getElementById('clickSound').play();
+}
+</script>
+
 </body>
 </html>
