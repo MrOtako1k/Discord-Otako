@@ -16,107 +16,54 @@
   --bg:#050812;
   --card:#0b1022;
 }
-
 *{margin:0;padding:0;box-sizing:border-box}
-
 body{
   font-family:'Cairo',sans-serif;
   min-height:100vh;
-  background:
-    radial-gradient(circle at top,#0e1433,#050812 70%);
+  background:radial-gradient(circle at top,#0e1433,#050812 70%);
   color:#fff;
   display:flex;
   justify-content:center;
   align-items:center;
   padding:20px;
-  overflow:hidden;
 }
-
-/* background particles */
-.bg span{
-  position:absolute;
-  width:4px;
-  height:4px;
-  background:var(--main);
-  opacity:.3;
-  animation:move 10s linear infinite;
-}
-@keyframes move{
-  from{transform:translateY(100vh)}
-  to{transform:translateY(-10vh)}
-}
-
 .card{
   width:100%;
-  max-width:430px;
+  max-width:440px;
   background:linear-gradient(180deg,#0b1022,#070b18);
   border-radius:28px;
   padding:35px 25px;
   text-align:center;
   position:relative;
   box-shadow:0 0 60px rgba(0,255,213,.15);
-  z-index:2;
 }
-
-/* neon border */
-.card::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  border-radius:28px;
-  background:linear-gradient(120deg,var(--main),#00aaff,var(--main));
-  filter:blur(18px);
-  opacity:.35;
-  z-index:-1;
-}
-
 .logo{
-  width:95px;
-  height:95px;
+  width:95px;height:95px;
   margin:0 auto 15px;
   border-radius:50%;
   background:linear-gradient(135deg,var(--discord),var(--main));
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:flex;align-items:center;justify-content:center;
   font-size:48px;
-  box-shadow:0 0 30px rgba(88,101,242,.6);
 }
-
-h1{
-  font-size:2em;
-  font-weight:900;
-}
-
-.tag{
-  margin-top:4px;
-  opacity:.75;
-  font-size:.9em;
-}
+h1{font-size:2em;font-weight:900}
+.tag{opacity:.7;margin-bottom:20px}
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:12px;
-  margin:25px 0;
+  margin:20px 0;
 }
-
 .stat{
-  background:rgba(255,255,255,.05);
+  background:rgba(255,255,255,.06);
   border-radius:16px;
-  padding:12px 6px;
+  padding:12px;
 }
-
 .stat span{
   display:block;
-  font-size:1.5em;
+  font-size:1.4em;
   font-weight:900;
   color:var(--main);
-}
-
-.stat small{
-  font-size:.75em;
-  opacity:.7;
 }
 
 .buttons{
@@ -124,43 +71,28 @@ h1{
   flex-direction:column;
   gap:14px;
 }
-
 .btn{
   padding:15px;
-  border-radius:45px;
+  border-radius:40px;
   font-size:1.05em;
   font-weight:700;
   border:none;
   cursor:pointer;
   transition:.3s;
 }
-
-.btn.discord{
-  background:var(--discord);
-  color:#fff;
-}
-
-.btn.youtube{
-  background:var(--youtube);
-  color:#fff;
-}
-
+.btn.discord{background:var(--discord);color:#fff}
+.btn.youtube{background:var(--youtube);color:#fff}
 .btn.alt{
   background:transparent;
   color:var(--main);
   border:2px solid var(--main);
 }
-
 .btn:hover{
-  transform:translateY(-3px) scale(1.04);
-  box-shadow:0 0 25px rgba(0,255,213,.6);
+  transform:scale(1.05);
+  box-shadow:0 0 20px rgba(0,255,213,.6);
 }
 
-.footer{
-  margin-top:22px;
-  font-size:.75em;
-  opacity:.55;
-}
+.footer{margin-top:20px;font-size:.75em;opacity:.6}
 
 /* toast */
 #toast{
@@ -176,47 +108,65 @@ h1{
   z-index:999;
 }
 
-@media(max-width:480px){
-  h1{font-size:1.7em}
+/* admin */
+#adminBtn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:55px;height:55px;
+  border-radius:50%;
+  background:#000;
+  color:var(--main);
+  border:none;
+  font-size:22px;
+  cursor:pointer;
+}
+#adminLogin,#adminPanel{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  display:none;
+  z-index:1000;
+}
+.adminBox{
+  background:#0b1022;
+  padding:25px;
+  border-radius:20px;
+  max-width:350px;
+  margin:15% auto;
+  text-align:center;
+}
+.adminBox input{
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+  border-radius:10px;
+  border:none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg">
-  <span style="left:10%;animation-duration:12s"></span>
-  <span style="left:30%;animation-duration:9s"></span>
-  <span style="left:50%;animation-duration:11s"></span>
-  <span style="left:70%;animation-duration:8s"></span>
-  <span style="left:90%;animation-duration:13s"></span>
-</div>
-
 <div class="card">
   <div class="logo"><i class="fab fa-discord"></i></div>
-
   <h1>Family Otako</h1>
   <div class="tag">Gaming • SA-MP • Discord</div>
 
   <div class="stats">
-    <div class="stat"><span id="v">0</span><small>زياراتك</small></div>
-    <div class="stat"><span id="c">0</span><small>نقرات</small></div>
-    <div class="stat"><span id="m">—</span><small>أعضاء</small></div>
+    <div class="stat"><span id="v">0</span>زيارات</div>
+    <div class="stat"><span id="c">0</span>نقرات</div>
+    <div class="stat"><span id="m">—</span>أعضاء</div>
   </div>
 
-  <div class="buttons">
+  <div class="buttons" id="buttons">
     <a class="btn discord" href="https://discord.gg/zgc6Vj24" target="_blank"
-       onclick="clicks();toast('🚀 فتح Discord')">
-       انضم إلى Discord
-    </a>
+       onclick="clicks();toast('🚀 فتح Discord')">انضم إلى Discord</a>
 
     <a class="btn youtube" href="https://youtube.com/@mrotako-1k" target="_blank"
-       onclick="clicks();toast('▶️ فتح YouTube')">
-       قناة YouTube
-    </a>
+       onclick="clicks();toast('▶️ فتح YouTube')">قناة YouTube</a>
 
     <button class="btn alt" onclick="copy()">📋 نسخ رابط Discord</button>
-    <button class="btn alt" onclick="share()">🔗 مشاركة الموقع</button>
   </div>
 
   <div class="footer">© Family Otako</div>
@@ -224,54 +174,87 @@ h1{
 
 <div id="toast"></div>
 
+<button id="adminBtn" onclick="openAdmin()">⚙️</button>
+
+<!-- Admin Login -->
+<div id="adminLogin">
+  <div class="adminBox">
+    <h3>🔐 Admin Login</h3><br>
+    <input id="au" placeholder="Username">
+    <input id="ap" type="password" placeholder="Password">
+    <button class="btn discord" onclick="login()">Login</button>
+  </div>
+</div>
+
+<!-- Admin Panel -->
+<div id="adminPanel">
+  <div class="adminBox">
+    <h3>🛠 Admin Panel</h3><br>
+    <button class="btn alt" onclick="toggleButtons()">👁 إخفاء/إظهار الأزرار</button><br><br>
+    <button class="btn alt" onclick="logout()">🚪 تسجيل خروج</button>
+  </div>
+</div>
+
 <script>
+/* stats */
 let v=+localStorage.getItem("v")||0;
 let c=+localStorage.getItem("c")||0;
-
-function update(){
-  v++;
-  localStorage.setItem("v",v);
-  document.getElementById("v").textContent=v;
-  document.getElementById("c").textContent=c;
-}
-update();
+v++; localStorage.setItem("v",v);
+document.getElementById("v").textContent=v;
+document.getElementById("c").textContent=c;
 
 function clicks(){
-  c++;
-  localStorage.setItem("c",c);
+  c++; localStorage.setItem("c",c);
   document.getElementById("c").textContent=c;
 }
 
+/* toast */
 function toast(t){
   const e=document.getElementById("toast");
   e.textContent=t;
   e.style.opacity=1;
-  setTimeout(()=>e.style.opacity=0,2200);
+  setTimeout(()=>e.style.opacity=0,2000);
 }
 
+/* copy */
 function copy(){
   navigator.clipboard.writeText("https://discord.gg/zgc6Vj24");
-  toast("✅ تم نسخ الرابط");
+  toast("✅ تم النسخ");
 }
 
-function share(){
-  if(navigator.share){
-    navigator.share({
-      title:"Family Otako",
-      text:"انضم إلى Family Otako 🔥",
-      url:location.href
-    });
-  }else{
-    navigator.clipboard.writeText(location.href);
-    toast("📋 تم نسخ رابط الموقع");
-  }
-}
-
-// Discord members
+/* discord members */
 fetch("https://discord.com/api/v9/invites/zgc6Vj24?with_counts=true")
 .then(r=>r.json())
 .then(d=>document.getElementById("m").textContent=d.approximate_member_count)
 .catch(()=>document.getElementById("m").textContent="—");
+
+/* admin */
+const USER="admin";
+const PASS="otako123";
+
+function openAdmin(){
+  document.getElementById("adminLogin").style.display="block";
+}
+function login(){
+  if(au.value===USER && ap.value===PASS){
+    localStorage.setItem("admin","1");
+    adminLogin.style.display="none";
+    adminPanel.style.display="block";
+    toast("✅ Admin");
+  }else toast("❌ خطأ");
+}
+if(localStorage.getItem("admin")==="1"){
+  adminPanel.style.display="block";
+}
+function logout(){
+  localStorage.removeItem("admin");
+  adminPanel.style.display="none";
+}
+let hidden=false;
+function toggleButtons(){
+  document.getElementById("buttons").style.display=hidden?"flex":"none";
+  hidden=!hidden;
+}
 </script>
 
 </body>
