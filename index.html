@@ -8,13 +8,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
 <style>
 :root{
   --main:#00ffd5;
   --discord:#5865F2;
   --youtube:#ff0033;
-  --bg:#050812;
-  --card:#0b1022;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{
@@ -28,13 +30,11 @@ body{
   padding:20px;
 }
 .card{
-  width:100%;
-  max-width:440px;
-  background:linear-gradient(180deg,#0b1022,#070b18);
+  max-width:440px;width:100%;
+  background:#0b1022;
   border-radius:28px;
   padding:35px 25px;
   text-align:center;
-  position:relative;
   box-shadow:0 0 60px rgba(0,255,213,.15);
 }
 .logo{
@@ -66,11 +66,7 @@ h1{font-size:2em;font-weight:900}
   color:var(--main);
 }
 
-.buttons{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
+.buttons{display:flex;flex-direction:column;gap:14px}
 .btn{
   padding:15px;
   border-radius:40px;
@@ -78,7 +74,6 @@ h1{font-size:2em;font-weight:900}
   font-weight:700;
   border:none;
   cursor:pointer;
-  transition:.3s;
 }
 .btn.discord{background:var(--discord);color:#fff}
 .btn.youtube{background:var(--youtube);color:#fff}
@@ -87,14 +82,9 @@ h1{font-size:2em;font-weight:900}
   color:var(--main);
   border:2px solid var(--main);
 }
-.btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px rgba(0,255,213,.6);
-}
 
 .footer{margin-top:20px;font-size:.75em;opacity:.6}
 
-/* toast */
 #toast{
   position:fixed;
   bottom:25px;
@@ -105,10 +95,8 @@ h1{font-size:2em;font-weight:900}
   border-radius:30px;
   opacity:0;
   transition:.4s;
-  z-index:999;
 }
 
-/* admin */
 #adminBtn{
   position:fixed;
   bottom:20px;
@@ -126,7 +114,6 @@ h1{font-size:2em;font-weight:900}
   inset:0;
   background:rgba(0,0,0,.85);
   display:none;
-  z-index:1000;
 }
 .adminBox{
   background:#0b1022;
@@ -150,8 +137,8 @@ h1{font-size:2em;font-weight:900}
 
 <div class="card">
   <div class="logo"><i class="fab fa-discord"></i></div>
-  <h1>Family Otako</h1>
-  <div class="tag">Gaming • SA-MP • Discord</div>
+  <h1 id="title">Family Otako</h1>
+  <div class="tag" id="welcome">Gaming • SA-MP • Discord</div>
 
   <div class="stats">
     <div class="stat"><span id="v">0</span>زيارات</div>
@@ -160,7 +147,7 @@ h1{font-size:2em;font-weight:900}
   </div>
 
   <div class="buttons" id="buttons">
-    <a class="btn discord" href="https://discord.gg/zgc6Vj24" target="_blank"
+    <a class="btn discord" id="discordLink" href="#" target="_blank"
        onclick="clicks();toast('🚀 فتح Discord')">انضم إلى Discord</a>
 
     <a class="btn youtube" href="https://youtube.com/@mrotako-1k" target="_blank"
@@ -173,7 +160,6 @@ h1{font-size:2em;font-weight:900}
 </div>
 
 <div id="toast"></div>
-
 <button id="adminBtn" onclick="openAdmin()">⚙️</button>
 
 <!-- Admin Login -->
@@ -190,12 +176,38 @@ h1{font-size:2em;font-weight:900}
 <div id="adminPanel">
   <div class="adminBox">
     <h3>🛠 Admin Panel</h3><br>
-    <button class="btn alt" onclick="toggleButtons()">👁 إخفاء/إظهار الأزرار</button><br><br>
+    <button class="btn alt" onclick="editTitle()">✏️ تغيير العنوان</button><br><br>
+    <button class="btn alt" onclick="editWelcome()">💬 تغيير الترحيب</button><br><br>
     <button class="btn alt" onclick="logout()">🚪 تسجيل خروج</button>
   </div>
 </div>
 
 <script>
+/* Firebase CONFIG — غيّر القيم */
+const firebaseConfig = {
+  apiKey: "PUT_API_KEY_HERE",
+  authDomain: "PROJECT.firebaseapp.com",
+  databaseURL: "https://PROJECT-default-rtdb.firebaseio.com",
+  projectId: "PROJECT",
+  storageBucket: "PROJECT.appspot.com",
+  messagingSenderId: "ID",
+  appId: "APP_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+/* Sync data */
+db.ref("site/title").on("v", s=>{
+  if(s.exists()) document.getElementById("title").textContent=s.val();
+});
+db.ref("site/welcome").on("v", s=>{
+  if(s.exists()) document.getElementById("welcome").textContent=s.val();
+});
+db.ref("site/discord").on("v", s=>{
+  if(s.exists()) document.getElementById("discordLink").href=s.val();
+});
+
 /* stats */
 let v=+localStorage.getItem("v")||0;
 let c=+localStorage.getItem("c")||0;
@@ -203,57 +215,45 @@ v++; localStorage.setItem("v",v);
 document.getElementById("v").textContent=v;
 document.getElementById("c").textContent=c;
 
-function clicks(){
-  c++; localStorage.setItem("c",c);
-  document.getElementById("c").textContent=c;
-}
+function clicks(){c++;localStorage.setItem("c",c);document.getElementById("c").textContent=c}
 
 /* toast */
 function toast(t){
   const e=document.getElementById("toast");
-  e.textContent=t;
-  e.style.opacity=1;
+  e.textContent=t;e.style.opacity=1;
   setTimeout(()=>e.style.opacity=0,2000);
-}
-
-/* copy */
-function copy(){
-  navigator.clipboard.writeText("https://discord.gg/zgc6Vj24");
-  toast("✅ تم النسخ");
 }
 
 /* discord members */
 fetch("https://discord.com/api/v9/invites/zgc6Vj24?with_counts=true")
 .then(r=>r.json())
 .then(d=>document.getElementById("m").textContent=d.approximate_member_count)
-.catch(()=>document.getElementById("m").textContent="—");
+.catch(()=>{});
 
 /* admin */
-const USER="admin";
-const PASS="otako123";
-
-function openAdmin(){
-  document.getElementById("adminLogin").style.display="block";
-}
+const USER="admin",PASS="otako123";
+function openAdmin(){adminLogin.style.display="block"}
 function login(){
   if(au.value===USER && ap.value===PASS){
     localStorage.setItem("admin","1");
     adminLogin.style.display="none";
     adminPanel.style.display="block";
-    toast("✅ Admin");
-  }else toast("❌ خطأ");
+  }
 }
-if(localStorage.getItem("admin")==="1"){
-  adminPanel.style.display="block";
+if(localStorage.getItem("admin")==="1") adminPanel.style.display="block";
+function logout(){localStorage.removeItem("admin");adminPanel.style.display="none"}
+
+function editTitle(){
+  const t=prompt("العنوان الجديد:");
+  if(t) db.ref("site/title").set(t);
 }
-function logout(){
-  localStorage.removeItem("admin");
-  adminPanel.style.display="none";
+function editWelcome(){
+  const w=prompt("رسالة الترحيب:");
+  if(w) db.ref("site/welcome").set(w);
 }
-let hidden=false;
-function toggleButtons(){
-  document.getElementById("buttons").style.display=hidden?"flex":"none";
-  hidden=!hidden;
+function copy(){
+  navigator.clipboard.writeText(document.getElementById("discordLink").href);
+  toast("✅ تم النسخ");
 }
 </script>
 
