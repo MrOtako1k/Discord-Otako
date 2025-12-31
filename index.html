@@ -8,15 +8,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-<!-- Firebase CDN -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
 <style>
 :root{
   --main:#00ffd5;
   --discord:#5865F2;
   --youtube:#ff0033;
+  --bg:#050812;
+  --card:#0b1022;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{
@@ -30,11 +28,14 @@ body{
   padding:20px;
 }
 .card{
-  max-width:440px;width:100%;
-  background:#0b1022;
+  width:100%;
+  max-width:440px;
+  background:linear-gradient(180deg,#0b1022,#070b18);
   border-radius:28px;
   padding:35px 25px;
   text-align:center;
+  position:relative;
+  box-shadow:0 0 60px rgba(0,255,213,.15);
 }
 .logo{
   width:95px;height:95px;
@@ -47,7 +48,29 @@ body{
 h1{font-size:2em;font-weight:900}
 .tag{opacity:.7;margin-bottom:20px}
 
-.buttons{display:flex;flex-direction:column;gap:14px}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:20px 0;
+}
+.stat{
+  background:rgba(255,255,255,.06);
+  border-radius:16px;
+  padding:12px;
+}
+.stat span{
+  display:block;
+  font-size:1.4em;
+  font-weight:900;
+  color:var(--main);
+}
+
+.buttons{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
 .btn{
   padding:15px;
   border-radius:40px;
@@ -55,10 +78,37 @@ h1{font-size:2em;font-weight:900}
   font-weight:700;
   border:none;
   cursor:pointer;
+  transition:.3s;
 }
 .btn.discord{background:var(--discord);color:#fff}
 .btn.youtube{background:var(--youtube);color:#fff}
+.btn.alt{
+  background:transparent;
+  color:var(--main);
+  border:2px solid var(--main);
+}
+.btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px rgba(0,255,213,.6);
+}
 
+.footer{margin-top:20px;font-size:.75em;opacity:.6}
+
+/* toast */
+#toast{
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#000;
+  padding:12px 22px;
+  border-radius:30px;
+  opacity:0;
+  transition:.4s;
+  z-index:999;
+}
+
+/* admin */
 #adminBtn{
   position:fixed;
   bottom:20px;
@@ -76,6 +126,7 @@ h1{font-size:2em;font-weight:900}
   inset:0;
   background:rgba(0,0,0,.85);
   display:none;
+  z-index:1000;
 }
 .adminBox{
   background:#0b1022;
@@ -99,27 +150,36 @@ h1{font-size:2em;font-weight:900}
 
 <div class="card">
   <div class="logo"><i class="fab fa-discord"></i></div>
+  <h1>Family Otako</h1>
+  <div class="tag">Gaming • SA-MP • Discord</div>
 
-  <h1 id="title">Family Otako</h1>
-  <div class="tag" id="welcome">Gaming • SA-MP • Discord</div>
-
-  <div class="buttons">
-    <a class="btn discord" id="discordLink" href="#" target="_blank">
-      انضم إلى Discord
-    </a>
-
-    <a class="btn youtube" href="https://youtube.com/@mrotako-1k" target="_blank">
-      قناة YouTube
-    </a>
+  <div class="stats">
+    <div class="stat"><span id="v">0</span>زيارات</div>
+    <div class="stat"><span id="c">0</span>نقرات</div>
+    <div class="stat"><span id="m">—</span>أعضاء</div>
   </div>
+
+  <div class="buttons" id="buttons">
+    <a class="btn discord" href="https://discord.gg/zgc6Vj24" target="_blank"
+       onclick="clicks();toast('🚀 فتح Discord')">انضم إلى Discord</a>
+
+    <a class="btn youtube" href="https://youtube.com/@mrotako-1k" target="_blank"
+       onclick="clicks();toast('▶️ فتح YouTube')">قناة YouTube</a>
+
+    <button class="btn alt" onclick="copy()">📋 نسخ رابط Discord</button>
+  </div>
+
+  <div class="footer">© Family Otako</div>
 </div>
+
+<div id="toast"></div>
 
 <button id="adminBtn" onclick="openAdmin()">⚙️</button>
 
 <!-- Admin Login -->
 <div id="adminLogin">
   <div class="adminBox">
-    <h3>Admin Login</h3><br>
+    <h3>🔐 Admin Login</h3><br>
     <input id="au" placeholder="Username">
     <input id="ap" type="password" placeholder="Password">
     <button class="btn discord" onclick="login()">Login</button>
@@ -129,54 +189,59 @@ h1{font-size:2em;font-weight:900}
 <!-- Admin Panel -->
 <div id="adminPanel">
   <div class="adminBox">
-    <h3>Admin Panel</h3><br>
-    <button class="btn discord" onclick="editTitle()">تغيير العنوان</button><br><br>
-    <button class="btn discord" onclick="editWelcome()">تغيير الترحيب</button><br><br>
-    <button class="btn youtube" onclick="logout()">خروج</button>
+    <h3>🛠 Admin Panel</h3><br>
+    <button class="btn alt" onclick="toggleButtons()">👁 إخفاء/إظهار الأزرار</button><br><br>
+    <button class="btn alt" onclick="logout()">🚪 تسجيل خروج</button>
   </div>
 </div>
 
 <script>
-/* Firebase config */
-const firebaseConfig = {
-  apiKey: "AIzaSyBC7IJrdE_ao49Rd102oRP43lyD1_L5CWM",
-  authDomain: "otako2k-c102d.firebaseapp.com",
-  databaseURL: "https://otako2k-c102d-default-rtdb.firebaseio.com",
-  projectId: "otako2k-c102d",
-  storageBucket: "otako2k-c102d.appspot.com",
-  messagingSenderId: "798157540144",
-  appId: "1:798157540144:web:58401dada62f50766556f5"
-};
+/* stats */
+let v=+localStorage.getItem("v")||0;
+let c=+localStorage.getItem("c")||0;
+v++; localStorage.setItem("v",v);
+document.getElementById("v").textContent=v;
+document.getElementById("c").textContent=c;
 
-/* Init Firebase */
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+function clicks(){
+  c++; localStorage.setItem("c",c);
+  document.getElementById("c").textContent=c;
+}
 
-/* Read from Firebase */
-db.ref("site/title").on("value", s=>{
-  if(s.exists()) document.getElementById("title").textContent = s.val();
-});
-db.ref("site/welcome").on("value", s=>{
-  if(s.exists()) document.getElementById("welcome").textContent = s.val();
-});
-db.ref("site/discord").on("value", s=>{
-  if(s.exists()) document.getElementById("discordLink").href = s.val();
-});
+/* toast */
+function toast(t){
+  const e=document.getElementById("toast");
+  e.textContent=t;
+  e.style.opacity=1;
+  setTimeout(()=>e.style.opacity=0,2000);
+}
 
-/* Admin */
-const USER="admin", PASS="otako123";
+/* copy */
+function copy(){
+  navigator.clipboard.writeText("https://discord.gg/zgc6Vj24");
+  toast("✅ تم النسخ");
+}
+
+/* discord members */
+fetch("https://discord.com/api/v9/invites/zgc6Vj24?with_counts=true")
+.then(r=>r.json())
+.then(d=>document.getElementById("m").textContent=d.approximate_member_count)
+.catch(()=>document.getElementById("m").textContent="—");
+
+/* admin */
+const USER="admin";
+const PASS="otako123";
 
 function openAdmin(){
-  adminLogin.style.display="block";
+  document.getElementById("adminLogin").style.display="block";
 }
 function login(){
   if(au.value===USER && ap.value===PASS){
     localStorage.setItem("admin","1");
     adminLogin.style.display="none";
     adminPanel.style.display="block";
-  }else{
-    alert("خطأ في البيانات");
-  }
+    toast("✅ Admin");
+  }else toast("❌ خطأ");
 }
 if(localStorage.getItem("admin")==="1"){
   adminPanel.style.display="block";
@@ -185,13 +250,10 @@ function logout(){
   localStorage.removeItem("admin");
   adminPanel.style.display="none";
 }
-function editTitle(){
-  const t=prompt("العنوان الجديد:");
-  if(t) db.ref("site/title").set(t);
-}
-function editWelcome(){
-  const w=prompt("رسالة الترحيب:");
-  if(w) db.ref("site/welcome").set(w);
+let hidden=false;
+function toggleButtons(){
+  document.getElementById("buttons").style.display=hidden?"flex":"none";
+  hidden=!hidden;
 }
 </script>
 
