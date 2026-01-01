@@ -156,10 +156,10 @@ h1{font-size:2em;font-weight:900}
   </div>
 
   <div class="buttons" id="buttons">
-    <a class="btn discord" href="https://discord.gg/zgc6Vj24" target="_blank"
+    <a class="btn discord" id="discordLink" href="#" target="_blank"
        onclick="clicks();toast('🚀 فتح Discord')">انضم إلى Discord</a>
 
-    <a class="btn youtube" href="https://youtube.com/@mrotako-1k" target="_blank"
+    <a class="btn youtube" id="youtubeLink" href="#" target="_blank"
        onclick="clicks();toast('▶️ فتح YouTube')">قناة YouTube</a>
 
     <button class="btn alt" onclick="copy()">📋 نسخ رابط Discord</button>
@@ -185,6 +185,11 @@ h1{font-size:2em;font-weight:900}
   <div class="adminBox">
     <h3>🛠 Admin Panel</h3><br>
     <button class="btn alt" onclick="toggleButtons()">👁 إخفاء/إظهار الأزرار</button><br><br>
+    
+    <input id="newDiscordLink" placeholder="رابط جديد لـ Discord">
+    <input id="newYouTubeLink" placeholder="رابط جديد لـ YouTube">
+    
+    <button class="btn alt" onclick="updateLinks()">تحديث الروابط</button><br><br>
     <button class="btn alt" onclick="logout()">🚪 تسجيل خروج</button>
   </div>
 </div>
@@ -212,7 +217,7 @@ const ref = doc(db,"site","settings");
 (async()=>{
   const s=await getDoc(ref);
   if(!s.exists()){
-    await setDoc(ref,{buttons:true,visits:0,clicks:0});
+    await setDoc(ref,{buttons:true,visits:0,clicks:0,discordLink:"https://discord.gg/zgc6Vj24",youtubeLink:"https://youtube.com/@mrotako-1k"});
   }
 })();
 
@@ -221,6 +226,8 @@ onSnapshot(ref,(snap)=>{
   buttons.style.display=d.buttons?"flex":"none";
   v.textContent=d.visits;
   c.textContent=d.clicks;
+  discordLink.href = d.discordLink;
+  youtubeLink.href = d.youtubeLink;
 });
 
 updateDoc(ref,{visits:increment(1)});
@@ -250,17 +257,29 @@ fetch("https://discord.com/api/v9/invites/zgc6Vj24?with_counts=true")
 const USER="admin",PASS="otako123";
 window.openAdmin=()=>adminLogin.style.display="block";
 window.login=()=>{
-  if(au.value===USER&&ap.value===PASS){
-    localStorage.setItem("admin","1");
+  if(au.value==USER && ap.value==PASS){
     adminLogin.style.display="none";
-    adminPanel.style.display="block";
-    toast("✅ Admin");
-  }else toast("❌ خطأ");
+    adminPanel.style.display="flex";
+  }
 };
-if(localStorage.getItem("admin")==="1") adminPanel.style.display="block";
 window.logout=()=>{
-  localStorage.removeItem("admin");
   adminPanel.style.display="none";
+  adminLogin.style.display="flex";
+};
+
+window.updateLinks=async()=>{
+  const newDiscord = newDiscordLink.value;
+  const newYouTube = newYouTubeLink.value;
+  
+  if(newDiscord && newYouTube) {
+    await updateDoc(ref, {
+      discordLink: newDiscord,
+      youtubeLink: newYouTube
+    });
+    toast("✅ تم تحديث الروابط بنجاح!");
+  } else {
+    toast("❌ يرجى إدخال الروابط بشكل صحيح.");
+  }
 };
 </script>
 
