@@ -13,8 +13,6 @@
   --main:#00ffd5;
   --discord:#5865F2;
   --youtube:#ff0033;
-  --bg:#050812;
-  --card:#0b1022;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{
@@ -34,7 +32,6 @@ body{
   border-radius:28px;
   padding:35px 25px;
   text-align:center;
-  position:relative;
   box-shadow:0 0 60px rgba(0,255,213,.15);
 }
 .logo{
@@ -94,7 +91,6 @@ h1{font-size:2em;font-weight:900}
 
 .footer{margin-top:20px;font-size:.75em;opacity:.6}
 
-/* toast */
 #toast{
   position:fixed;
   bottom:25px;
@@ -176,7 +172,6 @@ h1{font-size:2em;font-weight:900}
 
 <button id="adminBtn" onclick="openAdmin()">⚙️</button>
 
-<!-- Admin Login -->
 <div id="adminLogin">
   <div class="adminBox">
     <h3>🔐 Admin Login</h3><br>
@@ -186,7 +181,6 @@ h1{font-size:2em;font-weight:900}
   </div>
 </div>
 
-<!-- Admin Panel -->
 <div id="adminPanel">
   <div class="adminBox">
     <h3>🛠 Admin Panel</h3><br>
@@ -195,66 +189,79 @@ h1{font-size:2em;font-weight:900}
   </div>
 </div>
 
-<script>
-/* stats */
-let v=+localStorage.getItem("v")||0;
-let c=+localStorage.getItem("c")||0;
-v++; localStorage.setItem("v",v);
-document.getElementById("v").textContent=v;
-document.getElementById("c").textContent=c;
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getFirestore, doc, getDoc, setDoc,
+  updateDoc, increment, onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-function clicks(){
-  c++; localStorage.setItem("c",c);
-  document.getElementById("c").textContent=c;
-}
+const firebaseConfig = {
+  apiKey: "AIzaSyBC7lJrdE_ao49Rd1O2oRP43lyD1_l5CWM",
+  authDomain: "otako2k-c102d.firebaseapp.com",
+  projectId: "otako2k-c102d",
+  storageBucket: "otako2k-c102d.firebasestorage.app",
+  messagingSenderId: "798157540144",
+  appId: "1:798157540144:web:58401dada62f50766556f5"
+};
 
-/* toast */
-function toast(t){
-  const e=document.getElementById("toast");
-  e.textContent=t;
-  e.style.opacity=1;
-  setTimeout(()=>e.style.opacity=0,2000);
-}
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const ref = doc(db,"site","settings");
 
-/* copy */
-function copy(){
+(async()=>{
+  const s=await getDoc(ref);
+  if(!s.exists()){
+    await setDoc(ref,{buttons:true,visits:0,clicks:0});
+  }
+})();
+
+onSnapshot(ref,(snap)=>{
+  const d=snap.data();
+  buttons.style.display=d.buttons?"flex":"none";
+  v.textContent=d.visits;
+  c.textContent=d.clicks;
+});
+
+updateDoc(ref,{visits:increment(1)});
+window.clicks=()=>updateDoc(ref,{clicks:increment(1)});
+
+window.toggleButtons=async()=>{
+  const s=await getDoc(ref);
+  updateDoc(ref,{buttons:!s.data().buttons});
+};
+
+window.toast=(t)=>{
+  toast.innerText=t;
+  toast.style.opacity=1;
+  setTimeout(()=>toast.style.opacity=0,2000);
+};
+
+window.copy=()=>{
   navigator.clipboard.writeText("https://discord.gg/zgc6Vj24");
   toast("✅ تم النسخ");
-}
+};
 
-/* discord members */
 fetch("https://discord.com/api/v9/invites/zgc6Vj24?with_counts=true")
 .then(r=>r.json())
-.then(d=>document.getElementById("m").textContent=d.approximate_member_count)
-.catch(()=>document.getElementById("m").textContent="—");
+.then(d=>m.textContent=d.approximate_member_count)
+.catch(()=>m.textContent="—");
 
-/* admin */
-const USER="admin";
-const PASS="otako123";
-
-function openAdmin(){
-  document.getElementById("adminLogin").style.display="block";
-}
-function login(){
-  if(au.value===USER && ap.value===PASS){
+const USER="admin",PASS="otako123";
+window.openAdmin=()=>adminLogin.style.display="block";
+window.login=()=>{
+  if(au.value===USER&&ap.value===PASS){
     localStorage.setItem("admin","1");
     adminLogin.style.display="none";
     adminPanel.style.display="block";
     toast("✅ Admin");
   }else toast("❌ خطأ");
-}
-if(localStorage.getItem("admin")==="1"){
-  adminPanel.style.display="block";
-}
-function logout(){
+};
+if(localStorage.getItem("admin")==="1") adminPanel.style.display="block";
+window.logout=()=>{
   localStorage.removeItem("admin");
   adminPanel.style.display="none";
-}
-let hidden=false;
-function toggleButtons(){
-  document.getElementById("buttons").style.display=hidden?"flex":"none";
-  hidden=!hidden;
-}
+};
 </script>
 
 </body>
