@@ -3,853 +3,1300 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Family Otako | مجتمع الألعاب الأول</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
+<title>Family Otako | Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <style>
+/* ==============================
+   ROOT & RESET
+============================== */
 :root{
-  --teal:#00ffd5;
-  --pink:#ff006e;
-  --purple:#7b2ff7;
-  --blue:#00b4ff;
-  --bg:#050a1a;
-  --card:#0a1128;
-  --border:rgba(0,255,213,.12);
-  --glow-teal:0 0 40px rgba(0,255,213,.35);
-  --glow-pink:0 0 40px rgba(255,0,110,.3);
+  --c1:#00ffe1;
+  --c2:#ff2d6b;
+  --c3:#7000ff;
+  --c4:#ffb800;
+  --bg:#03040d;
+  --bg2:#06091a;
+  --panel:#080d1f;
+  --panel2:#0c1228;
+  --border:rgba(0,255,225,.08);
+  --border2:rgba(0,255,225,.18);
+  --text:rgba(255,255,255,.85);
+  --muted:rgba(255,255,255,.35);
+  --discord:#5865F2;
+  --samp:#ff6a00;
+  --online:#23d160;
+  --r:16px;
 }
-
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-
+*{margin:0;padding:0;box-sizing:border-box;outline:none;}
+html{scroll-behavior:smooth;}
 body{
   font-family:'Cairo',sans-serif;
-  background:var(--bg);
-  color:#fff;
-  overflow-x:hidden;
-  cursor:none;
+  background:var(--bg);color:var(--text);
+  overflow-x:hidden;min-height:100vh;
 }
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:inherit;}
+code,pre{font-family:'JetBrains Mono',monospace;}
 
-/* Custom Cursor */
-.cursor{
-  width:12px;height:12px;
-  background:var(--teal);
-  border-radius:50%;
-  position:fixed;
-  pointer-events:none;
-  z-index:99999;
-  mix-blend-mode:difference;
-  transition:transform .15s ease;
+/* ==============================
+   BACKGROUND EFFECTS
+============================== */
+.bg-scene{
+  position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
 }
-.cursor-follower{
-  width:36px;height:36px;
-  border:1.5px solid rgba(0,255,213,.4);
-  border-radius:50%;
-  position:fixed;
-  pointer-events:none;
-  z-index:99998;
-  transition:transform .4s ease, opacity .3s;
+.bg-grad{
+  position:absolute;
+  border-radius:50%;filter:blur(120px);opacity:.18;
 }
-
-/* Noise texture overlay */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events:none;
-  z-index:9998;
-  opacity:.4;
+.bg-grad.g1{width:700px;height:700px;background:var(--c3);top:-200px;right:-200px;animation:bgDrift 20s ease-in-out infinite;}
+.bg-grad.g2{width:500px;height:500px;background:var(--c2);bottom:-150px;left:-150px;animation:bgDrift 26s ease-in-out infinite reverse;}
+.bg-grad.g3{width:400px;height:400px;background:var(--c1);top:40%;left:30%;animation:bgDrift 18s ease-in-out infinite 8s;}
+@keyframes bgDrift{
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(40px,-30px) scale(1.05);}
+  66%{transform:translate(-30px,40px) scale(.95);}
 }
-
-/* ===== NAVBAR ===== */
-.navbar{
-  position:fixed;top:0;width:100%;
-  padding:20px 50px;
-  display:flex;justify-content:space-between;align-items:center;
-  z-index:1000;
-  background:rgba(5,10,26,.85);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-}
-
-.logo{
-  display:flex;align-items:center;gap:12px;
-  text-decoration:none;
-}
-.logo-icon{
-  width:44px;height:44px;
-  background:linear-gradient(135deg,var(--teal),var(--purple));
-  border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.2em;
-  box-shadow:var(--glow-teal);
-}
-.logo-text{
-  font-family:'Tajawal',sans-serif;
-  font-weight:900;font-size:1.4em;
-  background:linear-gradient(90deg,var(--teal),var(--blue));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-
-.nav-links{
-  display:flex;gap:8px;list-style:none;
-}
-.nav-links a{
-  color:rgba(255,255,255,.6);
-  text-decoration:none;
-  font-weight:600;font-size:.9em;
-  padding:8px 18px;
-  border-radius:50px;
-  transition:.3s;
-  border:1px solid transparent;
-}
-.nav-links a:hover{
-  color:var(--teal);
-  border-color:var(--border);
-  background:rgba(0,255,213,.05);
-}
-
-.nav-cta{
-  background:linear-gradient(90deg,var(--teal),var(--blue));
-  color:#000!important;
-  border-color:transparent!important;
-  font-weight:700!important;
-}
-.nav-cta:hover{
-  box-shadow:var(--glow-teal);
-  transform:translateY(-2px);
-  color:#000!important;
-}
-
-.toggle-btn{display:none;background:none;border:none;color:#fff;font-size:1.4em;cursor:pointer}
-
-/* ===== HERO ===== */
-.hero{
-  min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  padding:120px 50px 60px;
-  position:relative;
-  overflow:hidden;
-}
-
-/* Animated grid background */
-.hero-grid{
+.grid-lines{
   position:absolute;inset:0;
   background-image:
-    linear-gradient(rgba(0,255,213,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,255,213,.04) 1px,transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse 80% 60% at 50% 50%,black 0%,transparent 100%);
+    linear-gradient(rgba(0,255,225,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,225,.025) 1px,transparent 1px);
+  background-size:50px 50px;
+  mask-image:radial-gradient(ellipse 100% 100% at 50% 0%,black 0%,transparent 80%);
 }
+.scan-line{
+  position:absolute;width:100%;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(0,255,225,.06),transparent);
+  animation:scanMove 8s linear infinite;
+}
+@keyframes scanMove{from{top:-2px;}to{top:100vh;}}
 
-/* Glowing orbs */
-.orb{
-  position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;
-}
-.orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(0,255,213,.12),transparent 70%);top:-100px;left:-150px;animation:drift 18s ease-in-out infinite;}
-.orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(123,47,247,.15),transparent 70%);bottom:-100px;right:-100px;animation:drift 24s ease-in-out infinite reverse;}
-.orb-3{width:300px;height:300px;background:radial-gradient(circle,rgba(255,0,110,.08),transparent 70%);top:50%;left:60%;animation:drift 20s ease-in-out infinite 5s;}
-
-@keyframes drift{
-  0%,100%{transform:translate(0,0)}
-  33%{transform:translate(30px,-20px)}
-  66%{transform:translate(-20px,30px)}
-}
-
-.hero-content{
-  text-align:center;max-width:780px;position:relative;z-index:2;
-}
-
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(0,255,213,.08);
-  border:1px solid rgba(0,255,213,.25);
-  border-radius:50px;
-  padding:8px 20px;
-  font-size:.85em;font-weight:600;color:var(--teal);
-  margin-bottom:30px;
-  animation:slideDown .7s ease both;
-}
-.hero-badge::before{
-  content:"";width:8px;height:8px;background:var(--teal);
-  border-radius:50%;animation:pulse 2s infinite;
-}
-@keyframes pulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(0,255,213,.4)}
-  50%{box-shadow:0 0 0 8px rgba(0,255,213,0)}
-}
-
-.hero h1{
-  font-family:'Tajawal',sans-serif;
-  font-size:5.5em;font-weight:900;
-  line-height:.9;
-  margin-bottom:25px;
-  animation:slideUp .8s ease .1s both;
-}
-.hero h1 .line-1{
-  display:block;
-  background:linear-gradient(135deg,#fff 40%,rgba(255,255,255,.5));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.hero h1 .line-2{
-  display:block;
-  background:linear-gradient(90deg,var(--teal),var(--blue),var(--purple));
-  background-size:200% 100%;
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:gradShift 4s linear infinite;
-}
-@keyframes gradShift{
-  0%{background-position:0%}100%{background-position:200%}
-}
-
-.hero p{
-  font-size:1.2em;opacity:.65;margin-bottom:45px;
-  line-height:1.7;font-weight:400;
-  animation:slideUp .8s ease .2s both;
-}
-
-.hero-btns{
-  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
-  animation:slideUp .8s ease .3s both;
-}
-
-@keyframes slideUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
-@keyframes slideDown{from{opacity:0;transform:translateY(-15px)}to{opacity:1;transform:translateY(0)}}
-
-.btn{
-  padding:16px 35px;
-  border-radius:12px;
-  font-family:'Cairo',sans-serif;
-  font-size:1em;font-weight:700;
-  border:none;cursor:none;
-  transition:.3s;text-decoration:none;
-  display:inline-flex;align-items:center;gap:10px;
-}
-.btn.primary{
-  background:linear-gradient(135deg,var(--teal),var(--blue));
-  color:#000;
-  box-shadow:0 8px 30px rgba(0,255,213,.25);
-}
-.btn.primary:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,255,213,.4);}
-.btn.secondary{
-  background:rgba(255,255,255,.04);
-  color:#fff;
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(10px);
-}
-.btn.secondary:hover{background:rgba(255,255,255,.08);border-color:rgba(0,255,213,.3);transform:translateY(-3px);}
-
-/* scroll indicator */
-.scroll-hint{
-  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  opacity:.4;font-size:.8em;animation:bounce 2s ease-in-out infinite;
-}
-@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
-.scroll-hint span{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--teal));}
-
-/* ===== STATS ===== */
-.stats{
-  padding:80px 50px;
-  max-width:1200px;margin:0 auto;
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;
-}
-
-.stat-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:35px 25px;text-align:center;
-  position:relative;overflow:hidden;
-  transition:.3s;
-}
-.stat-card::before{
-  content:"";position:absolute;inset:-1px;border-radius:20px;
-  background:linear-gradient(135deg,rgba(0,255,213,.15),transparent 60%);
-  opacity:0;transition:.3s;
-}
-.stat-card:hover{transform:translateY(-8px);border-color:rgba(0,255,213,.3);}
-.stat-card:hover::before{opacity:1;}
-.stat-icon{
-  width:55px;height:55px;margin:0 auto 18px;
-  background:linear-gradient(135deg,rgba(0,255,213,.15),rgba(0,180,255,.1));
-  border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.4em;color:var(--teal);
-  border:1px solid rgba(0,255,213,.2);
-}
-.stat-num{
-  font-family:'Tajawal',sans-serif;
-  font-size:2.5em;font-weight:900;
-  background:linear-gradient(90deg,var(--teal),var(--blue));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  line-height:1;margin-bottom:8px;
-}
-.stat-label{font-size:.9em;opacity:.55;font-weight:400;}
-
-/* ===== FEATURES ===== */
-.features{
-  padding:100px 50px;
-  position:relative;
-}
-.features::before{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,transparent,rgba(0,255,213,.02) 50%,transparent);
-  pointer-events:none;
-}
-
-.section-header{
-  text-align:center;margin-bottom:70px;
-}
-.section-tag{
-  display:inline-block;
-  font-size:.8em;font-weight:700;letter-spacing:.15em;
-  color:var(--teal);opacity:.8;
-  text-transform:uppercase;margin-bottom:15px;
-}
-.section-title{
-  font-family:'Tajawal',sans-serif;
-  font-size:2.8em;font-weight:900;
-  background:linear-gradient(135deg,#fff 50%,rgba(255,255,255,.4));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-
-.features-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-  max-width:1200px;margin:0 auto;
-}
-
-.feat-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;padding:35px;
-  transition:.3s;
-  position:relative;overflow:hidden;
-  group:true;
-}
-.feat-card::after{
-  content:"";
-  position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--teal),var(--purple));
-  transform:scaleX(0);transform-origin:right;
+/* ==============================
+   SIDEBAR NAV
+============================== */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;
+  width:72px;
+  background:rgba(6,9,26,.9);
+  border-right:1px solid var(--border);
+  backdrop-filter:blur(20px);
+  display:flex;flex-direction:column;align-items:center;
+  padding:20px 0;gap:8px;
+  z-index:1000;
   transition:.4s;
 }
-.feat-card:hover{transform:translateY(-6px);border-color:rgba(0,255,213,.25);}
-.feat-card:hover::after{transform:scaleX(1);transform-origin:left;}
-
-.feat-icon{
-  width:50px;height:50px;
-  background:linear-gradient(135deg,rgba(0,255,213,.12),rgba(123,47,247,.08));
+.sidebar:hover{width:220px;}
+.sidebar-logo{
+  width:44px;height:44px;
+  background:linear-gradient(135deg,var(--c1),var(--c3));
   border-radius:12px;
   display:flex;align-items:center;justify-content:center;
-  font-size:1.3em;color:var(--teal);
+  font-size:1.3em;color:#000;font-weight:900;
   margin-bottom:20px;
-  border:1px solid rgba(0,255,213,.15);
+  flex-shrink:0;
+  box-shadow:0 0 30px rgba(0,255,225,.3);
+}
+.sidebar-logo span{
+  display:none;margin-right:10px;
+  font-family:'Syne',sans-serif;font-size:.9em;
+  background:linear-gradient(90deg,var(--c1),var(--c3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.sidebar:hover .sidebar-logo span{display:block;}
+.sidebar:hover .sidebar-logo{width:auto;padding:0 16px;border-radius:12px;}
+
+.nav-item{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);transition:.3s;
+  position:relative;cursor:pointer;
+  border:1px solid transparent;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.sidebar:hover .nav-item{width:calc(220px - 30px);justify-content:flex-start;padding:0 14px;gap:12px;}
+.nav-item:hover,.nav-item.active{
+  color:var(--c1);background:rgba(0,255,225,.07);
+  border-color:var(--border2);
+}
+.nav-item.active{
+  background:linear-gradient(135deg,rgba(0,255,225,.12),rgba(112,0,255,.08));
+}
+.nav-item i{font-size:1em;flex-shrink:0;}
+.nav-label{
+  display:none;font-size:.88em;font-weight:600;white-space:nowrap;
+}
+.sidebar:hover .nav-label{display:block;}
+.nav-badge{
+  position:absolute;top:8px;right:8px;
+  width:8px;height:8px;background:var(--c2);border-radius:50%;
+}
+.sidebar:hover .nav-badge{position:static;margin-right:auto;padding:1px 6px;border-radius:10px;font-size:.7em;height:auto;width:auto;}
+.sidebar-bottom{margin-top:auto;width:100%;}
+
+/* ==============================
+   MAIN CONTENT
+============================== */
+.main{
+  margin-right:72px;position:relative;z-index:1;
+  min-height:100vh;
+}
+
+/* ==============================
+   TOPBAR
+============================== */
+.topbar{
+  position:sticky;top:0;z-index:900;
+  background:rgba(3,4,13,.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 40px;
+  height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.topbar-left{display:flex;align-items:center;gap:20px;}
+.breadcrumb{
+  display:flex;align-items:center;gap:8px;
+  font-size:.85em;color:var(--muted);
+}
+.breadcrumb span{color:var(--text);}
+.topbar-right{display:flex;align-items:center;gap:12px;}
+.topbar-status{
+  display:flex;align-items:center;gap:7px;
+  background:rgba(35,209,96,.08);
+  border:1px solid rgba(35,209,96,.2);
+  padding:5px 14px;border-radius:50px;
+  font-size:.8em;color:var(--online);
+}
+.topbar-status::before{content:"";width:7px;height:7px;background:var(--online);border-radius:50%;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* Discord Login Button */
+.btn-discord-login{
+  display:flex;align-items:center;gap:10px;
+  background:var(--discord);color:#fff;
+  border:none;padding:10px 22px;border-radius:12px;
+  font-size:.9em;font-weight:700;
   transition:.3s;
+  box-shadow:0 4px 20px rgba(88,101,242,.4);
 }
-.feat-card:hover .feat-icon{
-  background:linear-gradient(135deg,rgba(0,255,213,.2),rgba(0,180,255,.15));
-  box-shadow:var(--glow-teal);
-}
-.feat-card h4{font-size:1.1em;margin-bottom:10px;font-weight:700;}
-.feat-card p{opacity:.55;font-size:.9em;line-height:1.7;font-weight:300;}
-
-/* ===== TEAM ===== */
-.team{
-  padding:100px 50px;
-  background:linear-gradient(180deg,transparent,rgba(123,47,247,.04),transparent);
+.btn-discord-login:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(88,101,242,.6);
+  background:#4752c4;
 }
 
-.team-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
-  gap:25px;max-width:1000px;margin:0 auto;
-}
+/* ==============================
+   PAGES
+============================== */
+.page{display:none;}
+.page.active{display:block;}
 
-.member-card{
-  background:var(--card);
+/* ==============================
+   HOME PAGE
+============================== */
+.hero-section{
+  padding:80px 50px 60px;
+  position:relative;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.8em;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--c1);margin-bottom:25px;
+  opacity:.8;
+}
+.hero-eyebrow::before,.hero-eyebrow::after{
+  content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--c1),transparent);width:30px;
+}
+.hero-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(3em,7vw,6em);
+  font-weight:800;line-height:.9;
+  margin-bottom:30px;
+  letter-spacing:-.02em;
+}
+.hero-title .t1{
+  display:block;color:#fff;
+}
+.hero-title .t2{
+  display:block;
+  background:linear-gradient(120deg,var(--c1) 0%,var(--c3) 50%,var(--c2) 100%);
+  background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:titleShift 5s ease-in-out infinite;
+}
+@keyframes titleShift{0%,100%{background-position:0%}50%{background-position:100%}}
+.hero-sub{
+  font-size:1.15em;color:var(--muted);max-width:560px;
+  line-height:1.8;margin-bottom:50px;font-weight:300;
+}
+.hero-actions{display:flex;gap:15px;flex-wrap:wrap;margin-bottom:80px;}
+
+.btn-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--c1),var(--c3));
+  color:#000;padding:15px 32px;border-radius:12px;
+  font-size:1em;font-weight:700;border:none;
+  transition:.3s;
+  box-shadow:0 8px 30px rgba(0,255,225,.2);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,255,225,.35);}
+
+.btn-outline{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.04);color:#fff;
+  padding:15px 32px;border-radius:12px;
+  font-size:1em;font-weight:600;
+  border:1px solid rgba(255,255,255,.1);transition:.3s;
+}
+.btn-outline:hover{background:rgba(255,255,255,.08);border-color:var(--border2);transform:translateY(-3px);}
+
+/* Quick Stats */
+.quick-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+  max-width:900px;
+}
+.qs-card{
+  background:var(--panel);
   border:1px solid var(--border);
-  border-radius:24px;padding:40px 30px;text-align:center;
-  transition:.3s;position:relative;overflow:hidden;
-}
-.member-card::before{
-  content:"";position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--teal),var(--purple),var(--pink));
-  transform:scaleX(0);transition:.4s;
-}
-.member-card:hover{transform:translateY(-10px);border-color:rgba(0,255,213,.25);}
-.member-card:hover::before{transform:scaleX(1);}
-
-.member-avatar{
-  width:90px;height:90px;margin:0 auto 20px;
-  border-radius:50%;
-  background:linear-gradient(135deg,rgba(0,255,213,.15),rgba(123,47,247,.15));
-  border:2px solid rgba(0,255,213,.2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:2em;
+  border-radius:var(--r);
+  padding:25px;
+  position:relative;overflow:hidden;
   transition:.3s;
 }
-.member-card:hover .member-avatar{
-  border-color:var(--teal);
-  box-shadow:var(--glow-teal);
+.qs-card::before{
+  content:"";position:absolute;inset:-1px;border-radius:var(--r);
+  background:linear-gradient(135deg,var(--c1),var(--c3),var(--c2));
+  opacity:0;transition:.3s;z-index:-1;
 }
-.member-role{
-  font-size:.75em;font-weight:700;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--teal);opacity:.8;margin-bottom:8px;
+.qs-card:hover{transform:translateY(-5px);}
+.qs-card:hover::before{opacity:.15;}
+.qs-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:2em;font-weight:700;
+  background:linear-gradient(90deg,var(--c1),var(--c3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:5px;
 }
-.member-name{font-size:1.3em;font-weight:700;margin-bottom:6px;}
-.member-desc{font-size:.85em;opacity:.5;font-weight:300;margin-bottom:22px;}
+.qs-label{font-size:.8em;color:var(--muted);}
+.qs-icon{
+  position:absolute;top:20px;left:20px;
+  font-size:1.2em;color:var(--c1);opacity:.25;
+}
 
-.member-social{display:flex;gap:10px;justify-content:center;}
-.member-social a{
-  width:36px;height:36px;border-radius:10px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.08);
+/* ==============================
+   SAMP DEVELOPER PAGE
+============================== */
+.dev-page{padding:40px 50px;}
+.page-header{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:50px;flex-wrap:wrap;gap:20px;
+}
+.page-header-text h2{
+  font-family:'Syne',sans-serif;font-size:2.2em;font-weight:800;
+  margin-bottom:8px;
+}
+.page-header-text p{color:var(--muted);font-size:.95em;}
+
+/* Code terminal */
+.terminal{
+  background:#02040e;
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  overflow:hidden;
+  margin-bottom:30px;
+}
+.terminal-bar{
+  background:rgba(255,255,255,.04);
+  padding:12px 20px;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--border);
+}
+.t-dot{width:12px;height:12px;border-radius:50%;}
+.t-dot.r{background:#ff5f57;}
+.t-dot.y{background:#ffbd2e;}
+.t-dot.g{background:#28c840;}
+.terminal-title{margin-right:auto;font-size:.8em;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+.terminal-body{padding:25px;font-family:'JetBrains Mono',monospace;font-size:.85em;line-height:1.8;}
+.t-comment{color:#4b5563;}
+.t-keyword{color:#c084fc;}
+.t-func{color:var(--c1);}
+.t-str{color:var(--samp);}
+.t-num{color:var(--c4);}
+.t-var{color:#60a5fa;}
+.t-op{color:var(--muted);}
+.t-line{display:block;margin-bottom:2px;}
+.t-cursor{
+  display:inline-block;width:8px;height:15px;
+  background:var(--c1);vertical-align:middle;
+  animation:cursorBlink .8s infinite;
+}
+@keyframes cursorBlink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* Dev Cards Grid */
+.dev-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;margin-bottom:40px;
+}
+.dev-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--r);padding:30px;
+  transition:.3s;cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.dev-card::after{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--samp),var(--c4));
+  transform:scaleX(0);transition:.4s;transform-origin:left;
+}
+.dev-card:hover{transform:translateY(-5px);border-color:rgba(255,106,0,.3);}
+.dev-card:hover::after{transform:scaleX(1);}
+.dev-card-icon{
+  width:50px;height:50px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(255,106,0,.15),rgba(255,184,0,.08));
   display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.5);
-  text-decoration:none;transition:.3s;font-size:.9em;
+  font-size:1.3em;color:var(--samp);margin-bottom:20px;
+  border:1px solid rgba(255,106,0,.2);
 }
-.member-social a:hover{background:rgba(0,255,213,.1);border-color:rgba(0,255,213,.3);color:var(--teal);}
+.dev-card h4{font-size:1em;font-weight:700;margin-bottom:8px;}
+.dev-card p{font-size:.85em;color:var(--muted);line-height:1.6;}
+.dev-card-badge{
+  display:inline-block;margin-top:15px;
+  padding:4px 10px;border-radius:6px;
+  font-size:.72em;font-weight:700;letter-spacing:.05em;
+  background:rgba(255,106,0,.1);color:var(--samp);
+  border:1px solid rgba(255,106,0,.2);
+}
 
-/* ===== CTA SECTION ===== */
-.cta-section{
-  padding:100px 50px;
+/* Code Snippets Section */
+.snippets-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+}
+.snippet-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;
+}
+.snippet-header{
+  padding:15px 20px;
+  background:rgba(255,255,255,.03);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.snippet-title{font-size:.85em;font-weight:700;display:flex;align-items:center;gap:8px;}
+.snippet-lang{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7em;padding:3px 8px;border-radius:6px;
+  background:rgba(255,106,0,.1);color:var(--samp);
+  border:1px solid rgba(255,106,0,.2);
+}
+.copy-btn{
+  background:rgba(0,255,225,.08);border:1px solid var(--border2);
+  color:var(--c1);padding:5px 12px;border-radius:8px;
+  font-size:.75em;font-weight:600;transition:.3s;
+}
+.copy-btn:hover{background:rgba(0,255,225,.15);}
+.snippet-code{
+  padding:20px;font-family:'JetBrains Mono',monospace;
+  font-size:.8em;line-height:1.7;overflow-x:auto;
+}
+
+/* ==============================
+   DISCORD LOGIN PAGE
+============================== */
+.login-page{
+  min-height:calc(100vh - 64px);
+  display:flex;align-items:center;justify-content:center;
+  padding:40px;
+}
+.login-container{
+  width:100%;max-width:440px;
+}
+.login-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:24px;padding:50px 40px;
   text-align:center;
   position:relative;overflow:hidden;
 }
-.cta-box{
-  max-width:700px;margin:0 auto;
-  background:linear-gradient(135deg,rgba(0,255,213,.06),rgba(123,47,247,.06));
-  border:1px solid rgba(0,255,213,.2);
-  border-radius:30px;
-  padding:70px 50px;
+.login-card::before{
+  content:"";position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:250px;height:250px;
+  background:radial-gradient(circle,rgba(88,101,242,.15),transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+.login-logo{
+  width:70px;height:70px;
+  background:linear-gradient(135deg,var(--c1),var(--c3));
+  border-radius:18px;margin:0 auto 25px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8em;color:#000;font-weight:900;
+  box-shadow:0 10px 40px rgba(0,255,225,.25);
+}
+.login-title{
+  font-family:'Syne',sans-serif;font-size:1.8em;font-weight:800;margin-bottom:8px;
+}
+.login-sub{color:var(--muted);font-size:.9em;margin-bottom:40px;line-height:1.6;}
+
+.discord-btn{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  width:100%;background:var(--discord);color:#fff;
+  border:none;padding:16px 24px;border-radius:14px;
+  font-size:1em;font-weight:700;
+  transition:.3s;margin-bottom:15px;
+  box-shadow:0 8px 30px rgba(88,101,242,.3);
   position:relative;overflow:hidden;
 }
-.cta-box::before{
-  content:"";position:absolute;
-  top:-100px;left:50%;transform:translateX(-50%);
-  width:300px;height:300px;
-  background:radial-gradient(circle,rgba(0,255,213,.1),transparent 70%);
-  border-radius:50%;filter:blur(40px);
+.discord-btn::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  opacity:0;transition:.3s;
 }
-.cta-box h2{
-  font-family:'Tajawal',sans-serif;
-  font-size:2.5em;font-weight:900;margin-bottom:15px;
-}
-.cta-box p{opacity:.6;margin-bottom:40px;font-size:1.05em;}
-.cta-btns{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;}
+.discord-btn:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(88,101,242,.5);}
+.discord-btn:hover::before{opacity:1;}
+.discord-btn i{font-size:1.2em;}
 
-/* ===== FOOTER ===== */
-.footer{
-  background:linear-gradient(180deg,var(--bg),#020510);
-  border-top:1px solid var(--border);
-  padding:60px 50px 30px;
+.login-divider{
+  display:flex;align-items:center;gap:12px;
+  margin:20px 0;color:var(--muted);font-size:.8em;
+}
+.login-divider::before,.login-divider::after{
+  content:"";flex:1;height:1px;background:var(--border);
 }
 
-.footer-top{
-  display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:50px;
-  max-width:1200px;margin:0 auto 60px;
+.login-features{
+  display:flex;flex-direction:column;gap:10px;text-align:right;margin-top:30px;
 }
+.login-feat{
+  display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  padding:12px 16px;border-radius:12px;font-size:.85em;
+}
+.login-feat i{color:var(--c1);width:18px;text-align:center;}
 
-.footer-brand .logo-text{font-size:1.6em;}
-.footer-brand p{opacity:.45;font-size:.9em;line-height:1.8;margin:15px 0 25px;font-weight:300;}
-.footer-social{display:flex;gap:10px;}
-.footer-social a{
-  width:38px;height:38px;border-radius:10px;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+/* Logged in state */
+.user-profile{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--r);padding:30px;margin-bottom:30px;
+  display:flex;align-items:center;gap:20px;
+}
+.user-avatar{
+  width:70px;height:70px;border-radius:50%;
+  background:linear-gradient(135deg,var(--c1),var(--c3));
   display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.45);text-decoration:none;transition:.3s;font-size:.9em;
+  font-size:1.8em;flex-shrink:0;
+  border:3px solid rgba(0,255,225,.3);
 }
-.footer-social a:hover{
-  background:rgba(0,255,213,.1);border-color:rgba(0,255,213,.3);
-  color:var(--teal);transform:translateY(-2px);
+.user-name{font-family:'Syne',sans-serif;font-size:1.3em;font-weight:800;}
+.user-role{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(0,255,225,.08);border:1px solid var(--border2);
+  color:var(--c1);padding:4px 12px;border-radius:50px;
+  font-size:.75em;font-weight:700;margin-top:6px;
+}
+.user-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:20px;
+}
+.us-item{
+  background:var(--panel2);border:1px solid var(--border);
+  border-radius:12px;padding:15px;text-align:center;
+}
+.us-val{font-family:'JetBrains Mono',monospace;font-size:1.4em;font-weight:700;color:var(--c1);}
+.us-key{font-size:.75em;color:var(--muted);margin-top:4px;}
+
+/* ==============================
+   MEMBERS PAGE
+============================== */
+.members-page{padding:40px 50px;}
+.members-filters{
+  display:flex;gap:10px;margin-bottom:30px;flex-wrap:wrap;
+}
+.filter-btn{
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+  color:var(--muted);padding:8px 18px;border-radius:50px;
+  font-size:.85em;font-weight:600;transition:.3s;
+}
+.filter-btn.active,.filter-btn:hover{
+  background:rgba(0,255,225,.08);border-color:var(--border2);color:var(--c1);
+}
+.members-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:15px;
+}
+.member-tile{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--r);padding:25px 20px;
+  text-align:center;transition:.3s;cursor:pointer;
+}
+.member-tile:hover{transform:translateY(-5px);border-color:var(--border2);}
+.tile-avatar{
+  width:60px;height:60px;margin:0 auto 14px;
+  border-radius:50%;border:2px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;font-size:1.5em;
+  position:relative;
+}
+.tile-avatar .status-dot{
+  position:absolute;bottom:2px;right:2px;
+  width:12px;height:12px;border-radius:50%;
+  border:2px solid var(--panel);
+}
+.status-dot.online{background:var(--online);}
+.status-dot.offline{background:#6b7280;}
+.status-dot.gaming{background:var(--c4);}
+.tile-name{font-weight:700;font-size:.95em;margin-bottom:4px;}
+.tile-role{font-size:.75em;color:var(--muted);}
+.tile-role-badge{
+  display:inline-block;margin-top:10px;
+  padding:3px 10px;border-radius:6px;font-size:.7em;font-weight:700;
+}
+.role-owner{background:rgba(255,184,0,.12);color:var(--c4);border:1px solid rgba(255,184,0,.2);}
+.role-admin{background:rgba(255,45,107,.1);color:var(--c2);border:1px solid rgba(255,45,107,.2);}
+.role-mod{background:rgba(0,255,225,.08);color:var(--c1);border:1px solid var(--border2);}
+.role-dev{background:rgba(255,106,0,.1);color:var(--samp);border:1px solid rgba(255,106,0,.2);}
+.role-member{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border);}
+
+/* ==============================
+   CONTENT SECTION HELPERS
+============================== */
+.section-label{
+  font-size:.75em;font-weight:700;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--c1);opacity:.7;
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+.section-label::after{content:"";flex:1;height:1px;background:var(--border);}
+
+.section-title-lg{
+  font-family:'Syne',sans-serif;
+  font-size:1.6em;font-weight:800;margin-bottom:6px;
 }
 
-.footer-col h5{
-  font-size:.85em;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--teal);opacity:.8;margin-bottom:20px;
-}
-.footer-col ul{list-style:none;}
-.footer-col li{margin-bottom:10px;}
-.footer-col a{
-  color:rgba(255,255,255,.45);text-decoration:none;
-  font-size:.9em;font-weight:300;transition:.3s;
-}
-.footer-col a:hover{color:rgba(255,255,255,.85);}
+/* Glow text */
+.glow-text{text-shadow:0 0 30px rgba(0,255,225,.4);}
 
-.footer-bottom{
-  max-width:1200px;margin:0 auto;
-  border-top:1px solid var(--border);
-  padding-top:25px;
-  display:flex;justify-content:space-between;align-items:center;
-  opacity:.4;font-size:.82em;flex-wrap:wrap;gap:10px;
+/* Cards row */
+.cards-row{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:20px;margin-bottom:40px;
 }
 
-/* ===== TOAST ===== */
-#toast{
-  position:fixed;bottom:35px;left:50%;transform:translateX(-50%) translateY(20px);
-  background:rgba(10,17,40,.95);
-  border:1px solid rgba(0,255,213,.3);
-  color:#fff;
-  padding:14px 28px;border-radius:12px;
-  opacity:0;transition:.4s;z-index:9999;
-  font-size:.9em;font-weight:600;
-  backdrop-filter:blur(20px);
-  box-shadow:0 20px 60px rgba(0,0,0,.5),var(--glow-teal);
-  display:flex;align-items:center;gap:10px;
-  pointer-events:none;
+/* Info card */
+.info-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--r);padding:28px;transition:.3s;
+}
+.info-card:hover{border-color:var(--border2);}
+.info-card-head{display:flex;align-items:center;gap:12px;margin-bottom:15px;}
+.info-card-icon{
+  width:42px;height:42px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:1.1em;
+  flex-shrink:0;
+}
+.ic-green{background:rgba(0,255,225,.1);color:var(--c1);border:1px solid var(--border2);}
+.ic-purple{background:rgba(112,0,255,.15);color:#a78bfa;border:1px solid rgba(112,0,255,.2);}
+.ic-orange{background:rgba(255,106,0,.1);color:var(--samp);border:1px solid rgba(255,106,0,.2);}
+.ic-pink{background:rgba(255,45,107,.1);color:var(--c2);border:1px solid rgba(255,45,107,.2);}
+.info-card h4{font-size:1em;font-weight:700;}
+.info-card p{font-size:.85em;color:var(--muted);line-height:1.6;}
+
+/* Progress bars */
+.progress-wrap{margin-top:12px;}
+.progress-label{
+  display:flex;justify-content:space-between;
+  font-size:.78em;color:var(--muted);margin-bottom:6px;
+}
+.progress-bar{
+  height:6px;background:rgba(255,255,255,.06);border-radius:10px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;border-radius:10px;
+  background:linear-gradient(90deg,var(--c1),var(--c3));
+  transition:width 1.5s ease;
 }
 
-/* ===== REVEAL ANIMATION ===== */
-.reveal{opacity:0;transform:translateY(30px);transition:.7s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-
-/* ===== RESPONSIVE ===== */
+/* ==============================
+   RESPONSIVE
+============================== */
 @media(max-width:900px){
-  .features-grid{grid-template-columns:repeat(2,1fr);}
-  .footer-top{grid-template-columns:1fr 1fr;gap:30px;}
+  .snippets-grid{grid-template-columns:1fr;}
+  .quick-stats{grid-template-columns:repeat(2,1fr);}
 }
 @media(max-width:768px){
-  .navbar{padding:15px 25px;}
-  .nav-links{display:none;}
-  .toggle-btn{display:block;}
-  .hero{padding:100px 25px 60px;}
-  .hero h1{font-size:3.5em;}
-  .stats{padding:60px 25px;}
-  .features,.team,.cta-section{padding:70px 25px;}
-  .features-grid{grid-template-columns:1fr;}
-  .footer-top{grid-template-columns:1fr;gap:30px;}
-  .footer{padding:50px 25px 25px;}
-  .footer-bottom{flex-direction:column;text-align:center;}
-  .cta-box{padding:50px 30px;}
+  .sidebar{
+    width:100%;height:60px;flex-direction:row;
+    top:auto;bottom:0;left:0;right:0;border-right:none;
+    border-top:1px solid var(--border);
+    justify-content:space-around;padding:0 10px;
+  }
+  .sidebar:hover{width:100%;height:60px;flex-direction:row;}
+  .sidebar-logo{display:none;}
+  .nav-label,.sidebar:hover .nav-label{display:none;}
+  .sidebar:hover .nav-item{width:50px;height:50px;justify-content:center;padding:0;}
+  .main{margin-right:0;margin-bottom:60px;}
+  .hero-section,.dev-page,.members-page{padding:30px 20px;}
+  .quick-stats{grid-template-columns:repeat(2,1fr);}
+  .topbar{padding:0 20px;}
+  .topbar-status{display:none;}
+  .login-page{padding:20px;}
 }
-@media(max-width:480px){
-  .hero h1{font-size:2.8em;}
-  body{cursor:auto;}
-  .cursor,.cursor-follower{display:none;}
+
+/* ==============================
+   PARTICLES CANVAS
+============================== */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;}
+
+/* ==============================
+   SCROLL ANIMATIONS
+============================== */
+.reveal-up{
+  opacity:0;transform:translateY(25px);
+  transition:opacity .6s ease,transform .6s ease;
 }
+.reveal-up.shown{opacity:1;transform:translateY(0);}
 </style>
 </head>
 <body>
 
-<!-- Custom Cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-follower" id="cursorFollower"></div>
+<canvas id="particles"></canvas>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <a class="logo" href="#hero">
-    <div class="logo-icon"><i class="fab fa-discord" style="color:#000"></i></div>
-    <span class="logo-text">Family Otako</span>
-  </a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#stats">الإحصائيات</a></li>
-    <li><a href="#features">الميزات</a></li>
-    <li><a href="#team">الفريق</a></li>
-    <li><a href="https://discord.gg/AZtk9F9q" target="_blank" class="nav-cta">انضم الآن <i class="fab fa-discord"></i></a></li>
-  </ul>
-  <button class="toggle-btn" id="toggleBtn"><i class="fas fa-bars"></i></button>
+<!-- BG Scene -->
+<div class="bg-scene">
+  <div class="grid-lines"></div>
+  <div class="bg-grad g1"></div>
+  <div class="bg-grad g2"></div>
+  <div class="bg-grad g3"></div>
+  <div class="scan-line"></div>
+</div>
+
+<!-- ===================== SIDEBAR ===================== -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <i class="fab fa-discord"></i>
+    <span>Family Otako</span>
+  </div>
+
+  <div class="nav-item active" onclick="showPage('home')" id="nav-home">
+    <i class="fas fa-home"></i>
+    <span class="nav-label">الرئيسية</span>
+  </div>
+  <div class="nav-item" onclick="showPage('samp')" id="nav-samp">
+    <i class="fas fa-code"></i>
+    <span class="nav-label">SA-MP Dev</span>
+    <span class="nav-badge">NEW</span>
+  </div>
+  <div class="nav-item" onclick="showPage('members')" id="nav-members">
+    <i class="fas fa-users"></i>
+    <span class="nav-label">الأعضاء</span>
+  </div>
+  <div class="nav-item" onclick="showPage('login')" id="nav-login">
+    <i class="fab fa-discord"></i>
+    <span class="nav-label">تسجيل الدخول</span>
+  </div>
+  <div class="nav-item" onclick="showToast('🔔 لا توجد إشعارات جديدة')">
+    <i class="fas fa-bell"></i>
+    <span class="nav-label">الإشعارات</span>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="nav-item" onclick="showToast('⚙️ الإعدادات قريباً')">
+      <i class="fas fa-cog"></i>
+      <span class="nav-label">الإعدادات</span>
+    </div>
+  </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-grid"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-  <div class="hero-content">
-    <div class="hero-badge">المجتمع الأكبر في المنطقة</div>
-    <h1>
-      <span class="line-1">Family</span>
-      <span class="line-2">Otako</span>
-    </h1>
-    <p>مجتمع الألعاب الأول — SA-MP • Gaming • Creative Community<br>انضم إلى آلاف اللاعبين وعيش التجربة الحقيقية</p>
-    <div class="hero-btns">
-      <a href="https://discord.gg/r9BbPeqgz" target="_blank" class="btn primary" onclick="showToast('🚀 جارٍ الانتقال إلى Discord')">
-        <i class="fab fa-discord"></i> انضم إلى Discord
-      </a>
-      <a href="https://youtube.com/@mrotako-1k" target="_blank" class="btn secondary" onclick="showToast('▶️ قناة YouTube')">
-        <i class="fab fa-youtube"></i> قناة YouTube
-      </a>
-    </div>
-  </div>
-  <div class="scroll-hint">
-    <span></span>
-    <small>اسحب للأسفل</small>
-  </div>
-</section>
+<!-- ===================== MAIN ===================== -->
+<div class="main">
 
-<!-- STATS -->
-<section class="stats" id="stats">
-  <div class="stat-card reveal">
-    <div class="stat-icon"><i class="fas fa-users"></i></div>
-    <div class="stat-num" id="membersCount">0</div>
-    <div class="stat-label">عضو نشط</div>
-  </div>
-  <div class="stat-card reveal" style="transition-delay:.1s">
-    <div class="stat-icon"><i class="fas fa-eye"></i></div>
-    <div class="stat-num" id="viewsCount">0</div>
-    <div class="stat-label">زيارة</div>
-  </div>
-  <div class="stat-card reveal" style="transition-delay:.2s">
-    <div class="stat-icon"><i class="fas fa-gamepad"></i></div>
-    <div class="stat-num">100+</div>
-    <div class="stat-label">ساعة لعب يومياً</div>
-  </div>
-  <div class="stat-card reveal" style="transition-delay:.3s">
-    <div class="stat-icon"><i class="fas fa-star"></i></div>
-    <div class="stat-num">5.0</div>
-    <div class="stat-label">تقييم المجتمع</div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features" id="features">
-  <div class="section-header reveal">
-    <div class="section-tag">ما يميّزنا</div>
-    <h2 class="section-title">ميزات المجتمع</h2>
-  </div>
-  <div class="features-grid">
-    <div class="feat-card reveal">
-      <div class="feat-icon"><i class="fas fa-headset"></i></div>
-      <h4>تواصل مباشر</h4>
-      <p>قنوات صوتية عالية الجودة وتواصل فوري مع جميع أعضاء المجتمع في أي وقت</p>
-    </div>
-    <div class="feat-card reveal" style="transition-delay:.1s">
-      <div class="feat-icon"><i class="fas fa-trophy"></i></div>
-      <h4>مسابقات أسبوعية</h4>
-      <p>جوائز حقيقية وتحديات مثيرة كل أسبوع تجعلك في حالة تنافس دائمة</p>
-    </div>
-    <div class="feat-card reveal" style="transition-delay:.2s">
-      <div class="feat-icon"><i class="fas fa-server"></i></div>
-      <h4>سيرفرات خاصة</h4>
-      <p>سيرفرات عالية الأداء مخصصة ومحمية لضمان أفضل تجربة لعب</p>
-    </div>
-    <div class="feat-card reveal" style="transition-delay:.3s">
-      <div class="feat-icon"><i class="fas fa-fire"></i></div>
-      <h4>أحداث يومية</h4>
-      <p>أنشطة ومسابقات كل يوم لا تجعلك تشعر بالملل أبداً</p>
-    </div>
-    <div class="feat-card reveal" style="transition-delay:.4s">
-      <div class="feat-icon"><i class="fas fa-user-shield"></i></div>
-      <h4>أمان عالي</h4>
-      <p>حماية شاملة لبياناتك وحسابك مع إدارة متواجدة على مدار الساعة</p>
-    </div>
-    <div class="feat-card reveal" style="transition-delay:.5s">
-      <div class="feat-icon"><i class="fas fa-bolt"></i></div>
-      <h4>تطور مستمر</h4>
-      <p>تحديثات منتظمة وميزات جديدة مبنية بناءً على آراء ومقترحات الأعضاء</p>
-    </div>
-  </div>
-</section>
-
-<!-- TEAM -->
-<section class="team" id="team">
-  <div class="section-header reveal">
-    <div class="section-tag">من نحن</div>
-    <h2 class="section-title">فريق الإدارة</h2>
-  </div>
-  <div class="team-grid">
-    <div class="member-card reveal">
-      <div class="member-avatar"><i class="fas fa-crown" style="color:var(--teal)"></i></div>
-      <div class="member-role">المؤسس</div>
-      <div class="member-name">Mr Otako</div>
-      <div class="member-desc">مؤسس المجتمع والرؤية الأساسية</div>
-      <div class="member-social">
-        <a href="https://discord.gg/r9BbPeqgz" target="_blank"><i class="fab fa-discord"></i></a>
-        <a href="https://youtube.com/@mrotako-1k" target="_blank"><i class="fab fa-youtube"></i></a>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="breadcrumb" id="breadcrumb">
+        <i class="fas fa-home"></i>
+        <span>الرئيسية</span>
       </div>
     </div>
-    <div class="member-card reveal" style="transition-delay:.15s">
-      <div class="member-avatar"><i class="fas fa-shield-alt" style="color:var(--blue)"></i></div>
-      <div class="member-role">الإدارة</div>
-      <div class="member-name">Admin Team</div>
-      <div class="member-desc">فريق الإدارة المتميز والمتفاني</div>
-      <div class="member-social">
-        <a href="#"><i class="fab fa-discord"></i></a>
-        <a href="#"><i class="fas fa-envelope"></i></a>
+    <div class="topbar-right">
+      <div class="topbar-status">السيرفر شغّال</div>
+      <button class="btn-discord-login" onclick="showPage('login')">
+        <i class="fab fa-discord"></i> تسجيل الدخول
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== HOME PAGE ========== -->
+  <div class="page active" id="page-home">
+    <div class="hero-section">
+      <div class="hero-eyebrow">مجتمع الألعاب الأول • SA-MP • Gaming</div>
+      <h1 class="hero-title">
+        <span class="t1">FAMILY</span>
+        <span class="t2">OTAKO</span>
+      </h1>
+      <p class="hero-sub">
+        بورتال متكامل للاعبين والمطورين — انضم إلى مجتمعنا، شارك في التطوير، وعيش تجربة مختلفة كل يوم.
+      </p>
+      <div class="hero-actions">
+        <a href="https://discord.gg/r9BbPeqgz" target="_blank" class="btn-primary" onclick="showToast('🚀 جارٍ الانتقال...')">
+          <i class="fab fa-discord"></i> انضم للديسكورد
+        </a>
+        <button class="btn-outline" onclick="showPage('samp')">
+          <i class="fas fa-code"></i> قسم المطورين
+        </button>
+        <a href="https://youtube.com/@mrotako-1k" target="_blank" class="btn-outline" onclick="showToast('▶️ YouTube')">
+          <i class="fab fa-youtube"></i> يوتيوب
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="quick-stats">
+        <div class="qs-card reveal-up">
+          <i class="fas fa-users qs-icon"></i>
+          <div class="qs-num" id="membNum">...</div>
+          <div class="qs-label">عضو ديسكورد</div>
+        </div>
+        <div class="qs-card reveal-up" style="transition-delay:.1s">
+          <i class="fas fa-circle qs-icon" style="color:var(--online)"></i>
+          <div class="qs-num" id="onlineNum">...</div>
+          <div class="qs-label">أونلاين الآن</div>
+        </div>
+        <div class="qs-card reveal-up" style="transition-delay:.2s">
+          <i class="fas fa-code qs-icon" style="color:var(--samp)"></i>
+          <div class="qs-num">12</div>
+          <div class="qs-label">مشروع SA-MP</div>
+        </div>
+        <div class="qs-card reveal-up" style="transition-delay:.3s">
+          <i class="fas fa-star qs-icon" style="color:var(--c4)"></i>
+          <div class="qs-num">5.0</div>
+          <div class="qs-label">تقييم المجتمع</div>
+        </div>
       </div>
     </div>
-    <div class="member-card reveal" style="transition-delay:.3s">
-      <div class="member-avatar"><i class="fas fa-headset" style="color:var(--purple)"></i></div>
-      <div class="member-role">الدعم</div>
-      <div class="member-name">Support Team</div>
-      <div class="member-desc">دعم فني متاح على مدار الساعة</div>
-      <div class="member-social">
-        <a href="#"><i class="fab fa-discord"></i></a>
-        <a href="#"><i class="fas fa-envelope"></i></a>
+
+    <!-- Features Row -->
+    <div style="padding:0 50px 60px">
+      <div class="section-label reveal-up">ما يميّزنا</div>
+      <div class="cards-row">
+        <div class="info-card reveal-up">
+          <div class="info-card-head">
+            <div class="info-card-icon ic-green"><i class="fas fa-headset"></i></div>
+            <h4>دعم 24/7</h4>
+          </div>
+          <p>فريق دعم متواجد على مدار الساعة لحل مشاكلك والإجابة على تساؤلاتك</p>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>مستوى الرضا</span><span>98%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:98%"></div></div>
+          </div>
+        </div>
+        <div class="info-card reveal-up" style="transition-delay:.1s">
+          <div class="info-card-head">
+            <div class="info-card-icon ic-orange"><i class="fas fa-code"></i></div>
+            <h4>تطوير SA-MP</h4>
+          </div>
+          <p>موارد وسكريبتات حصرية لمطوري SA-MP مع شروحات ونماذج جاهزة للاستخدام</p>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>اكتمال المشاريع</span><span>85%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:85%;background:linear-gradient(90deg,var(--samp),var(--c4))"></div></div>
+          </div>
+        </div>
+        <div class="info-card reveal-up" style="transition-delay:.2s">
+          <div class="info-card-head">
+            <div class="info-card-icon ic-purple"><i class="fas fa-trophy"></i></div>
+            <h4>مسابقات وجوائز</h4>
+          </div>
+          <p>بطولات أسبوعية وشهرية بجوائز حقيقية لأفضل اللاعبين والمطورين</p>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>بطولات مكتملة</span><span>24+</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:75%;background:linear-gradient(90deg,#7000ff,#c084fc)"></div></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- CTA -->
-<section class="cta-section">
-  <div class="cta-box reveal">
-    <h2>مستعد للانضمام؟ 🎮</h2>
-    <p>انضم إلى مجتمعنا الآن وابدأ رحلتك مع آلاف اللاعبين من حولك</p>
-    <div class="cta-btns">
-      <a href="https://discord.gg/r9BbPeqgz" target="_blank" class="btn primary" onclick="showToast('🚀 Discord')">
-        <i class="fab fa-discord"></i> انضم إلى Discord
-      </a>
-      <a href="https://youtube.com/@mrotako-1k" target="_blank" class="btn secondary" onclick="showToast('▶️ YouTube')">
-        <i class="fab fa-youtube"></i> شاهد على YouTube
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer" id="footer">
-  <div class="footer-top">
-    <div class="footer-brand">
-      <div class="logo" style="margin-bottom:0">
-        <div class="logo-icon" style="width:36px;height:36px;font-size:1em"><i class="fab fa-discord" style="color:#000"></i></div>
-        <span class="logo-text">Family Otako</span>
+  <!-- ========== SA-MP DEV PAGE ========== -->
+  <div class="page" id="page-samp">
+    <div class="dev-page">
+      <div class="page-header reveal-up">
+        <div class="page-header-text">
+          <div class="section-label">SA-MP Development Hub</div>
+          <h2>مركز تطوير SA-MP</h2>
+          <p>سكريبتات، موارد، وأدوات للمطورين — كل شيء في مكان واحد</p>
+        </div>
+        <button class="btn-primary" onclick="showToast('📋 تم نسخ رابط السيرفر')">
+          <i class="fas fa-server"></i> ip السيرفر
+        </button>
       </div>
-      <p>مجتمع الألعاب الأكبر في المنطقة. نجمع اللاعبين ونبني تجارب لا تُنسى معاً.</p>
-      <div class="footer-social">
-        <a href="https://discord.gg/r9BbPeqgz" target="_blank"><i class="fab fa-discord"></i></a>
-        <a href="https://youtube.com/@mrotako-1k" target="_blank"><i class="fab fa-youtube"></i></a>
-        <a href="#"><i class="fab fa-twitch"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
+
+      <!-- Terminal Demo -->
+      <div class="terminal reveal-up">
+        <div class="terminal-bar">
+          <div class="t-dot r"></div>
+          <div class="t-dot y"></div>
+          <div class="t-dot g"></div>
+          <span class="terminal-title">gamemode.pwn — Family Otako SA-MP</span>
+        </div>
+        <div class="terminal-body">
+<span class="t-line"><span class="t-comment">// Family Otako — Main Gamemode v3.0</span></span>
+<span class="t-line"><span class="t-comment">// Developed by Mr Otako & Dev Team</span></span>
+<span class="t-line"> </span>
+<span class="t-line"><span class="t-keyword">#include</span> <span class="t-str">&lt;a_samp&gt;</span></span>
+<span class="t-line"><span class="t-keyword">#include</span> <span class="t-str">&lt;streamer&gt;</span></span>
+<span class="t-line"><span class="t-keyword">#include</span> <span class="t-str">&lt;sscanf2&gt;</span></span>
+<span class="t-line"> </span>
+<span class="t-line"><span class="t-keyword">main</span><span class="t-op">()</span> <span class="t-op">{</span></span>
+<span class="t-line">  <span class="t-func">print</span><span class="t-op">(</span><span class="t-str">"Family Otako Server Loading..."</span><span class="t-op">);</span></span>
+<span class="t-line">  <span class="t-func">print</span><span class="t-op">(</span><span class="t-str">"discord.gg/r9BbPeqgz"</span><span class="t-op">);</span></span>
+<span class="t-line"><span class="t-op">}</span></span>
+<span class="t-line"> </span>
+<span class="t-line"><span class="t-keyword">public</span> <span class="t-func">OnGameModeInit</span><span class="t-op">() {</span></span>
+<span class="t-line">  <span class="t-func">SetGameModeText</span><span class="t-op">(</span><span class="t-str">"Family Otako RPG"</span><span class="t-op">);</span></span>
+<span class="t-line">  <span class="t-func">AddPlayerClass</span><span class="t-op">(</span><span class="t-num">0</span><span class="t-op">,</span> <span class="t-num">1958.3783</span><span class="t-op">,</span> <span class="t-num">1343.1572</span><span class="t-op">,</span> <span class="t-num">15.3746</span><span class="t-op">,</span> <span class="t-num">269.1425</span><span class="t-op">,</span> <span class="t-num">0</span><span class="t-op">,</span> <span class="t-num">0</span><span class="t-op">,</span> <span class="t-num">0</span><span class="t-op">,</span> <span class="t-num">0</span><span class="t-op">,</span> <span class="t-num">0</span><span class="t-op">,</span> <span class="t-num">0</span><span class="t-op">);</span></span>
+<span class="t-line">  <span class="t-keyword">return</span> <span class="t-num">1</span><span class="t-op">;</span></span>
+<span class="t-line"><span class="t-op">}</span></span>
+<span class="t-line"> </span>
+<span class="t-line"><span class="t-keyword">public</span> <span class="t-func">OnPlayerConnect</span><span class="t-op">(</span><span class="t-var">playerid</span><span class="t-op">) {</span></span>
+<span class="t-line">  <span class="t-func">SendClientMessage</span><span class="t-op">(</span><span class="t-var">playerid</span><span class="t-op">,</span> <span class="t-num">0x00FFE1FF</span><span class="t-op">,</span> <span class="t-str">"[Family Otako] مرحباً بك!"</span><span class="t-op">);</span></span>
+<span class="t-line">  <span class="t-keyword">return</span> <span class="t-num">1</span><span class="t-op">;</span></span>
+<span class="t-line"><span class="t-op">}</span><span class="t-cursor"></span></span>
+        </div>
+      </div>
+
+      <!-- Dev Resources -->
+      <div class="section-label reveal-up" style="margin-bottom:20px">الموارد المتاحة</div>
+      <div class="dev-grid reveal-up">
+        <div class="dev-card" onclick="showToast('📥 جاري التحميل...')">
+          <div class="dev-card-icon"><i class="fas fa-download"></i></div>
+          <h4>Base Gamemode</h4>
+          <p>قاعدة جيم مود متكاملة مع نظام تسجيل، تخزين MySQL، وأحداث جاهزة</p>
+          <span class="dev-card-badge">PAWN • MySQL</span>
+        </div>
+        <div class="dev-card" onclick="showToast('📥 جاري التحميل...')">
+          <div class="dev-card-icon"><i class="fas fa-lock"></i></div>
+          <h4>نظام التسجيل</h4>
+          <p>سكريبت تسجيل دخول احترافي مع Dialog وحماية SHA256 وتخزين آمن</p>
+          <span class="dev-card-badge">bcrypt • Dialog</span>
+        </div>
+        <div class="dev-card" onclick="showToast('📥 جاري التحميل...')">
+          <div class="dev-card-icon"><i class="fas fa-map"></i></div>
+          <h4>خرائط وتكسي</h4>
+          <p>نظام تاكسي ذكي مع خرائط محدّثة وتتبع مسار اللاعبين في الوقت الحقيقي</p>
+          <span class="dev-card-badge">Streamer • GPS</span>
+        </div>
+        <div class="dev-card" onclick="showToast('📥 جاري التحميل...')">
+          <div class="dev-card-icon"><i class="fas fa-database"></i></div>
+          <h4>MySQL Helper</h4>
+          <p>مكتبة مساعدة لتبسيط استعلامات MySQL مع دعم async ومنع SQL Injection</p>
+          <span class="dev-card-badge">MySQL R41-4</span>
+        </div>
+        <div class="dev-card" onclick="showToast('📥 جاري التحميل...')">
+          <div class="dev-card-icon"><i class="fas fa-shield-alt"></i></div>
+          <h4>Anti-Cheat</h4>
+          <p>نظام مكافحة غش متقدم يكتشف الهاكر والفلود والتلاعب في البيانات</p>
+          <span class="dev-card-badge">Advanced • Auto</span>
+        </div>
+        <div class="dev-card" onclick="showToast('📥 جاري التحميل...')">
+          <div class="dev-card-icon"><i class="fas fa-comments"></i></div>
+          <h4>نظام تشات متقدم</h4>
+          <p>تشات بالألوان والرتب مع دعم PM وChannel Chat وفلترة الكلمات</p>
+          <span class="dev-card-badge">Custom • Colors</span>
+        </div>
+      </div>
+
+      <!-- Code Snippets -->
+      <div class="section-label reveal-up" style="margin-bottom:20px">سكريبتات جاهزة</div>
+      <div class="snippets-grid reveal-up">
+        <div class="snippet-card">
+          <div class="snippet-header">
+            <span class="snippet-title"><i class="fas fa-code" style="color:var(--samp)"></i> رسالة ترحيب</span>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="snippet-lang">PAWN</span>
+              <button class="copy-btn" onclick="copyCode(this,'welcome-code')">نسخ</button>
+            </div>
+          </div>
+          <div class="snippet-code" id="welcome-code"><span class="t-keyword">public</span> <span class="t-func">OnPlayerConnect</span>(<span class="t-var">playerid</span>) {
+  <span class="t-keyword">new</span> <span class="t-var">name</span>[<span class="t-num">24</span>], <span class="t-var">msg</span>[<span class="t-num">128</span>];
+  <span class="t-func">GetPlayerName</span>(<span class="t-var">playerid</span>, <span class="t-var">name</span>, <span class="t-num">24</span>);
+  <span class="t-func">format</span>(<span class="t-var">msg</span>, <span class="t-num">128</span>,
+    <span class="t-str">"مرحباً %s في Family Otako!"</span>,
+    <span class="t-var">name</span>);
+  <span class="t-func">SendClientMessage</span>(<span class="t-var">playerid</span>,
+    <span class="t-num">0x00FFE1FF</span>, <span class="t-var">msg</span>);
+  <span class="t-keyword">return</span> <span class="t-num">1</span>;
+}</div>
+        </div>
+
+        <div class="snippet-card">
+          <div class="snippet-header">
+            <span class="snippet-title"><i class="fas fa-code" style="color:var(--samp)"></i> أمر /heal</span>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="snippet-lang">PAWN</span>
+              <button class="copy-btn" onclick="copyCode(this,'heal-code')">نسخ</button>
+            </div>
+          </div>
+          <div class="snippet-code" id="heal-code"><span class="t-keyword">CMD</span>:<span class="t-func">heal</span>(<span class="t-var">playerid</span>, <span class="t-var">params</span>[]) {
+  <span class="t-keyword">new</span> <span class="t-var">Float</span>:<span class="t-var">hp</span>;
+  <span class="t-func">GetPlayerHealth</span>(<span class="t-var">playerid</span>, <span class="t-var">hp</span>);
+  <span class="t-keyword">if</span>(<span class="t-var">hp</span> >= <span class="t-num">100.0</span>)
+    <span class="t-keyword">return</span> <span class="t-func">SendMsg</span>(<span class="t-var">playerid</span>,
+      <span class="t-str">"صحتك ممتلئة!"</span>);
+  <span class="t-func">SetPlayerHealth</span>(<span class="t-var">playerid</span>, <span class="t-num">100.0</span>);
+  <span class="t-func">SendMsg</span>(<span class="t-var">playerid</span>, <span class="t-str">"تم الشفاء ✓"</span>);
+  <span class="t-keyword">return</span> <span class="t-num">1</span>;
+}</div>
+        </div>
       </div>
     </div>
-    <div class="footer-col">
-      <h5>Discord</h5>
-      <ul>
-        <li><a href="https://discord.gg/r9BbPeqgz" target="_blank">انضم الآن</a></li>
-        <li><a href="#">القوانين</a></li>
-        <li><a href="#">الأدوار</a></li>
-        <li><a href="#">القنوات</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>YouTube</h5>
-      <ul>
-        <li><a href="https://youtube.com/@mrotako-1k" target="_blank">القناة</a></li>
-        <li><a href="#">آخر الفيديوهات</a></li>
-        <li><a href="#">الاشتراك</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>معلومات</h5>
-      <ul>
-        <li><a href="#">عن المجتمع</a></li>
-        <li><a href="#">الشروط والأحكام</a></li>
-        <li><a href="#">سياسة الخصوصية</a></li>
-        <li><a href="#">تواصل معنا</a></li>
-      </ul>
-    </div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2026 Family Otako — جميع الحقوق محفوظة</span>
-    <span>صُنع بـ <i class="fas fa-heart" style="color:var(--pink)"></i> من فريق Family Otako | v2.0</span>
-  </div>
-</footer>
 
-<div id="toast"></div>
+  <!-- ========== MEMBERS PAGE ========== -->
+  <div class="page" id="page-members">
+    <div class="members-page">
+      <div class="page-header reveal-up">
+        <div class="page-header-text">
+          <div class="section-label">Community</div>
+          <h2>أعضاء المجتمع</h2>
+          <p>تعرف على فريق Family Otako</p>
+        </div>
+      </div>
+
+      <div class="members-filters reveal-up">
+        <button class="filter-btn active" onclick="filterMembers(this,'all')">الكل</button>
+        <button class="filter-btn" onclick="filterMembers(this,'owner')">المؤسس</button>
+        <button class="filter-btn" onclick="filterMembers(this,'admin')">الإدارة</button>
+        <button class="filter-btn" onclick="filterMembers(this,'mod')">المشرفون</button>
+        <button class="filter-btn" onclick="filterMembers(this,'dev')">المطورون</button>
+        <button class="filter-btn" onclick="filterMembers(this,'member')">الأعضاء</button>
+      </div>
+
+      <div class="members-grid" id="membersGrid">
+        <!-- Generated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== LOGIN PAGE ========== -->
+  <div class="page" id="page-login">
+    <div class="login-page">
+      <div class="login-container">
+
+        <!-- NOT LOGGED IN -->
+        <div id="loginBox">
+          <div class="login-card reveal-up">
+            <div class="login-logo"><i class="fab fa-discord"></i></div>
+            <h2 class="login-title">أهلاً بك</h2>
+            <p class="login-sub">
+              سجّل دخولك عبر Discord للوصول إلى جميع ميزات البورتال
+            </p>
+
+            <button class="discord-btn" onclick="simulateLogin()">
+              <i class="fab fa-discord"></i>
+              تسجيل الدخول بـ Discord
+            </button>
+
+            <div class="login-divider">أو انضم مباشرة</div>
+
+            <a href="https://discord.gg/r9BbPeqgz" target="_blank" class="btn-outline" style="width:100%;justify-content:center">
+              <i class="fab fa-discord"></i> انضم إلى السيرفر
+            </a>
+
+            <div class="login-features">
+              <div class="login-feat">
+                <i class="fas fa-check-circle"></i>
+                <span>وصول كامل لقسم المطورين</span>
+              </div>
+              <div class="login-feat">
+                <i class="fas fa-check-circle"></i>
+                <span>تتبع إحصاءاتك في SA-MP</span>
+              </div>
+              <div class="login-feat">
+                <i class="fas fa-check-circle"></i>
+                <span>مشاركة في المسابقات والأحداث</span>
+              </div>
+              <div class="login-feat">
+                <i class="fas fa-shield-alt"></i>
+                <span>بياناتك محمية وآمنة تماماً</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOGGED IN STATE (hidden by default) -->
+        <div id="profileBox" style="display:none">
+          <div class="section-label reveal-up" style="margin-bottom:20px">ملفك الشخصي</div>
+          <div class="user-profile reveal-up">
+            <div class="user-avatar">🎮</div>
+            <div>
+              <div class="user-name" id="uName">Mr Otako</div>
+              <div class="user-role"><i class="fas fa-crown"></i> مؤسس المجتمع</div>
+            </div>
+            <button class="btn-outline" style="margin-right:auto;padding:8px 18px;font-size:.85em" onclick="simulateLogout()">
+              <i class="fas fa-sign-out-alt"></i> خروج
+            </button>
+          </div>
+
+          <div class="user-stats reveal-up">
+            <div class="us-item">
+              <div class="us-val">142</div>
+              <div class="us-key">ساعة لعب</div>
+            </div>
+            <div class="us-item">
+              <div class="us-val">8</div>
+              <div class="us-key">مشاريع</div>
+            </div>
+            <div class="us-item">
+              <div class="us-val">#1</div>
+              <div class="us-key">الترتيب</div>
+            </div>
+          </div>
+
+          <div style="margin-top:25px">
+            <div class="section-label" style="margin-bottom:15px">إحصاءات SA-MP</div>
+            <div class="info-card">
+              <div class="progress-wrap">
+                <div class="progress-label"><span>مستوى اللاعب</span><span>Level 42</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+              </div>
+              <div class="progress-wrap" style="margin-top:15px">
+                <div class="progress-label"><span>نقاط الخبرة</span><span>8,400 / 10,000</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:84%;background:linear-gradient(90deg,var(--samp),var(--c4))"></div></div>
+              </div>
+              <div class="progress-wrap" style="margin-top:15px">
+                <div class="progress-label"><span>سمعة المجتمع</span><span>99%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:99%;background:linear-gradient(90deg,var(--c3),var(--c2))"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- TOAST -->
+<div id="toastEl" style="
+  position:fixed;bottom:30px;left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:rgba(6,9,26,.97);
+  border:1px solid var(--border2);
+  color:#fff;padding:13px 25px;
+  border-radius:12px;opacity:0;
+  transition:.35s cubic-bezier(.34,1.56,.64,1);
+  z-index:9999;font-size:.88em;font-weight:600;
+  backdrop-filter:blur(20px);
+  box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 30px rgba(0,255,225,.1);
+  display:flex;align-items:center;gap:10px;pointer-events:none;
+  white-space:nowrap;
+"></div>
 
 <script>
-// ---- CURSOR ----
-const cursor = document.getElementById('cursor');
-const follower = document.getElementById('cursorFollower');
-let mx=0,my=0,fx=0,fy=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cursor.style.left=mx-6+'px';cursor.style.top=my-6+'px';
-});
-setInterval(()=>{
-  fx+=(mx-fx)*.12;fy+=(my-fy)*.12;
-  follower.style.left=fx-18+'px';follower.style.top=fy-18+'px';
-},16);
-document.querySelectorAll('a,button').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{
-    cursor.style.transform='scale(2.5)';
-    follower.style.opacity='0.4';
-  });
-  el.addEventListener('mouseleave',()=>{
-    cursor.style.transform='scale(1)';
-    follower.style.opacity='1';
-  });
-});
+/* ===================================
+   PARTICLES
+=================================== */
+(function(){
+  const c=document.getElementById('particles');
+  const ctx=c.getContext('2d');
+  let W,H,pts=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  class P{
+    constructor(){this.reset();}
+    reset(){
+      this.x=Math.random()*W;this.y=Math.random()*H;
+      this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;
+      this.r=Math.random()*1.5+.5;this.a=Math.random()*.4+.1;
+      this.c=Math.random()>.5?'0,255,225':'112,0,255';
+    }
+    update(){
+      this.x+=this.vx;this.y+=this.vy;
+      if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();
+    }
+    draw(){
+      ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${this.c},${this.a})`;ctx.fill();
+    }
+  }
+  for(let i=0;i<80;i++)pts.push(new P());
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{p.update();p.draw();});
+    pts.forEach((a,i)=>{
+      pts.slice(i+1).forEach(b=>{
+        const d=Math.hypot(a.x-b.x,a.y-b.y);
+        if(d<100){
+          ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+          ctx.strokeStyle=`rgba(0,255,225,${(1-d/100)*.06})`;
+          ctx.lineWidth=.5;ctx.stroke();
+        }
+      });
+    });
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
 
-// ---- MOBILE MENU ----
-document.getElementById('toggleBtn').addEventListener('click',function(){
-  const nl=document.getElementById('navLinks');
-  const open=nl.style.display==='flex';
-  nl.style.display=open?'none':'flex';
-  nl.style.flexDirection='column';
-  nl.style.position='absolute';
-  nl.style.top='70px';nl.style.left='0';nl.style.right='0';
-  nl.style.background='rgba(5,10,26,.98)';
-  nl.style.padding='20px 25px';
-  nl.style.borderBottom='1px solid rgba(0,255,213,.1)';
-  nl.style.backdropFilter='blur(20px)';
-  if(open)nl.style.display='none';
-});
-
-// ---- REVEAL ON SCROLL ----
-const revealObserver=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
-},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
-
-// ---- COUNTER ANIMATION ----
-function animateCount(el,target,duration=1800){
-  const start=performance.now();
-  const startVal=0;
-  const step=ts=>{
-    const p=Math.min((ts-start)/duration,1);
-    const ease=p<.5?2*p*p:(4-2*p)*p-1;
-    el.textContent=Math.floor(startVal+(target-startVal)*ease).toLocaleString('ar-EG');
-    if(p<1)requestAnimationFrame(step);
-    else el.textContent=target.toLocaleString('ar-EG');
-  };
-  requestAnimationFrame(step);
+/* ===================================
+   PAGES
+=================================== */
+const pages={
+  home:'الرئيسية',
+  samp:'SA-MP Developer',
+  members:'الأعضاء',
+  login:'تسجيل الدخول'
+};
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('nav-'+id)?.classList.add('active');
+  document.getElementById('breadcrumb').innerHTML=
+    `<i class="fas fa-home"></i> <span>${pages[id]||id}</span>`;
+  // re-run reveals
+  setTimeout(()=>{
+    document.querySelectorAll('.reveal-up').forEach(el=>{
+      el.classList.remove('shown');
+      requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('shown')));
+    });
+  },50);
 }
 
-// Views counter
-let views=0;
-try{views=parseInt(localStorage.getItem('fo_views')||'0')+1;localStorage.setItem('fo_views',views);}catch(e){}
-const statsObserver=new IntersectionObserver(entries=>{
-  if(entries[0].isIntersecting){
-    animateCount(document.getElementById('viewsCount'),views||1);
-    statsObserver.disconnect();
-  }
-},{threshold:.3});
-statsObserver.observe(document.getElementById('stats'));
+/* ===================================
+   MEMBERS DATA
+=================================== */
+const membersData=[
+  {name:'Mr Otako',role:'مؤسس',badge:'role-owner',icon:'👑',status:'online'},
+  {name:'Admin_01',role:'مدير',badge:'role-admin',icon:'🛡️',status:'online'},
+  {name:'Admin_02',role:'مدير',badge:'role-admin',icon:'🛡️',status:'gaming'},
+  {name:'Mod_X',role:'مشرف',badge:'role-mod',icon:'⚡',status:'online'},
+  {name:'Mod_Y',role:'مشرف',badge:'role-mod',icon:'⚡',status:'offline'},
+  {name:'DevPro',role:'مطور',badge:'role-dev',icon:'💻',status:'online'},
+  {name:'CodeMaster',role:'مطور',badge:'role-dev',icon:'💻',status:'gaming'},
+  {name:'Player1',role:'عضو',badge:'role-member',icon:'🎮',status:'online'},
+  {name:'Player2',role:'عضو',badge:'role-member',icon:'🎮',status:'offline'},
+  {name:'Player3',role:'عضو',badge:'role-member',icon:'🎮',status:'gaming'},
+  {name:'Player4',role:'عضو',badge:'role-member',icon:'🎮',status:'online'},
+  {name:'Player5',role:'عضو',badge:'role-member',icon:'🎮',status:'offline'},
+];
+function renderMembers(filter='all'){
+  const grid=document.getElementById('membersGrid');
+  const filtered=filter==='all'?membersData:membersData.filter(m=>{
+    const map={owner:'role-owner',admin:'role-admin',mod:'role-mod',dev:'role-dev',member:'role-member'};
+    return m.badge===map[filter];
+  });
+  grid.innerHTML=filtered.map(m=>`
+    <div class="member-tile reveal-up" onclick="showToast('👤 ${m.name}')">
+      <div class="tile-avatar">
+        ${m.icon}
+        <div class="status-dot ${m.status}"></div>
+      </div>
+      <div class="tile-name">${m.name}</div>
+      <div class="tile-role">${m.status==='online'?'🟢 أونلاين':m.status==='gaming'?'🟡 يلعب':'⚫ أوفلاين'}</div>
+      <div class="tile-role-badge ${m.badge}">${m.role}</div>
+    </div>
+  `).join('');
+  setTimeout(()=>{
+    document.querySelectorAll('.reveal-up').forEach((el,i)=>{
+      el.style.transitionDelay=i*.05+'s';
+      el.classList.add('shown');
+    });
+  },100);
+}
+function filterMembers(btn,f){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMembers(f);
+}
 
-// Discord members
-fetch("https://discord.com/api/v9/invites/r9BbPeqgz?with_counts=true")
-  .then(r=>r.json())
-  .then(d=>{
-    const count=d.approximate_member_count||0;
-    if(count>0)animateCount(document.getElementById('membersCount'),count);
-    else document.getElementById('membersCount').textContent='N/A';
-  })
-  .catch(()=>document.getElementById('membersCount').textContent='N/A');
+/* ===================================
+   DISCORD LOGIN SIMULATION
+=================================== */
+function simulateLogin(){
+  showToast('🔐 جارٍ تسجيل الدخول عبر Discord...');
+  setTimeout(()=>{
+    document.getElementById('loginBox').style.display='none';
+    document.getElementById('profileBox').style.display='block';
+    document.querySelector('.topbar-right .btn-discord-login').innerHTML=
+      '<i class="fas fa-user"></i> Mr Otako';
+    document.querySelector('.topbar-right .btn-discord-login').style.background='rgba(0,255,225,.1)';
+    document.querySelector('.topbar-right .btn-discord-login').style.border='1px solid var(--border2)';
+    document.querySelector('.topbar-right .btn-discord-login').style.color='var(--c1)';
+    showToast('✅ مرحباً Mr Otako!');
+    setTimeout(()=>{
+      document.querySelectorAll('#profileBox .reveal-up').forEach((el,i)=>{
+        el.style.transitionDelay=i*.1+'s';el.classList.add('shown');
+      });
+    },200);
+  },1500);
+}
+function simulateLogout(){
+  document.getElementById('loginBox').style.display='block';
+  document.getElementById('profileBox').style.display='none';
+  const btn=document.querySelector('.topbar-right .btn-discord-login');
+  btn.innerHTML='<i class="fab fa-discord"></i> تسجيل الدخول';
+  btn.style.background='var(--discord)';btn.style.border='none';btn.style.color='#fff';
+  showToast('👋 تم تسجيل الخروج');
+}
 
-// ---- TOAST ----
+/* ===================================
+   COPY CODE
+=================================== */
+function copyCode(btn,id){
+  const el=document.getElementById(id);
+  const text=el.innerText||el.textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='✓ تم';btn.style.color='var(--online)';
+    setTimeout(()=>{btn.textContent='نسخ';btn.style.color='';},2000);
+  });
+  showToast('📋 تم نسخ الكود');
+}
+
+/* ===================================
+   TOAST
+=================================== */
 let toastTimer;
 function showToast(msg){
-  const t=document.getElementById('toast');
-  t.innerHTML=`<i class="fas fa-check-circle" style="color:var(--teal)"></i> ${msg}`;
+  const t=document.getElementById('toastEl');
+  t.textContent=msg;
   t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';
   clearTimeout(toastTimer);
   toastTimer=setTimeout(()=>{
     t.style.opacity='0';t.style.transform='translateX(-50%) translateY(20px)';
-  },2500);
+  },2800);
 }
 
-// ---- SMOOTH SCROLL ----
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',function(e){
-    const target=document.querySelector(this.getAttribute('href'));
-    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth'});}
+/* ===================================
+   DISCORD API
+=================================== */
+fetch('https://discord.com/api/v9/invites/r9BbPeqgz?with_counts=true')
+  .then(r=>r.json()).then(d=>{
+    const m=d.approximate_member_count||'N/A';
+    const o=d.approximate_presence_count||'N/A';
+    document.getElementById('membNum').textContent=typeof m==='number'?m.toLocaleString('ar-EG'):m;
+    document.getElementById('onlineNum').textContent=typeof o==='number'?o.toLocaleString('ar-EG'):o;
+  }).catch(()=>{
+    document.getElementById('membNum').textContent='N/A';
+    document.getElementById('onlineNum').textContent='N/A';
   });
+
+/* ===================================
+   REVEAL ON SCROLL
+=================================== */
+const revObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('shown');});
+},{threshold:.1});
+function observeAll(){
+  document.querySelectorAll('.reveal-up').forEach(el=>revObs.observe(el));
+}
+observeAll();
+
+/* ===================================
+   INIT
+=================================== */
+window.addEventListener('load',()=>{
+  renderMembers();
+  document.querySelectorAll('.reveal-up').forEach((el,i)=>{
+    el.style.transitionDelay=i*.07+'s';
+  });
+  setTimeout(()=>{
+    document.querySelectorAll('#page-home .reveal-up').forEach(el=>el.classList.add('shown'));
+  },200);
 });
 </script>
 </body>
