@@ -270,9 +270,12 @@ canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
 const WEBHOOK_URL = "https://discord.com/api/webhooks/1482794405575266364/BCHR_Lh1iIB2jloU6jrIHBy9uU0QPDJuGV1g1Vpq6Y8b4yDDzqTBANvRC26Rqf2knF17";
 
-// مفتاح التخزين المحلي
-const STORAGE_KEY = "https://discord.gg/qHaTA54EQ";
-const RENEWAL_DAYS = 5; // عدد الأيام قبل التجديد
+// مفتاح التخزين المحلي (مفتاح بسيط، مش رابط)
+const STORAGE_KEY = "family_otako_invite";
+const RENEWAL_DAYS = 5;
+
+// الرابط الحالي للدعوة
+const CURRENT_INVITE_CODE = "K3BJEGnMK";
 
 // ── دالة تحميل/حفظ بيانات الدعوة من localStorage ──
 function loadInviteData() {
@@ -308,11 +311,10 @@ function formatCountdown(ms) {
 async function notifyWebhook(inviteCode, renewedAt) {
   const msg = {
     username: "Family Otako - Link Manager",
-    avatar_url: "https://cdn.discordapp.com/emojis/1234567890.png",
     embeds: [{
       title: "🔄 تم تجديد رابط الدعوة",
       description: `تم تحديث رابط السيرفر تلقائياً`,
-      color: 5793266, // #5865F2
+      color: 5793266,
       fields: [
         {
           name: "🔗 الرابط الجديد",
@@ -350,19 +352,12 @@ async function notifyWebhook(inviteCode, renewedAt) {
   }
 }
 
-// ── إنشاء رابط دعوة جديد عبر API ──
-// ملاحظة: هذا يتطلب Bot Token لإنشاء Invite حقيقي.
-// هنا نستخدم الرابط الثابت مع إرسال إشعار التجديد عبر الويبهوك.
-// لتجديد تلقائي كامل، يجب استخدام خادم (server-side) مع Bot Token.
+// ── تجديد الرابط ──
 async function renewInvite() {
-  // الرابط الحالي الثابت — سيتم استبداله بالرابط الجديد عند التجديد
-  const currentCode = "ThChbCR8x";
   const now = Date.now();
-
-  saveInviteData(currentCode, now);
-  await notifyWebhook(currentCode, now);
-
-  return currentCode;
+  saveInviteData(CURRENT_INVITE_CODE, now);
+  await notifyWebhook(CURRENT_INVITE_CODE, now);
+  return CURRENT_INVITE_CODE;
 }
 
 // ── تحديث زر Discord ──
@@ -382,27 +377,23 @@ function updateCountdownUI(timestamp) {
 // ── المنطق الرئيسي ──
 async function initInviteSystem() {
   let data = loadInviteData();
-  const now = Date.now();
 
   // إذا لا يوجد بيانات أو انتهت صلاحية 5 أيام → جدد
   if (!data || timeUntilRenewal(data.timestamp) <= 0) {
     const code = await renewInvite();
-    data = loadInviteData(); // أعد القراءة بعد الحفظ
+    data = loadInviteData();
     applyInviteCode(code);
   } else {
     applyInviteCode(data.code);
   }
 
-  // حدّث العداد فوراً
   if (data) updateCountdownUI(data.timestamp);
 
-  // عداد تنازلي يتحدث كل دقيقة
   setInterval(() => {
     const d = loadInviteData();
     if (!d) return;
 
     if (timeUntilRenewal(d.timestamp) <= 0) {
-      // حان وقت التجديد
       renewInvite().then(code => {
         applyInviteCode(code);
         const fresh = loadInviteData();
@@ -411,10 +402,9 @@ async function initInviteSystem() {
     } else {
       updateCountdownUI(d.timestamp);
     }
-  }, 60 * 1000); // كل دقيقة
+  }, 60 * 1000);
 }
 
-// شغّل النظام عند تحميل الصفحة
 initInviteSystem();
 
 /* ══════════════════════════════════════════════
