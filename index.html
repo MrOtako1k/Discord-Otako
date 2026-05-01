@@ -175,17 +175,6 @@ canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
 }
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
 
-/* Invite refresh badge */
-.refresh-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(88,101,242,.1);border:1px solid rgba(88,101,242,.2);
-  color:rgba(180,185,255,.7);
-  padding:4px 12px;border-radius:50px;
-  font-size:.7em;font-weight:500;
-  margin-bottom:14px;
-}
-.refresh-badge i{font-size:.85em;opacity:.7;}
-
 /* Footer */
 .footer-note{
   margin-top:34px;
@@ -227,22 +216,16 @@ canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
     السيرفر شغّال الآن
   </div>
 
-  <!-- Invite refresh info -->
-  <div class="refresh-badge" id="refreshBadge">
-    <i class="fas fa-sync-alt"></i>
-    <span id="refreshCountdown">جاري تحميل الرابط...</span>
-  </div>
-
   <div class="divider"></div>
 
   <!-- Links -->
   <div class="links">
 
-    <a href="#" id="discordBtn" target="_blank" class="link-btn btn-discord">
+    <a href="https://discord.gg/ESJDKPKX" target="_blank" class="link-btn btn-discord">
       <div class="btn-icon discord-icon"><i class="fab fa-discord"></i></div>
       <div class="btn-text">
         <span class="btn-title">سيرفر Discord</span>
-        <span class="btn-desc" id="discordBtnDesc">انضم للمجتمع الآن</span>
+        <span class="btn-desc">انضم للمجتمع الآن</span>
       </div>
       <i class="fas fa-arrow-left btn-arrow"></i>
     </a>
@@ -263,153 +246,7 @@ canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
 </div>
 
 <script>
-/* ══════════════════════════════════════════════
-   🔗 Discord Invite Auto-Renewal System
-   يتجدد الرابط كل 5 أيام تلقائياً عبر Webhook
-   ══════════════════════════════════════════════ */
-
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1482794405575266364/BCHR_Lh1iIB2jloU6jrIHBy9uU0QPDJuGV1g1Vpq6Y8b4yDDzqTBANvRC26Rqf2knF17";
-
-// مفتاح التخزين المحلي (مفتاح بسيط، مش رابط)
-const STORAGE_KEY = "family_otako_invite";
-const RENEWAL_DAYS = 5;
-
-// الرابط الحالي للدعوة
-const CURRENT_INVITE_CODE = "K3BJEGnMK";
-
-// ── دالة تحميل/حفظ بيانات الدعوة من localStorage ──
-function loadInviteData() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    return JSON.parse(raw);
-  } catch(e) { return null; }
-}
-
-function saveInviteData(code, timestamp) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({ code, timestamp }));
-}
-
-// ── حساب باقي الوقت حتى التجديد ──
-function timeUntilRenewal(timestamp) {
-  const renewalMs = RENEWAL_DAYS * 24 * 60 * 60 * 1000;
-  const elapsed = Date.now() - timestamp;
-  return Math.max(0, renewalMs - elapsed);
-}
-
-function formatCountdown(ms) {
-  if (ms <= 0) return "يجري التجديد الآن...";
-  const days  = Math.floor(ms / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const mins  = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
-  if (days > 0)  return `يتجدد بعد ${days} يوم و${hours} ساعة`;
-  if (hours > 0) return `يتجدد بعد ${hours} ساعة و${mins} دقيقة`;
-  return `يتجدد بعد ${mins} دقيقة`;
-}
-
-// ── إرسال إشعار عبر Webhook ──
-async function notifyWebhook(inviteCode, renewedAt) {
-  const msg = {
-    username: "Family Otako - Link Manager",
-    embeds: [{
-      title: "🔄 تم تجديد رابط الدعوة",
-      description: `تم تحديث رابط السيرفر تلقائياً`,
-      color: 5793266,
-      fields: [
-        {
-          name: "🔗 الرابط الجديد",
-          value: `https://discord.gg/${inviteCode}`,
-          inline: false
-        },
-        {
-          name: "📅 وقت التجديد",
-          value: new Date(renewedAt).toLocaleString("ar-SA", {
-            timeZone: "Asia/Riyadh",
-            dateStyle: "full",
-            timeStyle: "short"
-          }),
-          inline: false
-        },
-        {
-          name: "⏳ التجديد القادم",
-          value: `بعد ${RENEWAL_DAYS} أيام`,
-          inline: true
-        }
-      ],
-      footer: { text: "Family Otako • نظام إدارة الروابط" },
-      timestamp: new Date(renewedAt).toISOString()
-    }]
-  };
-
-  try {
-    await fetch(WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(msg)
-    });
-  } catch(e) {
-    console.warn("⚠️ فشل إرسال إشعار الويبهوك:", e.message);
-  }
-}
-
-// ── تجديد الرابط ──
-async function renewInvite() {
-  const now = Date.now();
-  saveInviteData(CURRENT_INVITE_CODE, now);
-  await notifyWebhook(CURRENT_INVITE_CODE, now);
-  return CURRENT_INVITE_CODE;
-}
-
-// ── تحديث زر Discord ──
-function applyInviteCode(code) {
-  const btn = document.getElementById("discordBtn");
-  if (btn) btn.href = `https://discord.gg/${code}`;
-}
-
-// ── تحديث عداد التجديد في الواجهة ──
-function updateCountdownUI(timestamp) {
-  const el = document.getElementById("refreshCountdown");
-  if (!el) return;
-  const ms = timeUntilRenewal(timestamp);
-  el.textContent = formatCountdown(ms);
-}
-
-// ── المنطق الرئيسي ──
-async function initInviteSystem() {
-  let data = loadInviteData();
-
-  // إذا لا يوجد بيانات أو انتهت صلاحية 5 أيام → جدد
-  if (!data || timeUntilRenewal(data.timestamp) <= 0) {
-    const code = await renewInvite();
-    data = loadInviteData();
-    applyInviteCode(code);
-  } else {
-    applyInviteCode(data.code);
-  }
-
-  if (data) updateCountdownUI(data.timestamp);
-
-  setInterval(() => {
-    const d = loadInviteData();
-    if (!d) return;
-
-    if (timeUntilRenewal(d.timestamp) <= 0) {
-      renewInvite().then(code => {
-        applyInviteCode(code);
-        const fresh = loadInviteData();
-        if (fresh) updateCountdownUI(fresh.timestamp);
-      });
-    } else {
-      updateCountdownUI(d.timestamp);
-    }
-  }, 60 * 1000);
-}
-
-initInviteSystem();
-
-/* ══════════════════════════════════════════════
-   Floating particles
-   ══════════════════════════════════════════════ */
+/* Floating particles */
 const cv=document.getElementById('c');
 const ctx=cv.getContext('2d');
 let W,H,pts=[];
